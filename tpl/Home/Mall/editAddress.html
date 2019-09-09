@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+    
+	<div>
+		<div class="sub-header-title">
+			<h2>修改地址</h2>
+		</div>
+
+		<div class="content-wrap">
+			<form role="form" id="add-form" class="form-horizontal" action="{:U('Mall/editAddress')}">
+				<input type="hidden" name="type" value="{$type}">
+				<input type="hidden" name="id" value="{$address.id}">
+				<input type="hidden" name="addrinfo" value="{$address.info}">
+				<div class="panel-body form-horizontal bucket-form">
+                	<div class="form-group">
+						<label for="receiver" class="col-sm-2 control-label"><span class="red_star">*</span>收货人</label>
+						<div class="col-sm-5">
+							<input type="text" id="receiver" value="{$address.receiver}" class="form-control" name="receiver">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="phone" class="col-sm-2 control-label"><span class="red_star">*</span>手机号</label>
+						<div class="col-sm-5">
+							<input type="text" id='phone' value="{$address.phone}" class="form-control" name="phone">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>所在地址</label>
+						<div class="col-sm-5" style="z-index:999;">
+							<select class="form-control addr" name="province" id="cmbProvince"></select>
+							<select class="form-control addr" name="city" id="cmbCity"></select>
+							<select class="form-control addr" name="zone" id="cmbArea"></select>
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">请选择所在地址</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="address" class="col-sm-2 control-label"><span class="red_star">*</span>详细地址</label>
+						<div class="col-sm-5">
+						   	<div class="input-group">
+								<span class="input-group-addon" id="addrinfo">{$address.info}</span>
+                               	<input class="form-control" value="{$address.address}" name="address" id="address"/>
+                         	</div>
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~50个字符之间</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-4 col-sm-4">
+							<button type="submit" class="btn btn-success block">保存</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/jsAddress.js"></script>
+	<script src="__HOME_JS__/common.js"></script>
+	
+    <script type="text/javascript">
+  		//SELECT
+    	$('.selectpicker').selectpicker(); 
+  		
+   	   	if('{$address.info}' == ''){
+            $('#addrinfo').html('-');
+   	   	}
+       	addressInit('cmbProvince', 'cmbCity', 'cmbArea', "{$address.province}", "{$address.city}", "{$address.zone}");
+       	
+     	$('#cmbProvince').change(function(){
+            if($(this).val()=='0'){
+	            $("#cmbCity").prepend("<option value='0'>请选择</option>");
+	            $("#cmbArea").empty(); 
+	            $("#cmbArea").prepend("<option value='0'>请选择</option>");
+	            $("#cmbArea").val('0');
+	            $('#addrinfo').html('');
+            }else{
+                $('#addrinfo').html($('#cmbProvince').val()+$('#cmbCity').val()+$('#cmbArea').val());
+            }
+   		});
+    	$('#cmbCity').change(function(){
+       		$('#addrinfo').html($('#cmbProvince').val()+$('#cmbCity').val()+$('#cmbArea').val());
+       	});
+      	$('#cmbArea').change(function(){
+        	$('#addrinfo').html($('#cmbProvince').val()+$('#cmbCity').val()+$('#cmbArea').val());
+    	});
+      	
+      	$('#add-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+	        	//询问框
+				window.parent.layer.confirm('确认修改此地址吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#add-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+	        		// 用ajax提交表单
+	        		form.find("input[name='addrinfo']").val($("#addrinfo").html());
+			      	$.post(form.attr('action'), form.serialize(), function(response) {
+			      		//弹出提示
+						window.parent.layer.msg(response.message);
+			      		
+			      		//根据请求相应状态提示通知
+			       		if(response.status){
+							notify("success",response.message);
+
+							var type = form.find("input[name='type']").val();
+							if(response.flag == 'mall' && type == 'mall'){
+                                location.href = "{:U('Mall/order')}";
+                      	    }else{
+                      	    	location.href = '{:U('Mall/addrList')}';
+                      	    }
+							
+						}else{
+							notify("error",response.message);
+						}
+			        }, 'json');
+        		
+			      	window.parent.layer.close(index);
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#add-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	        	receiver: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            phone: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            province: {
+	            	validators: {
+	                    callback: {
+	                        callback:function(value, validator){
+	                          	return value!=0 ? true : false;
+	                        }
+	                  	}
+	          		}
+	           	},
+	           	city: {
+	            	validators: {
+	                    callback: {
+	                        callback:function(value, validator){
+	                          	return value!=0 ? true : false;
+	                        }
+	                  	}
+	          		}
+	           	},
+	           	zone: {
+	            	validators: {
+	                    callback: {
+	                        callback:function(value, validator){
+	                          	return value!=0 ? true : false;
+	                        }
+	                  	}
+	          		}
+	           	},
+	           	address: {
+                    validators: {
+                        callback: {
+	    					callback:function(value, validator){
+	    						if (value.length<2 || value.length>50) {
+	    							return false;
+	    						}
+	    						//地址不得大于50
+    							var addrinfo = $("#addrinfo").html();
+    							if (addrinfo) {
+    								var length = value.length + addrinfo.length;
+    								if(length>50){
+    									return false;
+    								}
+    							}
+    							return true;
+	    					}
+	    				}
+                    }
+                },
+	        }
+	    });
+    </script>
+	</body>
+</html>

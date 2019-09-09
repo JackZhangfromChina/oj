@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>会员级别设置-{$level.title}</h2>
+		</div>
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 list-label">级别名称</label>
+				<div class="col-sm-10 list-value">{$level.title}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 list-label">状态</label>
+				<div class="col-sm-10 list-value"><if condition="$level.status eq  1">开启<else />关闭</if></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 list-label">投资额</label>
+				<div class="col-sm-10 list-value">{$level.investment}</div>
+			</div>
+			<if condition="$config['is_open_touch_award'] eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">对碰日封顶</label>
+					<div class="col-sm-10 list-value">
+						<if condition="$level.touch_max eq  0">不封顶<else />{$level.touch_max}</if>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 list-label">对碰奖</label>
+					<div class="col-sm-10 list-value">{$level.touch_award}%</div>
+				</div>
+			</if>
+			<if condition="($config['is_open_service_center'] eq  1) && ($config['is_open_service_award'] eq  1)">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">报单奖</label>
+					<div class="col-sm-10 list-value">{$level.service_award}%</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_recommend_award'] eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">推荐奖</label>
+					<div class="col-sm-10 list-value">
+						<volist name="recommend_award" id="vo">
+							<if condition="$vo['from'] eq $vo['to']">
+								{$vo.from}代:{$vo.value}%<br/>
+							<else />
+								{$vo.from}-{$vo.to}代:{$vo.value}%<br/>
+							</if>
+						</volist>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_leader_award'] eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">领导奖</label>
+					<div class="col-sm-10 list-value">
+						<volist name="leader_award" id="vo">
+							<if condition="$vo['from'] eq $vo['to']">
+								{$vo.from}代:{$vo.value}%<br/>
+							<else />
+								{$vo.from}-{$vo.to}代:{$vo.value}%<br/>
+							</if>
+						</volist>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_point_award'] eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">见点奖</label>
+					<div class="col-sm-10 list-value">
+						<volist name="point_award" id="vo">
+							<if condition="$vo['from'] eq $vo['to']">
+								{$vo.from}层:{$vo.value}%<br/>
+							<else />
+								{$vo.from}-{$vo.to}层:{$vo.value}%<br/>
+							</if>
+						</volist>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_layer_touch_award'] eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">层碰奖</label>
+					<div class="col-sm-10 list-value">
+						<volist name="layer_touch_award" id="vo">
+							<if condition="$vo['from'] eq $vo['to']">
+								{$vo.from}层:{$vo.value}%<br/>
+							<else />
+								{$vo.from}-{$vo.to}层:{$vo.value}%<br/>
+							</if>
+						</volist>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_floor_award'] eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">层奖</label>
+					<div class="col-sm-10 list-value">
+						<volist name="floor_award" id="vo">
+							<if condition="$vo['from'] eq $vo['to']">
+								{$vo.from}层:{$vo.value}%<br/>
+							<else />
+								{$vo.from}-{$vo.to}层:{$vo.value}%<br/>
+							</if>
+						</volist>
+					</div>
+				</div>
+			</if>
+			<div class="form-group">
+				<label class="col-sm-2 list-label">手续费</label>
+				<div class="col-sm-10 list-value">{$level.tax}%</div>
+			</div>
+			<if condition="$config['is_open_mall'] eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">奖励购物币</label>
+					<div class="col-sm-10 list-value">{$level.tb_reward}</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_return'] eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 list-label">杠杆倍数</label>
+					<div class="col-sm-10 list-value">{$level.multiple}</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 list-label">返还百分比</label>
+					<div class="col-sm-10 list-value">{$level.return_ratio}%</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 list-label">返还周期</label>
+					<div class="col-sm-10 list-value">{$level.return_cycle}天</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 list-label">返还次数</label>
+					<div class="col-sm-10 list-value">{$level.return_number}</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 list-label">返还封顶</label>
+					<div class="col-sm-10 list-value">
+						<if condition="$level.return_max eq  0">不封顶<else />{$level.return_max}</if>
+					</div>
+				</div>
+			</if>
+		</div>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	
+	<!-- Custom Js Files -->
+	<script src="__ADMIN_JS__/common.js"></script>
+
+	</body>
+</html>

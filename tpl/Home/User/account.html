@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+        
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    
+    <body>
+	<!-- Begin page -->
+    <div class="widget">
+    	<div class="sub-header-title">
+	        <h2> 账户信息</h2>
+	    </div>
+        <div class="widget-content">
+        	<div class="row">
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget pink-1  fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="icon-globe-inv"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"><b>会员级别</b></p>
+	                            <h2>{$level['title']}</h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget pink-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>投资额</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.investment}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="icon-bag"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>注册币</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.eb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>现金</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.cb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-users"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>购物币</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.tb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-users"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>奖金</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.mb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-users"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>返利</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.rb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget pink-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>对碰业绩</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.touch_market}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+		            <div class="widget lightblue-1 animated fadeInDown">
+		                <div class="widget-content padding">
+		                    <div class="widget-icon">
+		                        <i class="fa fa-users"></i>
+		                    </div>
+		                    <div class="text-box">
+		                        <p class="maindata"> <b>左区剩余业绩</b></p>
+		                        <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.left_market}" data-duration="3000">0</span></h2>
+		                        <div class="clearfix"></div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget lightblue-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-users"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>右区剩余业绩</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.right_market}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-3 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>总提现</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$withdraw.sum_total}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-3 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>总汇款</b></p>
+	                            <h2>￥<span class="animate-number" data-value="{$remit.sum_total}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	       	</div>
+        </div>
+    </div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-animate-numbers/jquery.animateNumbers.js"></script>
+    
+	<!-- Custom Js Files -->
+	<script src="__HOME_JS__/common.js"></script>
+	
+	<script>
+		$('.animate-number').each(function(){
+			$(this).animateNumbers($(this).attr("data-value"), true, parseInt($(this).attr("data-duration"))); 
+		})
+	</script>
+	</body>
+</html>

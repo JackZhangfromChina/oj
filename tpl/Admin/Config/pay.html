@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Files -->
+          <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+          <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+          <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+    <!-- Begin page -->
+    <div>
+        <div class="sub-header-title">
+            <h2>支付设置</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-10">
+                <p class="red"><if condition="$system_state eq  1">系统在开启状态下，不允许进行敏感操作！如必须操作，请先关闭系统，以免引起数据异常。</if>带有*为必填项</p>
+            </div>
+        </div>
+        <form role="form" id="config-form" class="form-horizontal" action="{:U('Config/pay')}">
+            <input type="hidden" name="password">
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_OPEN']['title']}</label>
+                <div class="col-sm-10">
+                      <div class="radio iradio">
+                        <label><input type="radio" name="PAY_OPEN" value="1" <if condition="$configs['PAY_OPEN']['value'] eq  1">checked</if>>开启</label>
+                          <label><input type="radio" name="PAY_OPEN" value="0" <if condition="$configs['PAY_OPEN']['value'] eq  0">checked</if>>关闭</label>
+                    </div>
+                </div>
+            </div>
+            <div class="pay-set" <if condition="$configs['PAY_OPEN']['value'] eq 1">style="display:block;"</if>>
+                <div class="form-group">
+                    <label for="PAY_GOODS_TITLE" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_GOODS_TITLE']['title']}</label>
+                    <div class="col-sm-5">
+                          <input type="text" class="form-control" id="PAY_GOODS_TITLE" name="PAY_GOODS_TITLE" value="{$configs['PAY_GOODS_TITLE']['value']}">
+                    </div>
+                    <div class="col-sm-5">
+                        <p class="help-block">必须在2~50个字符之间</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="PAY_GOODS_BODY" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_GOODS_BODY']['title']}</label>
+                    <div class="col-sm-5">
+                          <input type="text" class="form-control" id="PAY_GOODS_BODY" name="PAY_GOODS_BODY" value="{$configs['PAY_GOODS_BODY']['value']}">
+                    </div>
+                    <div class="col-sm-5">
+                        <p class="help-block">必须在2~50个字符之间</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_OPEN_ALI']['title']}</label>
+                    <div class="col-sm-10">
+                          <div class="radio iradio">
+                            <label><input type="radio" name="PAY_OPEN_ALI" value="1" <if condition="$configs['PAY_OPEN_ALI']['value'] eq  1">checked</if>>开启</label>
+                              <label><input type="radio" name="PAY_OPEN_ALI" value="0" <if condition="$configs['PAY_OPEN_ALI']['value'] eq  0">checked</if>>关闭</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="alipay-set" <if condition="$configs['PAY_OPEN_ALI']['value'] eq 1">style="display:block;"</if>>
+                    <div class="form-group">
+                        <label for="PAY_APPID_ALI" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_APPID_ALI']['title']}</label>
+                        <div class="col-sm-5">
+                              <input type="text" class="form-control" id="PAY_APPID_ALI" name="PAY_APPID_ALI" value="{$configs['PAY_APPID_ALI']['value']}">
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">必须在2~50个字符之间</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PAY_PARTNER_ALI" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_PARTNER_ALI']['title']}</label>
+                        <div class="col-sm-5">
+                              <input type="text" class="form-control" id="PAY_PARTNER_ALI" name="PAY_PARTNER_ALI" value="{$configs['PAY_PARTNER_ALI']['value']}">
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">必须在2~100个字符之间</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PAY_MERNAME_ALI" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_MERNAME_ALI']['title']}</label>
+                        <div class="col-sm-5">
+                              <input type="text" class="form-control" id="PAY_MERNAME_ALI" name="PAY_MERNAME_ALI" value="{$configs['PAY_MERNAME_ALI']['value']}">
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">必须在2~50个字符之间</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PAY_PUBLIC_KEY_ALI" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_PUBLIC_KEY_ALI']['title']}</label>
+                        <div class="col-sm-5">
+                            <textarea class="form-control" id="PAY_PUBLIC_KEY_ALI" name="PAY_PUBLIC_KEY_ALI" rows="5" cols="">{$configs['PAY_PUBLIC_KEY_ALI']['value']}</textarea>
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">请填写支付宝对应的公钥</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PAY_PRIVAT_EKEY_ALI" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_PRIVAT_EKEY_ALI']['title']}</label>
+                        <div class="col-sm-5">
+                              <textarea class="form-control" id="PAY_PRIVAT_EKEY_ALI" name="PAY_PRIVAT_EKEY_ALI" rows="5" cols="">{$configs['PAY_PRIVAT_EKEY_ALI']['value']}</textarea>
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">请填写支付宝对应的私钥</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_OPEN_IPS']['title']}</label>
+                    <div class="col-sm-10">
+                          <div class="radio iradio">
+                            <label><input type="radio" name="PAY_OPEN_IPS" value="1" <if condition="$configs['PAY_OPEN_IPS']['value'] eq  1">checked</if>>开启</label>
+                              <label><input type="radio" name="PAY_OPEN_IPS" value="0" <if condition="$configs['PAY_OPEN_IPS']['value'] eq  0">checked</if>>关闭</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="ipspay-set" <if condition="$configs['PAY_OPEN_IPS']['value'] eq 1">style="display:block;"</if>>
+                    <div class="form-group">
+                        <label for="PAY_MERCODE_IPS" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_MERCODE_IPS']['title']}</label>
+                        <div class="col-sm-5">
+                              <input type="text" class="form-control" id="PAY_MERCODE_IPS" name="PAY_MERCODE_IPS" value="{$configs['PAY_MERCODE_IPS']['value']}">
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">必须在2~50个字符之间</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PAY_ACCOUNT_IPS" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_ACCOUNT_IPS']['title']}</label>
+                        <div class="col-sm-5">
+                              <input type="text" class="form-control" id="PAY_ACCOUNT_IPS" name="PAY_ACCOUNT_IPS" value="{$configs['PAY_ACCOUNT_IPS']['value']}">
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">必须在2~50个字符之间</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PAY_MERNAME_IPS" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_MERNAME_IPS']['title']}</label>
+                        <div class="col-sm-5">
+                              <input type="text" class="form-control" id="PAY_MERNAME_IPS" name="PAY_MERNAME_IPS" value="{$configs['PAY_MERNAME_IPS']['value']}">
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">必须在2~100个字符之间</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PAY_IPSRSAPUB_IPS" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_IPSRSAPUB_IPS']['title']}</label>
+                        <div class="col-sm-5">
+                            <textarea class="form-control" id="PAY_IPSRSAPUB_IPS" name="PAY_IPSRSAPUB_IPS" rows="5" cols="">{$configs['PAY_IPSRSAPUB_IPS']['value']}</textarea>
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">请填写环迅支付对应的公钥</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PAY_MERCERT_IPS" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['PAY_MERCERT_IPS']['title']}</label>
+                        <div class="col-sm-5">
+                              <textarea class="form-control" id="PAY_MERCERT_IPS" name="PAY_MERCERT_IPS" rows="5" cols="">{$configs['PAY_MERCERT_IPS']['value']}</textarea>
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="help-block">请填写环迅支付对应的私钥</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- End of page -->
+
+    <!-- Base Js Files -->
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+     <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+
+    <!-- Extra Js Files -->
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+
+    <!-- Custom Js Files -->
+    <script src="__PUBLIC_JS__/sha1.js"></script>
+    <script src="__ADMIN_JS__/common.js"></script>
+
+    <script>
+    $(function(){
+        //ICHECK
+        $('input').iCheck({
+              checkboxClass: 'icheckbox_square-blue',
+              radioClass: 'iradio_square-blue',
+              increaseArea: '20%' // optional
+        });
+
+        $("input[name='PAY_OPEN']").on('ifChecked', function(event){
+            //切换是否开启支付
+            if ($(this).val() == '1') {
+                //选择开启，显示支付设置
+                $(".pay-set").show();
+            } else {
+                //选择关闭，隐藏支付设置
+                $(".pay-set").hide();
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".pay-set").find("input"), "NOT_VALIDATED", null );
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".pay-set").find("textarea"), "NOT_VALIDATED", null );
+            }
+            $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+        });
+
+        $("input[name='PAY_OPEN_ALI']").on('ifChecked', function(event){
+            //切换是否开启支付宝支付
+            if ($(this).val() == '1') {
+                //选择开启，显示支付设置
+                $(".alipay-set").show();
+            } else {
+                //选择关闭，隐藏支付设置
+                $(".alipay-set").hide();
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".alipay-set").find("input"), "NOT_VALIDATED", null );
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".alipay-set").find("textarea"), "NOT_VALIDATED", null );
+            }
+            $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+        });
+
+        $("input[name='PAY_OPEN_IPS']").on('ifChecked', function(event){
+            //切换是否开启环迅支付
+            if ($(this).val() == '1') {
+                //选择开启，显示支付设置
+                $(".ipspay-set").show();
+            } else {
+                //选择关闭，隐藏支付设置
+                $(".ipspay-set").hide();
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".ipspay-set").find("input"), "NOT_VALIDATED", null );
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".ipspay-set").find("textarea"), "NOT_VALIDATED", null );
+            }
+            $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+        });
+
+        $("input").on('ifChecked', function(event){
+            //开启支付，但是所以的第三方支付都没有开启
+            if ($("input[name='PAY_OPEN']:checked").val() == '1' && $("input[name='PAY_OPEN_ALI']:checked").val() == '0' && $("input[name='PAY_OPEN_IPS']:checked").val() == '0') {
+                $('#config-form').data('bootstrapValidator').updateElementStatus($("input[type='radio']"), "INVALID", null );
+                $('#config-form').bootstrapValidator('disableSubmitButtons', true);
+            } else {
+                $('#config-form').data('bootstrapValidator').updateElementStatus($("input[type='radio']"), "VALID", null );
+            }
+        });
+
+        //表单验证
+        $('#config-form').bootstrapValidator({
+            message: '',
+            trigger: 'blur',
+            submitHandler: function(validator, form, submitButton) {
+                  //询问框
+                window.parent.layer.confirm('确认保存修改后的配置信息吗？', {
+                    btn: ['确认','取消'], //按钮
+                    cancel: function(index){
+                        window.parent.layer.close(index);
+                        $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+                    }
+                }, function(index){
+
+                    window.parent.layer.prompt({
+                        title: '敏感操作:请输入口令',
+                        formType: 1,
+                        btn: ['确认','取消'], //按钮
+                        btn2: function(pro_index){
+                            window.parent.layer.close(pro_index);
+                            $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+                        },
+                        cancel: function(index){
+                            window.parent.layer.close(pro_index);
+                            $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+                        }
+                    }, function(password, pro_index){
+                        //开启数据处理提示
+                        var load = window.parent.layer.msg('数据保存中。。。', {
+                                      icon: 16,
+                                      shade: 0.5,
+                                      time: 0,
+                                    });
+                        form.find("input[name='password']").val(hex_sha1(password));
+                        // 用ajax提交表单
+                          $.post(form.attr('action'), form.serialize(), function(response) {
+                              //关闭数据处理提示
+                            window.parent.layer.close(load);
+                              //弹出提示
+                            window.parent.layer.msg(response.message);
+
+                              //根据状态显示通知
+                               if(response.status){
+                                notify("success",response.message);
+                                $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+                            }else{
+                                notify("error",response.message);
+                            }
+                        }, 'json');
+
+                          window.parent.layer.close(pro_index);
+                          window.parent.layer.close(index);
+                    });
+                }, function(index){
+                    window.parent.layer.close(index);
+                    $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+                });
+            },
+            fields: {
+                PAY_OPEN: {
+                    validators: {
+                        notEmpty: {
+                        }
+                    }
+                },
+                PAY_OPEN_ALI: {
+                    validators: {
+                        notEmpty: {
+                        }
+                    }
+                },
+                PAY_APPID_ALI: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                },
+                PAY_PARTNER_ALI: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                },
+                PAY_MERNAME_ALI: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                },
+                PAY_PUBLIC_KEY_ALI: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 5000,
+                        }
+                    }
+                },
+                PAY_PRIVAT_EKEY_ALI: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 5000,
+                        }
+                    }
+                },
+                PAY_OPEN_IPS: {
+                    validators: {
+                        notEmpty: {
+                        }
+                    }
+                },
+                PAY_MERCODE_IPS: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                },
+                PAY_ACCOUNT_IPS: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                },
+                PAY_MERNAME_IPS: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                },
+                PAY_IPSRSAPUB_IPS: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 5000,
+                        }
+                    }
+                },
+                PAY_MERCERT_IPS: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 5000,
+                        }
+                    }
+                },
+                PAY_GOODS_TITLE: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                },
+                PAY_GOODS_BODY: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                },
+            }
+        });
+    });
+    </script>
+    </body>
+</html>

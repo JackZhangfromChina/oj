@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>级别设置</h2>
+		</div>
+
+		<if condition="$system_state eq  1">
+			<div class="form-horizontal">
+	        	<div class="form-group">
+		    		<div class="col-sm-12">
+		    			<p class="red">系统在开启状态下，不允许进行级别操作！如必须操作，请先关闭系统，以免引起数据异常。</p>
+		    		</div>
+		    	</div>
+		    </div>
+	    </if>
+		<div class="widget">
+	        <div class="widget-content">                            
+	            <table class="table table-bordered table-striped">
+	                <thead>
+	                    <tr>
+	                        <th>级别名称</th>
+	                        <th>投资金额</th>
+	                        <th>状态</th>
+	                        <th>修改时间</th>
+	                        <th>操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody> 
+	                     <volist name="levels" id="vo">
+	                        <tr>     
+	                            <td>{$vo.title}</td>
+	                            <td>{$vo.investment}</td>
+	                            <td>
+	                            	<if condition="$vo.status eq  1"><font class="green">开启</font><else /><font class="red">关闭</font></if>
+	                            </td>
+	                            <td>{$vo.update_time}</td>
+	                            <td alt="{$vo.id}">
+	                                <a href="{:U('Level/set',array('id'=>$vo['id']))}">设置</a> |
+	                                <if condition="$vo.status eq  1"><a class="set-close" href="javascript:void(0);">关闭</a><else /><a class="set-open" href="javascript:void(0);">开启</a></if>
+	                            </td>
+	                        </tr>
+	                     </volist>  
+	                </tbody>
+	            </table>
+	        </div> 
+	    </div>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		
+		// 关闭会员级别
+	    $('.set-close').click(function(event) {
+	    	var id = $(this).parent().attr("alt");
+	    	window.parent.layer.confirm('确认要关闭该会员级别吗', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				//ajax保存状态
+				ajaxSaveStatus(id,0);
+				
+				//关闭确认对话框
+		      	window.parent.layer.close(index);
+			});
+	    });
+	 	// 开启会员级别
+	    $('.set-open').click(function(event) {
+	    	var id = $(this).parent().attr("alt");
+	    	window.parent.layer.confirm('确认要开启该会员级别吗', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				//ajax保存状态
+				ajaxSaveStatus(id,1);
+				
+				//关闭确认对话框
+		      	window.parent.layer.close(index);
+			});
+	    });
+	});
+	function ajaxSaveStatus(id,status){
+		
+		var data = {
+				'id'		: id,
+				'status'	: status
+		};
+		// 用ajax提交表单
+      	$.post("{:U('Level/setStatus')}", data, function(response) {
+			//弹出提示
+			window.parent.layer.msg(response.message);
+      		
+      		//根据请求相应状态提示通知
+       		if(response.status){
+				notify("success",response.message);
+				window.location.reload();
+			}else{
+				notify("error",response.message);
+			}
+        }, 'json');
+	}
+	</script>
+	</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    
+    <body>
+	<!-- Begin page -->
+	<div>
+        <div class="sub-header-title">
+            <h2>会员升级</h2>
+        </div>
+    </div>
+    <div class="widget">
+        <div class="widget-content">
+        	<input type="hidden" name="user_no" value="{$user.user_no}">
+           	<table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>级别名称</th>
+                        <th>投资额</th>
+                        <th>对碰日封顶</th>
+                        <th>奖金制度</th>
+                        <th>手续费</th>
+						<if condition="$config['is_open_mall'] eq  1"><th>奖励购物</th></if>
+						<if condition="$config['is_open_return'] eq  1"><th>返本</th></if>
+						<th>所需注册币</th>
+						<th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<volist name="levels" id="v">
+	                 	<tr>
+	                        <td>{$v['title']}</td>
+	                        <td>{$v['investment']}</td>
+							<td>{$v['touch_max']}</td>
+	                        <td>
+	                        	<if condition="$config['is_open_touch_award'] eq  1">
+	                        	对碰奖：{$v['touch_award']}%<br/>
+	                        	</if>
+	                        	<if condition="($config['is_open_service_center'] eq  1) && ($config['is_open_service_award'] eq  1)">
+	                        	报单奖：{$v['service_award']}%<br/>
+	                        	</if>
+								<if condition="$config['is_open_recommend_award'] eq  1">
+								推荐奖:
+									<volist name="v.recommend_award" id="vo">
+										{$vo.from}-{$vo.to}代{$vo.value}%;
+									</volist>
+									<br/>
+								</if>
+								<if condition="$config['is_open_leader_award'] eq  1">
+								领导奖:
+									<volist name="v.leader_award" id="vo">
+										{$vo.from}-{$vo.to}代{$vo.value}%;
+									</volist>
+									<br/>
+								</if>
+								<if condition="$config['is_open_point_award'] eq  1">
+								见点奖:
+									<volist name="v.point_award" id="vo">
+										{$vo.from}-{$vo.to}层{$vo.value}%;
+									</volist>
+									<br/>
+								</if>
+								<if condition="$config['is_open_floor_award'] eq  1">
+								层奖:
+									<volist name="v.floor_award" id="vo">
+										{$vo.from}-{$vo.to}层{$vo.value}%;
+									</volist>
+									<br/>
+								</if>
+							</td>
+							<td>{$v['tax']}%</td>
+							<if condition="$config['is_open_mall'] eq  1">
+								<td>{$v['tb_reward']}</td>
+							</if>
+							<if condition="$config['is_open_return'] eq  1">
+								<td>
+									返还值:{$v['multiple']*$v['investment']}<br/>
+									返还封顶:{$v['return_max']}<br/>
+									返还周期:{$v['return_cycle']}天<br/>
+									返还次数:{$v['return_number']}<br/>
+								</td>
+							</if>
+							<td>{$v['money']}</td>
+							<td alt="{$v.id}">
+								<a href="javascript:void(0);" class="user-upgrade" >升级</a>
+							</td>
+	                 	</tr>
+                 	</volist>
+            	</tbody>
+            </table>
+            {$page}
+        </div> 
+    </div> 
+    <!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/laydate/laydate.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__HOME_JS__/common.js"></script>
+	
+    <script>
+
+		// 报单中心状态更改
+		$('.user-upgrade').click(function() {
+			var id = $(this).parent().attr("alt");
+			window.parent.layer.confirm('确认要升级吗？', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				//开启数据处理提示
+                var load = window.parent.layer.msg('升级中。。。', {
+                    icon: 16,
+                    shade: 0.5,
+                    time: 0,
+                });
+				var user_no = $("input[name='user_no']").val();
+				var data = {
+						'level_id'	: id,
+						'user_no'	: user_no
+					};
+				// 用ajax提交表单
+				$.post("{:U('User/upgrade')}", data, function(response) {
+					//关闭数据处理提示
+                    window.parent.layer.close(load);
+                    //弹出提示
+                    window.parent.layer.msg(response.message);
+
+					//根据请求相应状态提示通知
+					if(response.status){
+						notify("success",response.message);
+						window.location.href = "{:U('User/info')}";
+					}else{
+						notify("error",response.message);
+					}
+				}, 'json');
+				
+				//关闭确认对话框
+		      	window.parent.layer.close(index);
+			});
+		});
+	</script>
+	</body>
+</html>

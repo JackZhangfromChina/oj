@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-spinner/bootstrap-spinner.min.css" rel="stylesheet" />
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+        
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+    
+    <div>
+        <div class="sub-header-title">
+            <h2>我的购物车</h2>
+        </div>
+        <div class="widget">
+			<if condition="count($list) eq 0">
+              	<h3 class="text-center">您的购物车是空的，去挑选商品吧！</h3>
+              	<p class="text-center"><a class="btn btn-success" href="{:U('Mall/goods')}">现在去购物</a></p>
+			<else/>
+  				<table id="user" class="table table-bordered table-striped" style="clear: both">
+             		<thead>
+                  		<tr>
+                       		<th><input type='checkbox' id="check-all"/></th>
+                           	<th>商品</th>
+                           	<th>单价</th>
+                           	<th>数量</th>
+                           	<th>小计</th>
+                           	<th>操作</th>
+                       	</tr>
+                   	</thead>
+           			<tbody>
+           				<volist name="list" id="vo">
+                        	<tr data-id="{$vo['id']}" class="cart-li">
+                        		<td>
+                        			<input type='checkbox' {$vo['validate'] ? '' : 'disabled'}/>
+                               	</td>
+                               	<td>
+                               		<span><img src="{$vo['pic_url']}" width="80" style="margin-right:10px;"/></span>
+                               		<a href="{:U('detail',array('id'=>$vo['goods_id']))}">{$vo['title']}</a><br/>
+                               		<span class="status-error red">
+	                                   	<if condition="$vo['status'] neq 1">商品已下架</if>
+                                	</span>
+                               	</td>
+                              	<td>
+                              		{$currency_symbol}<span class="price-tb">{$vo['new_price']}</span>
+                              	</td>
+                               	<td>
+                               		<form role="form" class="form-horizontal cart-form" action="{:U('Mall/changeCart')}">
+				             			<input type="hidden" name="goods_id" value="{$vo['goods_id']}">
+					             		<div class="input-group col-sm-12 spinner" data-trigger="spinner" style="max-width:200px;">
+										    <!-- <input type="text" class="form-control text-center" data-min="1" data-max="{$vo['max']}" data-step="1" value="{$vo['quantity']}" name="quantity" data-rule="quantity">-->
+											<input type="text" class="form-control text-center" data-min="1" data-step="1" value="{$vo['quantity']}" name="quantity" data-rule="quantity">
+										    <span class="input-group-addon">
+										        <a href="javascript:;" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
+										        <a href="javascript:;" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
+										    </span>
+										</div>
+									</form>
+									<span class="quantity-error red" style="margin-right: 20px">
+	                                   	<if condition="$vo['quantity'] GT $vo['inventory_number']">
+	                                  		库存不足
+	                                   	</if>
+	                             	</span>   	
+	                               	<span class="limit-error red">
+	                                   	<if condition="($vo['limit_number'] GT 0) and ($vo['quantity'] GT $vo['limit_number'])">
+	                                 		超出限购
+	                                	</if>
+                                	</span>
+                               	</td>
+                               	<td>
+                               		{$currency_symbol}<span class="subprice-tb">{$vo['quantity']*intval($vo['new_price'])}</span>
+                               	</td>
+                               	<td><a class="cart-del" href="javascript:void(0);">删除</a></td>
+                       		</tr>
+                       	</volist>
+                       	<tr>
+                        	<td colspan="2" style="border: none;"><a class="cart-clean" href="javascript:void(0);">清空购物车</a></td>
+                        	<td colspan="4" style="border: none; text-align: right;">
+                         		总计:{$currency_symbol}
+                         		<span class="total-tb">0</span><br/>
+								<a id="cart-order" class="btn btn-success" href="javascript:;">去结算</a>
+                         	</td>
+                   		</tr>
+              		</tbody>
+              	</table>
+			</if>
+		</div>
+	</div> 
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-spinner/jquery.spinner.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__HOME_JS__/common.js"></script>
+	
+	<script>
+		//ICHECK
+		$('input').iCheck({
+		  	checkboxClass: 'icheckbox_minimal-green',
+		  	increaseArea: '20%' // optional
+		});
+		
+		//初始化全选
+		$('#check-all').iCheck('check');
+		checkAll();
+		$('#check-all').on('ifChecked', checkAll);
+	    $('#check-all').on('ifUnchecked', uncheckAll);
+	    
+	    $('.cart-li input[type=checkbox]:enabled').on('ifChanged', function(event){
+	    	reckonTotal();
+	 	});
+	    
+		// 删除购物车
+	    $('.cart-del').click(function(event) {
+	    	var id = $(this).parents('tr').data("id");
+	    	
+	    	window.parent.layer.confirm('确认要从购物车中移除该商品吗？', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				//ajax保存状态
+				var data = {
+						'id'	: id
+				};
+				// 用ajax提交表单
+		      	$.post("{:U('Mall/deleteCart')}", data, function(response) {
+					//弹出提示
+					window.parent.layer.msg(response.message);
+		      		
+		      		//根据请求相应状态提示通知
+		       		if(response.status){
+						notify("success",response.message);
+						window.location.reload();
+					}else{
+						notify("error",response.message);
+					}
+		        }, 'json');
+				
+				//关闭确认对话框
+		      	window.parent.layer.close(index);
+			});
+	    });
+		
+	 	// 清空购物车
+	    $('.cart-clean').click(function(event) {
+	    	window.parent.layer.confirm('确认清空购物车吗？', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				// 用ajax提交表单
+		      	$.post("{:U('Mall/cleanCart')}", {}, function(response) {
+					//弹出提示
+					window.parent.layer.msg(response.message);
+		      		//根据请求相应状态提示通知
+		       		if(response.status){
+						notify("success",response.message);
+						window.location.reload();
+					}else{
+						notify("error",response.message);
+					}
+		        }, 'json');
+				
+				//关闭确认对话框
+		      	window.parent.layer.close(index);
+			});
+	    });
+	 	
+	    $('[data-trigger="spinner"]').spinner('changed', function(e, newVal, oldVal) {
+	    	var cart_li = $(this).parents('.cart-li');
+	    	var form = $(this).parents('.cart-li').find('.cart-form');
+	    	// 用ajax提交表单
+	      	$.post(form.attr('action'), form.serialize(), function(response) {
+	      		//根据请求相应状态提示通知
+	       		if(response.status){
+	       			cart_li.find(".status-error").html("");
+       				cart_li.find(".quantity-error").html("");
+       				cart_li.find(".limit-error").html("");
+       				
+	       			if (response.errors.length>0) {
+	       				if (response.errors.indexOf(1) != -1) {
+	       					cart_li.find(".status-error").html("商品已下架");
+		              	}
+						if(response.errors.indexOf(2) != -1) {
+		              		cart_li.find(".quantity-error").html("库存不足");
+		              	}
+						if(response.errors.indexOf(3) != -1) {
+		              		cart_li.find(".limit-error").html("超出限购");
+		              	}
+	       				cart_li.find('input[type=checkbox]').iCheck('uncheck');
+		       			cart_li.find('input[type=checkbox]').iCheck('disable');
+	       			} else {
+	       				cart_li.find('input[type=checkbox]').iCheck('check');
+		       			cart_li.find('input[type=checkbox]').iCheck('enable');
+	       			}
+	       			reckonTotal();
+				} else {
+					notify("error",response.message);
+					window.parent.layer.msg(response.message);
+				}
+	        }, 'json');
+	    });
+	 	
+	    $('#cart-order').click(function(){
+	    	var item= $('.cart-li input[type=checkbox]:enabled').length;
+	    	
+	    	var total = parseFloat($(".total-tb").html());
+	  		
+	    	if (item==0 || total==0){
+	    		notify("error", '请先选择商品');
+				window.parent.layer.msg('请先选择商品');
+	    	} else {
+	    		var ids = new Array();
+				
+				$('.cart-li input[type=checkbox]:enabled').each(function(index){
+					if ($(this).is(':checked')) {
+						ids.push($(this).parents('.cart-li').data('id'));
+					}
+		    	});
+				location = "{:U('Mall/order')}?ids="+ids;
+	    	}
+       });
+	    
+	  	//计算总计
+	    function reckonTotal(){
+	  		var tb_total=0;
+	  		
+	  		$('.cart-li input[type=checkbox]:enabled').each(function(){
+	  			if($(this).is(':checked')){
+	  				var cart_li = $(this).parents('.cart-li');
+	  				var quantity = parseInt(cart_li.find("input[name='quantity']").val());
+		  			var tb_price= parseFloat(cart_li.find(".price-tb").html());
+		  			
+		  			if (tb_price>0) {
+		  				tb_total += tb_price*quantity;
+		  				cart_li.find(".subprice-tb").html(tb_price*quantity)
+		  			}
+	            }  
+        	});
+	  		
+	  		$(".total-tb").html(tb_total);
+	    }
+	  	
+	  	//全选
+	    function checkAll(){
+	    	$('input[type=checkbox]:enabled').iCheck('check');
+	    	reckonTotal();
+	    }
+	  	
+	    //全不选
+	    function uncheckAll(){
+	    	$('input[type=checkbox]').iCheck('uncheck');
+	    	reckonTotal();
+	    }
+	</script>
+    </body>
+</html>

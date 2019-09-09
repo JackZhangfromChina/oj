@@ -1,0 +1,71 @@
+@CHARSET "UTF-8";
+.md-modal{
+	background-color: #fff;
+}
+.md-show.md-just-me ~ .md-overlay{
+	background-color: #000;
+	opacity: 0.5;
+}
+.profile-info{
+	margin-top:15px;
+}
+.logo-img {
+	max-width: 400px;
+	width:100%;
+}
+.not-logged-avatar{
+	background-color: #fff;
+}
+.rounded-image img{
+	background-color: #fff;
+}
+/* .content-page > .content {
+  	padding: 0px;
+} */
+.page-content{
+	min-height:300px;
+	-webkit-overflow-scrolling:touch;
+	overflow: auto;
+}
+.btn{
+	line-height:20px;
+}
+body.login-page{
+	background:url("../images/login.jpg") no-repeat fixed center bottom / cover;
+}
+.login-wrap{
+  	background: rgba(0, 0, 0, 0.3);
+}
+.layui-layer-btn .layui-layer-btn0 {
+  	background-color: #68c39f !important;
+  	border-color: #68c39f !important;
+  	color: #fff;
+}
+.input-group .form-control{
+	z-index:1;
+}
+
+.verify_input {
+	width:64%;
+	float:left;
+	margin-right:2%;
+}
+.verify_code {
+	width:34%;
+	float:left;
+}
+.imgvcode{
+	cursor: pointer;
+ 	height: 34px; 
+ 	width:100%;
+}
+.logintitle{
+  	font-size: 30px;
+  	margin-bottom: 18px;
+}
+.login-wrap .btn-block {
+	margin:0px;
+}
+.logo h1 img {
+  height: 60%;
+}

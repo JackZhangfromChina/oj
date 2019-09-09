@@ -1,0 +1,122 @@
+#chart-container {
+  text-align: center;
+}
+
+.home-link {
+  margin-top: 20px;
+  margin-right: 20px;
+  float: right;
+}
+
+.home-link a {
+  font-size: 36px;
+  color: #d43f3a;
+  text-decoration: none;
+}
+
+.home-link a:hover {
+  text-shadow: 0 0 6px #d43f3a;
+}
+
+.home-link a:hover+i {
+  animation: jump 0.6s ease infinite;
+  -webkit-animation: jump 0.6s ease infinite;
+}
+
+@keyframes jump {
+    0% {top: 0px;}
+    50% {top: -6px;}
+    100% {top: 6px;}
+}
+
+@-webkit-keyframes jump {
+    0% {top: 0px;}
+    50% {top: -6px;}
+    100% {top: 6px;}
+}
+
+.home-link i {
+  position: relative;
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 0 1px 0 #ccc,
+      0 2px 0 #c9c9c9,
+      0 3px 0 #bbb,
+      0 4px 0 #b9b9b9,
+      0 5px 0 #aaa,
+      0 6px 1px rgba(0,0,0,.1),
+      0 0 5px rgba(0,0,0,.1),
+      0 1px 3px rgba(0,0,0,.3),
+      0 3px 5px rgba(0,0,0,.2),
+      0 5px 10px rgba(0,0,0,.25),
+      0 10px 10px rgba(0,0,0,.2),
+      0 20px 20px rgba(0,0,0,.15);
+}
+
+.orgchart .node {
+	min-width: 130px;
+	width: auto;
+}
+.orgchart .node .title {
+	background-color: #3189c4;
+	height: auto;
+	padding: 3px 5px;
+}
+.orgchart .node .content {
+	background-color: #fff;
+	border: 1px solid #3189c4;
+	border-radius: 0 0 4px 4px;
+	color: #333;
+	font-size: 11px;
+	line-height: 18px;
+	overflow: hidden;
+	padding: 5px;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	height: auto;
+	margin-top:0px;
+}
+
+
+
+
+.orgchart {
+  background: #fff; 
+}
+.orgchart td.left, .orgchart td.right, .orgchart td.top {
+  border-color: #aaa;
+}
+.orgchart td>.down {
+  background-color: #aaa;
+}
+.orgchart .middle-level .title {
+  background-color: #006699;
+}
+.orgchart .middle-level .content {
+  border-color: #006699;
+}
+.orgchart .product-dept .title {
+  background-color: #009933;
+}
+.orgchart .product-dept .content {
+  border-color: #009933;
+}
+.orgchart .rd-dept .title {
+  background-color: #993366;
+}
+.orgchart .rd-dept .content {
+  border-color: #993366;
+}
+.orgchart .pipeline1 .title {
+  background-color: #996633;
+}
+.orgchart .pipeline1 .content {
+  border-color: #996633;
+}
+.orgchart .frontend1 .title {
+  background-color: #cc0066;
+}
+.orgchart .frontend1 .content {
+  border-color: #cc0066;
+}

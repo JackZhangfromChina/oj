@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>添加规则</h2>
+		</div>
+		<form role="form" id="add-form" class="form-horizontal" action="{:U('Rule/add')}">
+			<input type="hidden" name="parent_id" value="{$parent_id}">
+		  	<div class="form-group">
+				<label for="title" class="col-sm-2 control-label"><span class="red_star">*</span>权限名称</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="title" name="title" value="">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~20个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="name" class="col-sm-2 control-label"><span class="red_star">*</span>权限action</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="name" name="name" value="">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~100个字符之间(必须唯一)</p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">添加</button>
+                </div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		
+		$('#add-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+		      	//询问框
+				window.parent.layer.confirm('确认添加规则吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#add-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+
+					// 用ajax提交表单
+			      	$.post(form.attr('action'), form.serialize(), function(response) {
+			      		//弹出提示
+						window.parent.layer.msg(response.message);
+			      		
+			      		//根据请求相应状态提示通知
+			       		if(response.status){
+			       			notify("success",response.message);
+							window.location.href = "{:U('Rule/index')}";
+						}else{
+							notify("error",response.message);
+						}
+			        }, 'json');
+			      	window.parent.layer.close(index);
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#add-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	        	title: {
+	        		validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    },
+		            }
+	            },
+	            name: {
+	        		validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 100,
+	                    },
+			            callback: {
+							callback:function(value, validator){
+								var flag = true;
+								$.ajax({ 
+									type : 'post',  
+							    	url : "{:U('Check/checkRule')}",  
+							     	data : {name: value},
+							     	dataType: 'json', 
+							    	async : false,  
+							      	success : function(response){
+		    							flag = response.status;
+							    	}  
+								}); 
+								
+								return flag;
+							}
+						}
+		            }
+	            }
+	        }
+	    });
+	});
+	</script>
+	</body>
+</html>

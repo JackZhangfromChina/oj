@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>
+				添加银行卡
+			</h2>
+		</div>
+		<form role="form" id="add-form" class="form-horizontal" action="{:U('Cash/addBank')}">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">会员编号</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="user_no" value="{$user['user_no']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">会员编号为当前登录账号，不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">真实姓名</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="name" value="{$user['realname']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">真实姓名为当前账号的真实姓名，不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="bank" class="col-sm-2 control-label"><span class="red_star">*</span>银行名称</label>
+				<div class="col-sm-5" style="z-index:999;">
+				  	<select class="form-control selectpicker" name="bank">
+					  	<volist name="banks" id="vo">
+						  	<option value="{$vo.title}">{$vo.title}</option>
+					  	</volist>
+				  	</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>开户支行</label>
+				<div class="col-sm-5" style="z-index:99;" id="city_set">
+					<div class="col-sm-2" style="padding:0px;">
+						<select class="form-control prov" name="subbank_province"></select>
+					</div>
+					<div class="col-sm-2" style="padding:0px;">
+						<select class="form-control city" name="subbank_city" disabled="disabled"></select>
+					</div>
+					<div class="col-sm-8" style="padding:0px;">
+						<input class="form-control" value="" name="sub_bank" id="sub_bank"/>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~20个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="bank_no" class="col-sm-2 control-label"><span class="red_star">*</span>银行卡号</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="bank_no" name="bank_no" value="">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~20个字符之间，并且卡号必须唯一</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">添加</button>
+                </div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/jquery.cityselect.js"></script>
+	<script src="__HOME_JS__/common.js"></script>
+
+	<script>
+	$(function(){
+		//SELECT
+        $('.selectpicker').selectpicker();
+
+        $("#city_set").citySelect({
+        	url:"__PUBLIC_JS__/city.min.js",
+    		required:false
+    	});
+
+		$('#add-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+	        	//询问框
+				window.parent.layer.confirm('确认添加此银行卡吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){
+				    	window.parent.layer.close(index);
+						$('#add-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+	        		// 用ajax提交表单
+			      	$.post(form.attr('action'), form.serialize(), function(response) {
+			      		//弹出提示
+						window.parent.layer.msg(response.message);
+
+			      		//根据请求相应状态提示通知
+			       		if(response.status){
+							notify("success",response.message);
+							window.location.href = "{:U('Cash/bankList')}";
+						}else{
+							notify("error",response.message);
+						}
+			        }, 'json');
+
+			      	window.parent.layer.close(index);
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#add-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	            bank: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            subbank_province: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	           	},
+	           	subbank_city: {
+	           		validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	           	},
+	            sub_bank: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            bank_no: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    },
+			            callback: {
+							callback:function(value, validator){
+								var flag = true;
+								var user_no = $('#add-form').find("input[name='user_no']").val();
+								$.ajax({
+									type : 'post',
+							    	url : "{:U('Check/checkBankNo')}",
+							     	data : {bank_no: value,user_no: user_no},
+							     	dataType: 'json',
+							    	async : false,
+							      	success : function(response){
+		    							flag = response.status;
+							    	}
+								});
+
+								return flag;
+							}
+						}
+	                }
+	            }
+	        }
+	    });
+	});
+	!function () {
+        $('#bank_no').on('keyup mouseout input',function(){
+            var $this = $(this),
+                v = $this.val();
+            /\S{5}/.test(v) && $this.val(v.replace(/\s/g,'').replace(/(\d{4})(?=\d)/g, "$1 "));
+        });
+    }();
+	</script>
+	</body>
+</html>

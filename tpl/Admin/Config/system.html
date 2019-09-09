@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>基础设置</h2>
+		</div>
+		<div class="row">
+    		<div class="col-sm-offset-2 col-sm-10">
+    			<p class="red"><if condition="$system_state eq  1">系统在开启状态下，不允许进行敏感操作！如必须操作，请先关闭系统，以免引起数据异常。</if>带有*为必填项</p>
+    		</div>
+    	</div>
+		<form role="form" id="config-form" class="form-horizontal" action="{:U('Config/system')}">
+			<input type="hidden" name="password">
+			<div class="form-group">
+				<label for="SYSTEM_CURRENCY" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_CURRENCY']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="SYSTEM_CURRENCY" name="SYSTEM_CURRENCY" value="{$configs['SYSTEM_CURRENCY']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~20个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="SYSTEM_CURRENCY_SYMBOL" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_CURRENCY_SYMBOL']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="SYSTEM_CURRENCY_SYMBOL" name="SYSTEM_CURRENCY_SYMBOL" value="{$configs['SYSTEM_CURRENCY_SYMBOL']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在1~20个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="SYSTEM_EXRATE" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_EXRATE']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="SYSTEM_EXRATE" name="SYSTEM_EXRATE" value="{$configs['SYSTEM_EXRATE']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为大于0（小数/整数）</p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="SYSTEM_PAGE_NUMBER" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_PAGE_NUMBER']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="SYSTEM_PAGE_NUMBER" name="SYSTEM_PAGE_NUMBER" value="{$configs['SYSTEM_PAGE_NUMBER']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为[1,10000)的正整数</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="SYSTEM_TRADE_MONEY_UNIT" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_TRADE_MONEY_UNIT']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="SYSTEM_TRADE_MONEY_UNIT" name="SYSTEM_TRADE_MONEY_UNIT" value="{$configs['SYSTEM_TRADE_MONEY_UNIT']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为[0,100000000)的两位小数或整数）</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="SYSTEM_WITHDRAW_DAY" class="col-sm-2 control-label">{$configs['SYSTEM_WITHDRAW_DAY']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="SYSTEM_WITHDRAW_DAY" name="SYSTEM_WITHDRAW_DAY" value="{$configs['SYSTEM_WITHDRAW_DAY']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为日期的天数，请用;进行分割(为空表示不限制)</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="SYSTEM_WITHDRAW_FEE" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_WITHDRAW_FEE']['title']}</label>
+				<div class="col-sm-5">
+					<div class="input-group">
+						<input type="text" class="form-control" id="SYSTEM_WITHDRAW_FEE" name="SYSTEM_WITHDRAW_FEE" value="{$configs['SYSTEM_WITHDRAW_FEE']['value']}">
+						<span class="input-group-addon">%</span>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为[0,100]的一位小数或整数(单位是%)</p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_MULTI_UNFINISHED_WITHDRAW']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="SYSTEM_MULTI_UNFINISHED_WITHDRAW" value="1" <if condition="$configs['SYSTEM_MULTI_UNFINISHED_WITHDRAW']['value'] eq  1">checked</if>>是</label>
+					  	<label><input type="radio" name="SYSTEM_MULTI_UNFINISHED_WITHDRAW" value="0" <if condition="$configs['SYSTEM_MULTI_UNFINISHED_WITHDRAW']['value'] eq  0">checked</if>>否</label>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">会员在提现日内随时可提现，不受未完成提现的影响</p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_MULTI_UNFINISHED_REMIT']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="SYSTEM_MULTI_UNFINISHED_REMIT" value="1" <if condition="$configs['SYSTEM_MULTI_UNFINISHED_REMIT']['value'] eq  1">checked</if>>是</label>
+					  	<label><input type="radio" name="SYSTEM_MULTI_UNFINISHED_REMIT" value="0" <if condition="$configs['SYSTEM_MULTI_UNFINISHED_REMIT']['value'] eq  0">checked</if>>否</label>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">会员随时可汇款，不受未完成汇款的影响</p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_INTERNATIONALIZATION']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="SYSTEM_INTERNATIONALIZATION" value="1" <if condition="$configs['SYSTEM_INTERNATIONALIZATION']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="SYSTEM_INTERNATIONALIZATION" value="0" <if condition="$configs['SYSTEM_INTERNATIONALIZATION']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_DEFAULT_LANGUAGE']['title']}</label>
+				<div class="col-sm-5">
+					<select class="form-control selectpicker" name="SYSTEM_DEFAULT_LANGUAGE">
+					  	<option value="zh_cn" <if condition="$configs['SYSTEM_DEFAULT_LANGUAGE']['value'] eq  'zh_cn'">selected</if>>中文简体</option>
+					  	<option value="zh_tw" <if condition="$configs['SYSTEM_DEFAULT_LANGUAGE']['value'] eq  'zh_tw'">selected</if>>中文繁体</option>
+					  	<option value="en" <if condition="$configs['SYSTEM_DEFAULT_LANGUAGE']['value'] eq  'en'">selected</if>>英文</option>
+					</select>
+				</div>
+			</div>
+			
+			<if condition="$is_open_mall eq  1">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_MALL_ALLOW_ROLE']['title']}</label>
+					<div class="col-sm-5">
+					  	<div class="radio iradio">
+							<label><input type="radio" name="SYSTEM_MALL_ALLOW_ROLE" value="service_center" <if condition="$configs['SYSTEM_MALL_ALLOW_ROLE']['value'] eq  'service_center'">checked</if>>报单中心</label>
+						  	<label><input type="radio" name="SYSTEM_MALL_ALLOW_ROLE" value="all" <if condition="$configs['SYSTEM_MALL_ALLOW_ROLE']['value'] eq  'all'">checked</if>>所有会员</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="SYSTEM_ADDRESS_NUMBER" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_ADDRESS_NUMBER']['title']}</label>
+					<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="SYSTEM_ADDRESS_NUMBER" name="SYSTEM_ADDRESS_NUMBER" value="{$configs['SYSTEM_ADDRESS_NUMBER']['value']}">
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[1,1000)的正整数</p>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_MULTI_UNFINISHED_ORDER']['title']}</label>
+					<div class="col-sm-5">
+					  	<div class="radio iradio">
+							<label><input type="radio" name="SYSTEM_MULTI_UNFINISHED_ORDER" value="1" <if condition="$configs['SYSTEM_MULTI_UNFINISHED_ORDER']['value'] eq  1">checked</if>>是</label>
+						  	<label><input type="radio" name="SYSTEM_MULTI_UNFINISHED_ORDER" value="0" <if condition="$configs['SYSTEM_MULTI_UNFINISHED_ORDER']['value'] eq  0">checked</if>>否</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="SYSTEM_ORDER_FREE_SHIPPING" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_ORDER_FREE_SHIPPING']['title']}</label>
+					<div class="col-sm-5">
+						<div class="radio iradio">
+							<label><input type="radio" name="SYSTEM_ORDER_FREE_SHIPPING" value="-1" <if condition="$configs['SYSTEM_ORDER_FREE_SHIPPING']['value'] eq  '-1'">checked</if>>全部不包邮</label>
+						  	<label><input type="radio" name="SYSTEM_ORDER_FREE_SHIPPING" value="0" <if condition="$configs['SYSTEM_ORDER_FREE_SHIPPING']['value'] eq  0">checked</if>>全部包邮</label>
+						  	<label><input type="radio" name="SYSTEM_ORDER_FREE_SHIPPING" value="" <if condition="$configs['SYSTEM_ORDER_FREE_SHIPPING']['value'] gt  0">checked</if>>部分包邮</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" id="free_shipping_set" <if condition="$configs['SYSTEM_ORDER_FREE_SHIPPING']['value'] gt 0">style="display:block;"</if>>
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="SYSTEM_ORDER_FREE_SHIPPING" name="SYSTEM_ORDER_FREE_SHIPPING1" value="{$configs['SYSTEM_ORDER_FREE_SHIPPING']['value']}">
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">订单包邮金额不允许为空,必须为[1,100000000)的正整数</p>
+					</div>
+				</div>
+				
+				<div class="form-group order_shipping" <if condition="$configs['SYSTEM_ORDER_FREE_SHIPPING']['value'] eq '0'">style="display:none;"</if>>
+					<label for="SYSTEM_ORDER_SHIPPING" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['SYSTEM_ORDER_SHIPPING']['title']}</label>
+					<div class="col-sm-5">
+						<div class="radio iradio">
+							<label><input type="radio" name="SYSTEM_ORDER_SHIPPING" value="-1" <if condition="$configs['SYSTEM_ORDER_SHIPPING']['value'] eq  '-1'">checked</if>>到付</label>
+						  	<label><input type="radio" name="SYSTEM_ORDER_SHIPPING" value="" <if condition="$configs['SYSTEM_ORDER_SHIPPING']['value'] egt  0">checked</if>>固定运费</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group order_shipping" id="order_shipping_set" <if condition="($configs['SYSTEM_ORDER_FREE_SHIPPING']['value'] neq '0') && ($configs['SYSTEM_ORDER_SHIPPING']['value'] egt 0)">style="display:block;"</if>>
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="SYSTEM_ORDER_SHIPPING" name="SYSTEM_ORDER_SHIPPING1" value="{$configs['SYSTEM_ORDER_SHIPPING']['value']}">
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">运费不允许为空,必须为[1,1000000)的正整数</p>
+					</div>
+				</div>
+		    </if>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">保存</button>
+                </div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		//ICHECK
+		$('input').iCheck({
+			checkboxClass: 'icheckbox_square-blue',
+			radioClass: 'iradio_square-blue',
+			increaseArea: '20%' // optional
+		});
+		
+		//SELECT
+		$('.selectpicker').selectpicker();
+		
+		$("input").on('ifChecked', function(event){ 
+			//切换选择订单包邮
+			if($(this).attr("name") == 'SYSTEM_ORDER_FREE_SHIPPING'){
+				if ($(this).val() == '-1') {
+					//全部不包邮,隐藏包邮金额的设置，显示运费设置
+					$("#free_shipping_set").hide();
+					
+					$(".order_shipping").show();
+					//根据运费设置选择，决定显示隐藏运费金额设置
+					if ($("input[name='SYSTEM_ORDER_SHIPPING']:checked").val() == '-1') {
+						//运费设置选择到付，隐藏运费设置
+						$("#order_shipping_set").hide();
+					} else {
+						//运费设置选择固定运费，显示运费设置
+						$("#order_shipping_set").show();
+					}
+				} else if ($(this).val() == '0') {
+					//全部不包邮,隐藏包邮金额的设置，隐藏运费设置
+					$("#free_shipping_set").hide();
+					$(".order_shipping").hide();
+				} else {
+					//部分包邮,显示包邮金额的设置，显示运费设置
+					$("#free_shipping_set").show();
+					var free_shipping = $("input[name='SYSTEM_ORDER_FREE_SHIPPING1']").val();
+					$("input[name='SYSTEM_ORDER_FREE_SHIPPING1']").val(free_shipping>0 ? free_shipping : 0);
+					
+					$(".order_shipping").show();
+					//根据运费设置选择，决定显示隐藏运费金额设置
+					if ($("input[name='SYSTEM_ORDER_SHIPPING']:checked").val() == '-1') {
+						//运费设置选择到付，隐藏运费设置
+						$("#order_shipping_set").hide();
+					} else {
+						//运费设置选择固定运费，显示运费设置
+						$("#order_shipping_set").show();
+					}
+				}
+				
+				$('#config-form').data('bootstrapValidator').updateElementStatus($("input[name='SYSTEM_ORDER_FREE_SHIPPING1']"), "NOT_VALIDATED", null );
+				$('#config-form').data('bootstrapValidator').updateElementStatus($("input[name='SYSTEM_ORDER_SHIPPING1']"), "NOT_VALIDATED", null );
+			}
+			//切换选择运费设置
+			if($(this).attr("name") == 'SYSTEM_ORDER_SHIPPING'){
+				if ($(this).val() == '-1') {
+					//选择到付，隐藏运费设置
+					$("#order_shipping_set").hide();
+				} else {
+					//选择固定运费，显示运费设置
+					$("#order_shipping_set").show();
+					var shipping = $("input[name='SYSTEM_ORDER_SHIPPING1']").val();
+					$("input[name='SYSTEM_ORDER_SHIPPING1']").val(shipping>0 ? shipping : 0);
+				}
+				
+				$('#config-form').data('bootstrapValidator').updateElementStatus($("input[name='SYSTEM_ORDER_SHIPPING1']"), "NOT_VALIDATED", null );
+			}
+			$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		}); 
+		
+		//表单验证
+		$('#config-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        excluded: [':disabled'],//[':disabled', ':hidden', ':not(:visible)']
+	        submitHandler: function(validator, form, submitButton) {
+		      	//询问框
+				window.parent.layer.confirm('确认保存修改后的配置信息吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+					
+					window.parent.layer.prompt({
+		        		title: '敏感操作:请输入口令', 
+		        		formType: 1,
+		        		btn: ['确认','取消'], //按钮
+		        		btn2: function(pro_index){
+		        			window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		        		},
+					    cancel: function(index){ 
+					    	window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+						}
+					}, function(password, pro_index){
+						//订单包邮为部分包邮，更改包邮金额
+						if($("input[name='SYSTEM_ORDER_FREE_SHIPPING']:checked").val() == ''){
+							$("input[name='SYSTEM_ORDER_FREE_SHIPPING']").val($("input[name='SYSTEM_ORDER_FREE_SHIPPING1']").val());
+						}
+						//运费设置为固定运费，更改运费金额
+						if($("input[name='SYSTEM_ORDER_SHIPPING']:checked").val() == ''){
+							$("input[name='SYSTEM_ORDER_SHIPPING']").val($("input[name='SYSTEM_ORDER_SHIPPING1']").val());
+						}
+						
+						//开启数据处理提示
+						var load = window.parent.layer.msg('数据保存中。。。', {
+									  icon: 16,
+									  shade: 0.5,
+									  time: 0,
+									});
+						
+						form.find("input[name='password']").val(hex_sha1(password));
+						
+						// 用ajax提交表单
+				      	$.post(form.attr('action'), form.serialize(), function(response) {
+				      		//关闭数据处理提示
+							window.parent.layer.close(load);
+				      		//弹出提示
+							window.parent.layer.msg(response.message);
+				      	
+				      		//根据状态显示通知
+				       		if(response.status){
+								notify("success",response.message);
+								$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+							}else{
+								notify("error",response.message);
+								$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+							}
+				        }, 'json');
+						
+				      	window.parent.layer.close(pro_index);
+						window.parent.layer.close(index);
+		        	});
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	        	SYSTEM_CURRENCY: {
+                	validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            SYSTEM_CURRENCY_SYMBOL: {
+                	validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 1,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            SYSTEM_EXRATE: {
+	                validators: {
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^[0-9]+(\.[0-9]+)?$/; 
+	    						return value!='' && reg.test(value) && value>0 ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            SYSTEM_PAGE_NUMBER: {
+	                validators: {
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^[1-9][0-9]{0,3}$/; 
+	    						return value!='' && reg.test(value) ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            SYSTEM_TRADE_MONEY_UNIT: {
+	            	validators: {
+	            		callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,7}|0)(\.[0-9]{1,2})?$/;
+	    						return value!='' && reg.test(value)  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            SYSTEM_WITHDRAW_DAY: {
+	            	validators: {
+	            		callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^(?:3[01]|[12]\d|[1-9])(?:;(?:3[01]|[12]\d|[1-9]))*$/;
+	    						return value =='' || reg.test(value)  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            SYSTEM_ADDRESS_NUMBER: {
+	            	validators: {
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^[1-9][0-9]{0,2}$/; 
+	    						return value!='' && reg.test(value) ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            SYSTEM_ORDER_FREE_SHIPPING1: {
+	            	validators: {
+			            callback: {
+							callback:function(value, validator){
+								if ($("input[name='SYSTEM_ORDER_FREE_SHIPPING1']").is(":hidden")) {
+									return true;
+								} else {
+									var reg=/^[1-9][0-9]{0,7}$/; 
+									return value!='' && reg.test(value) ? true : false;
+								}
+							}
+						}
+	                }
+	            },
+	            SYSTEM_ORDER_SHIPPING1: {
+	            	validators: {
+			            callback: {
+							callback:function(value, validator){
+								if ($("input[name='SYSTEM_ORDER_SHIPPING1']").is(":hidden")) {
+									return true;
+								} else {
+									var reg=/^[1-9][0-9]{0,5}$/; 
+									return value!='' && reg.test(value) ? true : false;
+								}
+							}
+						}
+	                }
+	            },
+	            SYSTEM_MULTI_UNFINISHED_WITHDRAW: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            SYSTEM_MULTI_UNFINISHED_REMIT: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            SYSTEM_INTERNATIONALIZATION: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            SYSTEM_DEFAULT_LANGUAGE: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            SYSTEM_MULTI_UNFINISHED_ORDER: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            SYSTEM_ORDER_FREE_SHIPPING: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            SYSTEM_ORDER_SHIPPING: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            SYSTEM_MALL_ALLOW_ROLE: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            SYSTEM_WITHDRAW_FEE: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	            		callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,2}|0)(\.[0-9]{1})?$/;
+	    						return reg.test(value) &&value<=100  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	        }
+	    });
+	});
+	</script>
+	</body>
+</html>

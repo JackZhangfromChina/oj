@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-jvectormap/css/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-calendar/css/bic_calendar.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+        <style>
+			.row{margin:0px;}
+		</style>
+    </head>
+    
+    <body style="padding:0px;background:none;">
+	<!-- Begin page -->
+        <div class="widget-content">
+        	<div class="row">
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget pink-1  fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="icon-globe-inv"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"><b>会员级别</b></p>
+	                            <h2>{$level}</h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget pink-1 fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-group"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"><b>团队会员总人数</b></p>
+	                            <h2><span class="animate-number" data-value="{$user_count}" data-duration="3000">0</span>人</h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget pink-1 fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-group"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"><b>推荐会员总人数</b></p>
+	                            <h2><span class="animate-number" data-value="{$recommend_count}" data-duration="3000">0</span>人</h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <if condition="$is_open_service_center eq  1">
+		            <div class="col-lg-3 col-md-6">
+		                <div class="widget pink-1 fadeInDown">
+		                    <div class="widget-content padding">
+		                        <div class="widget-icon">
+		                            <i class="fa fa-group"></i>
+		                        </div>
+		                        <div class="text-box">
+		                            <p class="maindata"><b>下属会员总人数</b></p>
+		                            <h2><span class="animate-number" data-value="{$center_count}" data-duration="3000">0</span>人</h2>
+		                            <div class="clearfix"></div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+	            </if>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>注册币</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.eb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>现金</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.cb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>购物币</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.tb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>奖金</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.mb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-1 animated fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="fa fa-dollar"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"> <b>返利</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$user.rb_account}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-3  fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="icon-globe-inv"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"><b>总奖金</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$reward_total}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-3  fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="icon-globe-inv"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"><b>总提现</b></p>
+	                            <h2>{$currency_symbol}<span class="animate-number" data-value="{$withdraw_confirm}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6">
+	                <div class="widget green-3  fadeInDown">
+	                    <div class="widget-content padding">
+	                        <div class="widget-icon">
+	                            <i class="icon-globe-inv"></i>
+	                        </div>
+	                        <div class="text-box">
+	                            <p class="maindata"><b>总汇款</b></p>
+	                            <h2>￥<span class="animate-number" data-value="{$remit_confirm}" data-duration="3000">0</span></h2>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+            <div class="row">
+				<div class="col-lg-8 portlets ui-sortable">
+					<div class="widget">
+						<div class="widget-header">
+							<h2><i class="icon-volume"></i> 最新公告</h2>
+						</div>
+						<div class="widget-content">
+							<div class="row stacked">
+								<div class="col-sm-5 mini-stats">
+									<div class="widget-content padding-sm">
+										<ul class="todo-list">
+										<volist name="news" id="info">
+											<li>
+												<a href="{:U('News/detail',array('id'=>$info['id']))}">{$info.title}</a>
+											</li>
+										</volist>
+										</ul>
+									</div>
+								</div>
+								<div class="col-sm-7">
+									<div id="vector-map" style="height:370px"></div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 portlets ui-sortable">
+					<div id="calendar-widget2" class="widget blue-1">
+						<div class="widget-header transparent">
+							<h2>日历</h2>
+						</div>
+						<div id="calendar-box2" class="widget-content col-sm-12" style="height:370px;">
+
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    <!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-animate-numbers/jquery.animateNumbers.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-calendar/js/bic_calendar.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-jvectormap/js/jquery-jvectormap-world-mill-en.js"></script>
+    
+	<!-- Custom Js Files -->
+	<script src="__HOME_JS__/common.js"></script>
+	
+	<script>
+		$('.animate-number').each(function(){
+			$(this).animateNumbers($(this).attr("data-value"), true, parseInt($(this).attr("data-duration"))); 
+		});
+		
+		var cityAreaData = [
+		        	        500.70,
+		        	        410.16,
+		        	        210.69,
+		        	        120.17,
+		        	        64.31,
+		        	        150.35,
+		        	        130.22,
+		        	        120.71,
+		        	        300.32
+		        	    ]
+		        	    $('#vector-map').vectorMap({
+		        	        map: 'world_mill_en',
+		        	        normalizeFunction: 'polynomial',
+		        	        zoomOnScroll:true,
+		        	        focusOn:{
+		        	            x: 0,
+		        	            y: 0,
+		        	            scale: 0.9
+		        	        },
+		        	        zoomMin:0.9,
+		        	        hoverColor: false,
+		        	        regionStyle:{
+		        	            initial: {
+		        	                fill: '#bbbbbb',
+		        	                "fill-opacity": 1,
+		        	                stroke: '#a5ded9',
+		        	                "stroke-width": 0,
+		        	                "stroke-opacity": 0
+		        	            },
+		        	            hover: {
+		        	                "fill-opacity": 0.8
+		        	            }
+		        	        },
+		        	        markerStyle: {
+		        	            initial: {
+		        	                fill: '#F57A82',
+		        	                stroke: 'rgba(230,140,110,.8)',
+		        	                "fill-opacity": 1,
+		        	                "stroke-width": 9,
+		        	                "stroke-opacity": 0.5,
+		        	                r: 3
+		        	            },
+		        	            hover: {
+		        	                stroke: 'black',
+		        	                "stroke-width": 2
+		        	            },
+		        	            selected: {
+		        	                fill: 'blue'
+		        	            },
+		        	            selectedHover: {
+		        	            }
+		        	        },
+		        	        backgroundColor: '#ffffff',
+		        	        markers :[
+
+		        	            {latLng: [35.85, -77.88], name: 'Rocky Mt,NC'},
+		        	            {latLng: [32.90, -97.03], name: 'Dallas/FW,TX'},
+		        	            {latLng: [41.00, 28.96], name: 'Istanbul, TR'},
+		        	            {latLng: [39.37, -75.07], name: 'Millville,NJ'},
+		        	            {latLng: [31.22, 121.48], name: 'Shanghai'},
+		        	            {latLng: [39.92, 116.46], name: 'Beijing'},
+		        	            {latLng: [22.62, 114.07], name: 'Shenzhen'},
+		        	            {latLng: [30.67, 104.06], name: 'Chengdu'},
+		        	        ],
+		        	        series: {
+		        	            markers: [{
+		        	                attribute: 'r',
+		        	                scale: [3, 7],
+		        	                values: cityAreaData
+		        	            }]
+		        	        }
+		        	    });
+		
+		monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		dayNames = ["S", "M", "T", "W", "T", "F", "S"];
+
+		var cTime = new Date(), month = cTime.getMonth()+1, year = cTime.getFullYear();
+
+		var events = [
+			{
+				"date": cTime.getDate()+"/"+month+"/"+year, 
+				"title": 'Current day', 
+				"color": 'rgba(255,255,255,0.2)', 
+			}
+		];
+		$('#calendar-box2').bic_calendar({
+			events: events,
+			dayNames: dayNames,
+			monthNames: monthNames,
+			showDays: true,
+			displayMonthController: true,
+			displayYearController: false,
+			popoverOptions:{
+			    placement: 'top',
+			    trigger: 'hover',
+			    html: true
+			},
+			tooltipOptions:{
+			    placement: 'top',
+			    html: true
+			}
+		});
+	</script>
+	</body>
+</html>

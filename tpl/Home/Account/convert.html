@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>
+				{$type_name}
+			</h2>
+		</div>
+		<form role="form" id="convert-form" class="form-horizontal" action="{:U('Account/convert')}">
+			<input type="hidden" name="type" value="{$type}">
+			<input type="hidden" name="password">
+			<input type="hidden" name="unit" value={$unit}>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">会员编号</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="user_no" value="{$user['user_no']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">会员编号为当前登录账号，不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">账号余额</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="balance" value="{$user[$from_field]}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">为当前账号的账户余额，不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="amount" class="col-sm-2 control-label"><span class="red_star">*</span>转换金额</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="amount" name="amount" value="">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为(0,100000000)的两位小数或整数，是{$unit}的倍数并且小于当前余额</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="remark" class="col-sm-2 control-label"><span class="red_star">*</span>转换备注</label>
+				<div class="col-sm-5">
+				  	<textarea class="form-control" id="remark" name="remark"></textarea>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~100个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">转换</button>
+                </div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__HOME_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		$('#convert-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+	        	
+	        	window.parent.layer.prompt({
+	        		title: '敏感操作:请输入安全码，并确认', 
+	        		formType: 1,
+	        		btn: ['确认','取消'], //按钮
+	        		btn2: function(index){
+	        			window.parent.layer.close(index);
+						$('#convert-form').bootstrapValidator('disableSubmitButtons', false);
+	        		},
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#convert-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(password, index){
+	        		form.find("input[name='password']").val(hex_sha1(password));
+	        		// 用ajax提交表单
+			      	$.post(form.attr('action'), form.serialize(), function(response) {
+			      		//弹出提示
+						window.parent.layer.msg(response.message);
+			      		
+			      		//根据请求相应状态提示通知
+			       		if(response.status){
+							notify("success",response.message);
+							$(form)[0].reset();
+							$(form).data('bootstrapValidator').resetForm();
+							window.location.reload();
+						}else{
+							notify("error",response.message);
+							$('#convert-form').bootstrapValidator('disableSubmitButtons', false);
+						}
+			        }, 'json');
+	        		
+			      	window.parent.layer.close(index);
+	        	});
+	        },
+	        fields: {
+	            amount: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                	callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,7}|0)(\.[0-9]{1,2})?$/;
+	    						var unit = $('#convert-form').find("input[name='unit']").val();
+	    						var balance = $('#convert-form').find("input[name='balance']").val();
+	    						if(reg.test(value) && value>0  && parseFloat(value)<=parseFloat(balance)){
+	    							if((value*100) % (unit*100) == 0) return true;
+	    						}
+	    						return false;
+	    					}
+	    				}
+	                }
+	            },
+	            remark: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 100,
+	                    }
+	                }
+	            }
+	        }
+	    });
+	});
+	</script>
+	</body>
+</html>

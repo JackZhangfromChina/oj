@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="description" content="">
+        <meta name="keywords" content="coco bootstrap template, coco admin, bootstrap,admin template, bootstrap admin,">
+        <meta name="author" content="Huban Creative">
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/ios7-switch/ios7-switch.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/sortable/sortable-theme-bootstrap.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Code Highlighter for Demo -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/prettify/github.css" rel="stylesheet" />
+        
+        <!-- Extra CSS Libraries Start -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/summernote/summernote.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Libraries End -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+    <!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>修改地址</h2>
+		</div>
+		<form id="form1" method="post">
+			<div class="content-wrap">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="nest" id="elementClose">
+							<div class="body-nest" id="element">
+								<div class="panel-body form-horizontal bucket-form">
+								   <div class="form-group">
+										<label class="col-sm-2 control-label">会员编号</label>
+										<div class="col-sm-5">
+											<input type="text" id="user_no" value="{$selectinfo['user_no']}" class="form-control" name="user_no" readonly="true">
+										</div>
+									</div>
+		                            <div class="form-group">
+										<label class="col-sm-2 control-label"><span class="red_star">*</span>收货人</label>
+										<div class="col-sm-5">
+											<input type="text" id="receiver" value="{$selectinfo['receiver']}" class="form-control" name="receiver" >
+										</div>
+										<div class="col-sm-5">
+											<p class="help-block">必须在2~20个字符之间</p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span class="red_star">*</span>手机号</label>
+										<div class="col-sm-5">
+											<input type="text" id='phone' value="{$selectinfo['phone']}" class="form-control" name="phone">
+										</div>
+										<div class="col-sm-5">
+											<p class="help-block">必须在4~20个字符之间</p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span class="red_star">*</span>所在地址</label>
+										<div class="col-sm-5" style="z-index:999;">
+											<select class="form-control addr" name="cmbProvince" id="cmbProvince"></select>
+											<select class="form-control addr" name="cmbCity" id="cmbCity"></select>
+											<select class="form-control addr" name="cmbArea" id="cmbArea"></select>
+										</div>
+										<div class="col-sm-5">
+											<p class="help-block">请选择所在地址</p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span class="red_star">*</span>详细地址</label>
+										<div class="col-sm-5">
+										    <div class="input-group">
+												<span class="input-group-addon" id="addrinfo">{$addrinfo}</span>
+	                                            <input class="form-control" value="{$address}" name="address" id="address"/>
+	                                        </div>
+										</div>
+										<div class="col-sm-5">
+											<p class="help-block">必须在2~50个字符之间</p>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-4 col-sm-4">
+											<button type="submit" id='regg' class="btn btn-success">保 存</button>
+										</div>
+									</div>
+							        <input type="hidden" id="addrid" name="id" value="{$selectinfo['id']}">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+    <!-- Extra Js Files -->
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__ADMIN_JS__/common.js"></script>
+
+	<!-- 下拉框js -->
+	<script src="__PUBLIC_JS__/jsAddress.js"></script>
+    <script>
+		var resizefunc = [];
+	</script>
+    <script type="text/javascript">
+    	addressInit('cmbProvince', 'cmbCity', 'cmbArea', '请选择', '请选择', '请选择');
+
+      $(function(){
+	        $id = '{$selectinfo["id"]}';
+	        if($id != ''){
+	           addressInit('cmbProvince', 'cmbCity', 'cmbArea', '{$selectinfo["province"]}', '{$selectinfo["city"]}', '{$selectinfo["zone"]}');
+	        }
+
+    	$('#cmbProvince').change(function(){
+            if($(this).val()=='0'){
+	            $("#cmbCity").prepend("<option value='0'>请选择</option>");
+	            $("#cmbArea").empty(); 
+	            $("#cmbArea").prepend("<option value='0'>请选择</option>");
+	            $("#cmbArea").val('0');
+	            $('#addrinfo').html('');
+            }else{
+                $('#addrinfo').html($('#cmbProvince').val()+$('#cmbCity').val()+$('#cmbArea').val());
+            }
+          });
+
+          $('#cmbCity').change(function(){
+                $('#addrinfo').html($('#cmbProvince').val()+$('#cmbCity').val()+$('#cmbArea').val());
+          });
+
+          $('#cmbArea').change(function(){
+                $('#addrinfo').html($('#cmbProvince').val()+$('#cmbCity').val()+$('#cmbArea').val());
+          });
+
+       $('#form1').bootstrapValidator({
+          message: '',
+          trigger: 'blur',
+          submitHandler: function(validator, form, submitButton) {
+	        window.parent.layer.confirm('确定保存吗？', {
+	              btn: ['确认','取消'], //按钮
+                  cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#form1').bootstrapValidator('disableSubmitButtons', false);
+					}
+	          }, function(index){
+	          	 var cmbProvince = $("#cmbProvince").val();
+	          	 if(cmbProvince == 0){
+	          	 	notify('error','所在地址不能为空！');
+	          	 	window.parent.layer.msg('所在地址不能为空！');
+	          	 	window.parent.layer.close(index);
+	          	 	 $('#regg').removeAttr("disabled");
+	                return false;
+	          	 }
+	                // 用ajax提交表单
+	                $.ajax({
+		                type: "post",
+		                url: '{:U('Mall/addAddr')}', 
+		                data: {
+		                  'receiver':$('#receiver').val(),
+		                  'phone':$('#phone').val(),
+		                  'cmbProvince':$('#cmbProvince').val(),
+		                  'cmbCity':$('#cmbCity').val(),
+		                  'cmbArea':$('#cmbArea').val(),
+		                  'address':$('#address').val(),
+		                  'addrinfo':$('#addrinfo').html(),
+		                  'id':$('#addrid').val()
+		                },
+		                success: function(data) {
+		                      if(data.status){
+		                      	    notify('success',data.message);
+		                      	    location.href = '{:U('Mall/addrList')}';
+		                      }else{
+		                      	    notify('error',data.message);
+		                      }
+		                },
+		                error: function(error){
+		                   window.parent.layer.msg('网络错误！');
+		                }
+		            }); 
+
+	                window.parent.layer.close(index);
+	            }, function(index){
+	                //关闭确认对话框
+	                window.parent.layer.close(index);
+	                $('#form1').bootstrapValidator('disableSubmitButtons', false);
+	              });
+	          },
+	          fields: {
+	            receiver: {
+	                  validators: {
+	                    notEmpty: {
+	                    },
+	                    callback: {
+	                        callback:function(value, validator){
+	                          return value!='' && value.length>=2 && value.length<=20 ? true : false;
+	                        }
+	                      }
+	                  }
+	              },
+	            phone: {
+	                validators: {
+	                    notEmpty: {
+	                      },
+	                      callback: {
+	                        callback:function(value, validator){
+	                          return value!='' && value.length>=4 && value.length<=20 ? true : false;
+	                        }
+	                      }
+	                  }
+	              },
+	              cmbProvince: {
+	                validators: {
+	                    callback: {
+	                        callback:function(value, validator){
+	                          return value!=0 ? true : false;
+	                        }
+	                      }
+	                  }
+	              },
+	              address: {
+	                validators: {
+	                   notEmpty: {
+	                      },
+	                      callback: {
+	                        callback:function(value, validator){
+	                          return value!='' && value.length>=2 && value.length<=50 ? true : false;
+	                        }
+	                      }
+	                  }
+	              },
+	          }
+	      });
+      });
+    </script>
+	</body>
+</html>

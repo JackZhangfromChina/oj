@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>短信设置</h2>
+		</div>
+		<div class="row">
+    		<div class="col-sm-offset-2 col-sm-10">
+    			<p class="red"><if condition="$system_state eq  1">系统在开启状态下，不允许进行敏感操作！如必须操作，请先关闭系统，以免引起数据异常。</if>带有*为必填项</p>
+    		</div>
+    	</div>
+		<form role="form" id="config-form" class="form-horizontal" action="{:U('Config/message')}">
+			<input type="hidden" name="password">
+			<div class="form-group">
+                <label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_OPEN_SEND']['title']}</label>
+                <div class="col-sm-10">
+                      <div class="radio iradio">
+                        <label><input type="radio" name="MESSAGE_OPEN_SEND" value="1" <if condition="$configs['MESSAGE_OPEN_SEND']['value'] eq  1">checked</if>>开启</label>
+                          <label><input type="radio" name="MESSAGE_OPEN_SEND" value="0" <if condition="$configs['MESSAGE_OPEN_SEND']['value'] eq  0">checked</if>>关闭</label>
+                    </div>
+                </div>
+            </div>
+			<div class="message-send-sets" <if condition="$configs['MESSAGE_OPEN_SEND']['value'] eq 1">style="display:block;"</if>>
+				<div class="form-group">
+                    <label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_OPEN_SEND_ALI']['title']}</label>
+                    <div class="col-sm-5">
+                          <div class="radio iradio">
+                            <label><input type="radio" name="MESSAGE_OPEN_SEND_ALI" value="1" <if condition="$configs['MESSAGE_OPEN_SEND_ALI']['value'] eq  1">checked</if>>开启</label>
+                              <label><input type="radio" name="MESSAGE_OPEN_SEND_ALI" value="0" <if condition="$configs['MESSAGE_OPEN_SEND_ALI']['value'] eq  0">checked</if>>关闭</label>
+                        </div>
+                    </div>
+					<div class="col-sm-5">
+						<p class="help-block">支持国内发送短信</p>
+					</div>
+                </div>
+				<div class="ali-message-send-sets" <if condition="$configs['MESSAGE_OPEN_SEND_ALI']['value'] eq 1">style="display:block;"</if>>
+					<div class="form-group">
+						<label for="MESSAGE_APPKEY_ALI" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_APPKEY_ALI']['title']}</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_APPKEY_ALI" name="MESSAGE_APPKEY_ALI" value="{$configs['MESSAGE_APPKEY_ALI']['value']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="MESSAGE_SECRETKEY_ALI" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_SECRETKEY_ALI']['title']}</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_SECRETKEY_ALI" name="MESSAGE_SECRETKEY_ALI" value="{$configs['MESSAGE_SECRETKEY_ALI']['value']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~50个字符之间</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="MESSAGE_SIGN_ALI" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_SIGN_ALI']['title']}</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_SIGN_ALI" name="MESSAGE_SIGN_ALI" value="{$configs['MESSAGE_SIGN_ALI']['value']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+                    <label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_OPEN_SEND_HEYSKY']['title']}</label>
+                    <div class="col-sm-5">
+                          <div class="radio iradio">
+                            <label><input type="radio" name="MESSAGE_OPEN_SEND_HEYSKY" value="1" <if condition="$configs['MESSAGE_OPEN_SEND_HEYSKY']['value'] eq  1">checked</if>>开启</label>
+                              <label><input type="radio" name="MESSAGE_OPEN_SEND_HEYSKY" value="0" <if condition="$configs['MESSAGE_OPEN_SEND_HEYSKY']['value'] eq  0">checked</if>>关闭</label>
+                        </div>
+                    </div>
+					<div class="col-sm-5">
+						<p class="help-block">支持国内和国外发送短信</p>
+					</div>
+                </div>
+				<div class="heysky-message-send-sets" <if condition="$configs['MESSAGE_OPEN_SEND_HEYSKY']['value'] eq 1">style="display:block;"</if>>
+					<div class="form-group">
+						<label for="MESSAGE_APPKEY_HEYSKY" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_APPKEY_HEYSKY']['title']}</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_APPKEY_HEYSKY" name="MESSAGE_APPKEY_HEYSKY" value="{$configs['MESSAGE_APPKEY_HEYSKY']['value']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="MESSAGE_SECRETKEY_HEYSKY" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_SECRETKEY_HEYSKY']['title']}</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_SECRETKEY_HEYSKY" name="MESSAGE_SECRETKEY_HEYSKY" value="{$configs['MESSAGE_SECRETKEY_HEYSKY']['value']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~50个字符之间</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="MESSAGE_SIGN_HEYSKY" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_SIGN_HEYSKY']['title']}</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_SIGN_HEYSKY" name="MESSAGE_SIGN_HEYSKY" value="{$configs['MESSAGE_SIGN_HEYSKY']['value']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="message-send-set" ref="MESSAGE_FORGET">
+					<input type="hidden" name="MESSAGE_FORGET">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_FORGET']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_FORGET[is_open]" value="1" <if condition="$sets['MESSAGE_FORGET']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_FORGET[is_open]" value="0" <if condition="!$sets['MESSAGE_FORGET']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_FORGET" class="form-group mgs-template" <if condition="$sets['MESSAGE_FORGET']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_FORGET']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_FORGET" name="MESSAGE_FORGET[template_id]" value="{$sets['MESSAGE_FORGET']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="message-send-set" ref="MESSAGE_ACTIVATE">
+					<input type="hidden" name="MESSAGE_ACTIVATE">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_ACTIVATE']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_ACTIVATE[is_open]" value="1" <if condition="$sets['MESSAGE_ACTIVATE']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_ACTIVATE[is_open]" value="0" <if condition="!$sets['MESSAGE_ACTIVATE']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_ACTIVATE" class="form-group mgs-template" <if condition="$sets['MESSAGE_ACTIVATE']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_ACTIVATE']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_ACTIVATE" name="MESSAGE_ACTIVATE[template_id]" value="{$sets['MESSAGE_ACTIVATE']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="message-send-set" ref="MESSAGE_WITHDRAW">
+					<input type="hidden" name="MESSAGE_WITHDRAW">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_WITHDRAW']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_WITHDRAW[is_open]" value="1" <if condition="$sets['MESSAGE_WITHDRAW']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_WITHDRAW[is_open]" value="0" <if condition="!$sets['MESSAGE_WITHDRAW']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_WITHDRAW" class="form-group mgs-template" <if condition="$sets['MESSAGE_WITHDRAW']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_WITHDRAW']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_WITHDRAW" name="MESSAGE_WITHDRAW[template_id]" value="{$sets['MESSAGE_WITHDRAW']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="message-send-set" ref="MESSAGE_DEDUCT">
+					<input type="hidden" name="MESSAGE_DEDUCT">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_DEDUCT']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_DEDUCT[is_open]" value="1" <if condition="$sets['MESSAGE_DEDUCT']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_DEDUCT[is_open]" value="0" <if condition="!$sets['MESSAGE_DEDUCT']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_DEDUCT" class="form-group mgs-template" <if condition="$sets['MESSAGE_DEDUCT']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_DEDUCT']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_DEDUCT" name="MESSAGE_DEDUCT[template_id]" value="{$sets['MESSAGE_DEDUCT']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="message-send-set" ref="MESSAGE_RECHARGE">
+					<input type="hidden" name="MESSAGE_RECHARGE">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_RECHARGE']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_RECHARGE[is_open]" value="1" <if condition="$sets['MESSAGE_RECHARGE']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_RECHARGE[is_open]" value="0" <if condition="!$sets['MESSAGE_RECHARGE']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_RECHARGE" class="form-group mgs-template" <if condition="$sets['MESSAGE_RECHARGE']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_RECHARGE']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_RECHARGE" name="MESSAGE_RECHARGE[template_id]" value="{$sets['MESSAGE_RECHARGE']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="message-send-set" ref="MESSAGE_ROLL_IN">
+					<input type="hidden" name="MESSAGE_ROLL_IN">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_ROLL_IN']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_ROLL_IN[is_open]" value="1" <if condition="$sets['MESSAGE_ROLL_IN']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_ROLL_IN[is_open]" value="0" <if condition="!$sets['MESSAGE_ROLL_IN']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_ROLL_IN" class="form-group mgs-template" <if condition="$sets['MESSAGE_ROLL_IN']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_ROLL_IN']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_ROLL_IN" name="MESSAGE_ROLL_IN[template_id]" value="{$sets['MESSAGE_ROLL_IN']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="message-send-set" ref="MESSAGE_ROLL_OUT">
+					<input type="hidden" name="MESSAGE_ROLL_OUT">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_ROLL_OUT']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_ROLL_OUT[is_open]" value="1" <if condition="$sets['MESSAGE_ROLL_OUT']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_ROLL_OUT[is_open]" value="0" <if condition="!$sets['MESSAGE_ROLL_OUT']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_ROLL_OUT" class="form-group mgs-template" <if condition="$sets['MESSAGE_ROLL_OUT']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_ROLL_OUT']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_ROLL_OUT" name="MESSAGE_ROLL_OUT[template_id]" value="{$sets['MESSAGE_ROLL_OUT']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="message-send-set" ref="MESSAGE_REMIT">
+					<input type="hidden" name="MESSAGE_REMIT">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_REMIT']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_REMIT[is_open]" value="1" <if condition="$sets['MESSAGE_REMIT']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_REMIT[is_open]" value="0" <if condition="!$sets['MESSAGE_REMIT']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_REMIT" class="form-group mgs-template" <if condition="$sets['MESSAGE_REMIT']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_REMIT']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_REMIT" name="MESSAGE_REMIT[template_id]" value="{$sets['MESSAGE_REMIT']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+
+
+				<if condition="$is_open_mall eq  1">
+					<div class="message-send-set" ref="MESSAGE_BUY">
+						<input type="hidden" name="MESSAGE_BUY">
+						<div class="form-group">
+							<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_BUY']['title']}</label>
+							<div class="col-sm-5">
+								<div class="radio iradio">
+									<label><input type="radio" class="send-msg" name="MESSAGE_BUY[is_open]" value="1" <if condition="$sets['MESSAGE_BUY']['is_open']">checked</if>>发送</label>
+								  	<label><input type="radio" class="send-msg" name="MESSAGE_BUY[is_open]" value="0" <if condition="!$sets['MESSAGE_BUY']['is_open']">checked</if>>不发送</label>
+								</div>
+							</div>
+						</div>
+						<div for="MESSAGE_BUY" class="form-group mgs-template" <if condition="$sets['MESSAGE_BUY']['is_open'] eq 1">style="display:block;"</if>>
+							<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_BUY']['title']}模板id</label>
+							<div class="col-sm-5">
+							  	<input type="text" class="form-control" id="MESSAGE_BUY" name="MESSAGE_BUY[template_id]" value="{$sets['MESSAGE_BUY']['template_id']}">
+							</div>
+							<div class="col-sm-5">
+								<p class="help-block">必须在2~20个字符之间</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="message-send-set" ref="MESSAGE_ORDER">
+						<input type="hidden" name="MESSAGE_ORDER">
+						<div class="form-group">
+							<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_ORDER']['title']}</label>
+							<div class="col-sm-5">
+								<div class="radio iradio">
+									<label><input type="radio" class="send-msg" name="MESSAGE_ORDER[is_open]" value="1" <if condition="$sets['MESSAGE_ORDER']['is_open']">checked</if>>发送</label>
+								  	<label><input type="radio" class="send-msg" name="MESSAGE_ORDER[is_open]" value="0" <if condition="!$sets['MESSAGE_ORDER']['is_open']">checked</if>>不发送</label>
+								</div>
+							</div>
+						</div>
+						<div for="MESSAGE_ORDER" class="form-group mgs-template" <if condition="$sets['MESSAGE_ORDER']['is_open'] eq 1">style="display:block;"</if>>
+							<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_ORDER']['title']}模板id</label>
+							<div class="col-sm-5">
+							  	<input type="text" class="form-control" id="MESSAGE_ORDER" name="MESSAGE_ORDER[template_id]" value="{$sets['MESSAGE_ORDER']['template_id']}">
+							</div>
+							<div class="col-sm-5">
+								<p class="help-block">必须在2~20个字符之间</p>
+							</div>
+						</div>
+					</div>
+			    </if>
+
+			    <div class="message-send-set" ref="MESSAGE_PAY">
+					<input type="hidden" name="MESSAGE_PAY">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_PAY']['title']}</label>
+						<div class="col-sm-5">
+							<div class="radio iradio">
+								<label><input type="radio" class="send-msg" name="MESSAGE_PAY[is_open]" value="1" <if condition="$sets['MESSAGE_PAY']['is_open']">checked</if>>发送</label>
+							  	<label><input type="radio" class="send-msg" name="MESSAGE_PAY[is_open]" value="0" <if condition="!$sets['MESSAGE_PAY']['is_open']">checked</if>>不发送</label>
+							</div>
+						</div>
+					</div>
+					<div for="MESSAGE_PAY" class="form-group mgs-template" <if condition="$sets['MESSAGE_PAY']['is_open'] eq 1">style="display:block;"</if>>
+						<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['MESSAGE_PAY']['title']}模板id</label>
+						<div class="col-sm-5">
+						  	<input type="text" class="form-control" id="MESSAGE_PAY" name="MESSAGE_PAY[template_id]" value="{$sets['MESSAGE_PAY']['template_id']}">
+						</div>
+						<div class="col-sm-5">
+							<p class="help-block">必须在2~20个字符之间</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">保存</button>
+                </div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__ADMIN_JS__/common.js"></script>
+
+	<script>
+	$(function(){
+		//ICHECK
+		$('input').iCheck({
+		  	checkboxClass: 'icheckbox_square-blue',
+		  	radioClass: 'iradio_square-blue',
+		  	increaseArea: '20%' // optional
+		});
+
+		$("input[name='MESSAGE_OPEN_SEND']").on('ifChecked', function(event){
+            //切换是否开启短信
+            if ($(this).val() == '1') {
+                //选择开启，显示短信设置
+                $(".message-send-sets").show();
+            } else {
+                //选择关闭，隐藏短信设置
+                $(".message-send-sets").hide();
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".pay-set").find("input"), "NOT_VALIDATED", null );
+            }
+            $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+        });
+
+        $("input[name='MESSAGE_OPEN_SEND_ALI']").on('ifChecked', function(event){
+            //切换是否开启阿里大鱼短信
+            if ($(this).val() == '1') {
+                //选择开启，显示短信设置
+                $(".ali-message-send-sets").show();
+            } else {
+                //选择关闭，隐藏短信设置
+                $(".ali-message-send-sets").hide();
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".ali-message-send-sets").find("input"), "NOT_VALIDATED", null );
+            }
+            $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+        });
+
+        $("input[name='MESSAGE_OPEN_SEND_HEYSKY']").on('ifChecked', function(event){
+            //切换是否开启海客短信
+            if ($(this).val() == '1') {
+                //选择开启，显示短信设置
+                $(".heysky-message-send-sets").show();
+            } else {
+                //选择关闭，隐藏短信设置
+                $(".heysky-message-send-sets").hide();
+                $('#config-form').data('bootstrapValidator').updateElementStatus($(".heysky-message-send-sets").find("input"), "NOT_VALIDATED", null );
+            }
+            $('#config-form').bootstrapValidator('disableSubmitButtons', false);
+        });
+
+		$("input").on('ifChecked', function(event){
+			//开启短信发送，但是所以的第三方短信都没有开启
+            if ($("input[name='MESSAGE_OPEN_SEND']:checked").val() == '1' && !($("input[name='MESSAGE_OPEN_SEND_ALI']:checked").val() == '0' ^ $("input[name='MESSAGE_OPEN_SEND_HEYSKY']:checked").val() == '0')) {
+                $('#config-form').data('bootstrapValidator').updateElementStatus($("input[type='radio']"), "INVALID", null );
+                $('#config-form').bootstrapValidator('disableSubmitButtons', true);
+            } else {
+                $('#config-form').data('bootstrapValidator').updateElementStatus($("input[type='radio']"), "VALID", null );
+            }
+
+            //切换选择短信发送设置
+			if($(this).hasClass("send-msg")){
+				if ($(this).val() == '1') {
+					//选择发送，显示模板id设置
+					$(this).parents(".message-send-set").find(".mgs-template").show();
+				} else {
+					//选择不发送，隐藏模板id设置
+					$(this).parents(".message-send-set").find(".mgs-template").hide();
+					$(this).parents(".message-send-set").find("input[type='text']").val('');
+					$('#config-form').data('bootstrapValidator').updateElementStatus($(this).parents(".message-send-set").find("input[type='text']"), "NOT_VALIDATED", null );
+				}
+			}
+		});
+
+		//表单验证
+		$('#config-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+		      	//询问框
+				window.parent.layer.confirm('确认保存修改后的配置信息吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){
+				    	window.parent.layer.close(index);
+						$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+
+					window.parent.layer.prompt({
+		        		title: '敏感操作:请输入口令',
+		        		formType: 1,
+		        		btn: ['确认','取消'], //按钮
+		        		btn2: function(pro_index){
+		        			window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		        		},
+					    cancel: function(index){
+					    	window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+						}
+					}, function(password, pro_index){
+						//开启数据处理提示
+						var load = window.parent.layer.msg('数据保存中。。。', {
+									  icon: 16,
+									  shade: 0.5,
+									  time: 0,
+									});
+						form.find("input[name='password']").val(hex_sha1(password));
+						// 用ajax提交表单
+				      	$.post(form.attr('action'), form.serialize(), function(response) {
+				      		//关闭数据处理提示
+							window.parent.layer.close(load);
+				      		//弹出提示
+							window.parent.layer.msg(response.message);
+
+				      		//根据状态显示通知
+				       		if(response.status){
+								notify("success",response.message);
+								$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+							}else{
+								notify("error",response.message);
+							}
+				        }, 'json');
+
+				      	window.parent.layer.close(pro_index);
+				      	window.parent.layer.close(index);
+					});
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	        	MESSAGE_OPEN_SEND: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            MESSAGE_OPEN_SEND_ALI: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	        	MESSAGE_APPKEY_ALI: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            MESSAGE_SECRETKEY_ALI: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 50,
+	                    }
+	                }
+	            },
+	            MESSAGE_SIGN_ALI: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            MESSAGE_OPEN_SEND_HEYSKY: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	        	MESSAGE_APPKEY_HEYSKY: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            MESSAGE_SECRETKEY_HEYSKY: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 50,
+	                    }
+	                }
+	            },
+	            MESSAGE_SIGN_HEYSKY: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_FORGET[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	        	'MESSAGE_FORGET[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_ACTIVATE[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_ACTIVATE[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_WITHDRAW[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_WITHDRAW[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_DEDUCT[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_DEDUCT[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_RECHARGE[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_RECHARGE[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_ROLL_IN[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_ROLL_IN[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_ROLL_OUT[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_ROLL_OUT[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_REMIT[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_REMIT[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_BUY[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_BUY[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_ORDER[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_ORDER[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            'MESSAGE_PAY[is_open]': {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            'MESSAGE_PAY[template_id]': {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            }
+	        }
+	    });
+	});
+	</script>
+	</body>
+</html>

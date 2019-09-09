@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+	    <div class="sub-header-title">
+	        <h2>会员注册</h2>
+	    </div>
+	    <div class="widget-content">
+
+	    	<div class="form-group">
+	    		<label class="col-sm-2 control-label"></label>
+	    		<div class="col-sm-10">
+	    			<p class="red">请认真填写注册信息！为确保资金请务必填写真实的信息，带有<span class="red_star">*</span>为必填项！<if condition="$config['is_auto_slide']">（当前系统开启自动滑落模式！）</if></p>
+	    		</div>
+	    	</div>
+	        <form class="form-horizontal" role="form" method="post" action="{:U('Group/register')}" id="register-form">
+	        	<input type="hidden"  name="curr_user" value="{$user.user_no}">
+	            <div class="form-group">
+	                <label for="user_no" class="col-sm-2 control-label"><span class="red_star">*</span>会员编号</label>
+	                <if condition="$config['user_prefix']">
+	                	<div class="col-sm-5">
+	                		<div class="input-group">
+							  	<span class="input-group-addon" id="user_prefix">{$config['user_prefix']}</span>
+							  	<input type="text" class="form-control" name="user_no" id="user_no" value="{$auto_no}">
+							</div>
+						</div>
+		           	<else/>
+		           		<div class="col-sm-5">
+		                   <input type="text" class="form-control" name="user_no" id="user_no" value="{$auto_no}">
+		                </div>
+	                </if>
+	                <div class="col-sm-5">
+	                    <p class="help-block">由字母、_、数字组成， 必须在2~20<if condition="$config['user_prefix']">（包括前缀）</if>个字符之间，不能重复，设置后不能更改 </p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label for="realname" class="col-sm-2 control-label"><span class="red_star">*</span>真实姓名</label>
+	                <div class="col-sm-5">
+	                    <input type="text" class="form-control" name="realname" id="realname">
+
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block">必须在2~20个字符之间，设置后不能更改</p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+					<label for="phone" class="col-sm-2 control-label"><span class="red_star">*</span>国家代码</label>
+					<div class="col-sm-5" style="z-index:999;">
+						<select class="form-control selectpicker" name="sms_code">
+							<volist name="smscodes" id="vo">
+								<option value="{$vo.code}">{$vo.name}（{$vo.chinese_name}）</option>
+							</volist>
+						</select>
+					</div>
+				</div>
+	            <div class="form-group">
+	                <label for="phone" class="col-sm-2 control-label"><span class="red_star">*</span>手机</label>
+	                <div class="col-sm-5">
+	                    <input type="text"  name="phone" class="form-control" id="phone" value="">
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block">必须在4~20个数字之间(必须都为数字)</p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label for="password" class="col-sm-2 control-label"><span class="red_star">*</span>登录密码</label>
+	                <div class="col-sm-5">
+	                    <input type="password" class="form-control" name="password" id="password">
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block">必须在6~20个字符之间(必须与确认登录密码一致)</p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label for="confirmPassword" class="col-sm-2 control-label"><span class="red_star">*</span>确认登录密码</label>
+	                <div class="col-sm-5">
+	                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block">必须在6~20个字符之间(必须与登录码一致)</p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label for="two_password" class="col-sm-2 control-label"><span class="red_star">*</span>安全码</label>
+	                <div class="col-sm-5">
+	                    <input type="password" class="form-control" name="two_password" id="two_password">
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block">必须在6~20个字符之间(必须与确认安全码一致)</p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label for="confirm_two_password" class="col-sm-2 control-label"><span class="red_star">*</span>确认安全码</label>
+	                <div class="col-sm-5">
+	                    <input type="password" class="form-control" name="confirm_two_password" id="confirm_two_password">
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block">必须在6~20个字符之间(必须与安全码一致)</p>
+	                </div>
+	            </div>
+	            <if condition="$config['is_open_service_center']">
+		            <div class="form-group">
+		                <label for="service_center_no" class="col-sm-2 control-label"><span class="red_star">*</span>报单中心</label>
+		                <div class="col-sm-5">
+		                    <input type="text" class="form-control" name="service_center_no" id="service_center_no">
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">报单中心必须真实存在</p>
+		                </div>
+		            </div>
+	            </if>
+	            <div class="form-group">
+	                <label for="recommend_no" class="col-sm-2 control-label"><span class="red_star">*</span>推荐人</label>
+	                <div class="col-sm-5">
+	                    <input type="text" class="form-control" name="recommend_no" id="recommend_no">
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block">推荐人必须真实存在</p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label for="parent_no" class="col-sm-2 control-label"><span class="red_star">*</span>安置人</label>
+	                <div class="col-sm-5">
+	                    <input type="text" value="<?php echo $config['parent_no']?$config['parent_no']:'';?>" class="form-control" id="parent_no" name="parent_no">
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block">安置人必须真实存在并且在可视范围内</p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-sm-2 control-label"><span class="red_star">*</span>安置区域</label>
+	                <div class="col-sm-5">
+	                    <select class="form-control selectpicker" name="location" id='parentarea'>
+							<if condition="$config['local'] eq 1">
+								<option value='1'>左区</option>
+								<elseif condition="$config['local'] eq 2"/>
+								<option value='2'>右区</option>
+								<else />
+								<option value="">请选择</option>
+							</if>
+	                    </select>
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block" id="location-tips"></p>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-sm-2 control-label"><span class="red_star">*</span>会员级别</label>
+	                <div class="col-sm-5">
+	                    <select class="form-control selectpicker" name="user_level_id">
+	                    	<option value="">请选择</option>
+	                        <volist name="levels" id="vo">
+	                        	<option value="{$vo['id']}">{$vo['title']}</option>
+	                        </volist>
+	                    </select>
+	                </div>
+	                <div class="col-sm-5">
+	                    <p class="help-block"></p>
+	                </div>
+	            </div>
+
+	            <if condition="$user_enroll_item['sex']">
+		            <div class="form-group">
+		                <label class="col-sm-2 control-label">
+		                	<if condition="in_array('required',$user_enroll_item['sex'])"><span class="red_star">*</span>
+		                    </if>
+		                	性别
+		                </label>
+		                <div class="col-sm-5">
+		                    <div class="radio iradio">
+		                        <label>
+		                            <input type="radio" name="sex" value="0" checked>保密
+		                        </label>
+		                        <label>
+		                            <input type="radio" name="sex" value="1">男
+		                        </label>
+		                        <label>
+		                            <input type="radio" name="sex" value="2">女
+		                        </label>
+		                    </div>
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block"></p>
+		                </div>
+		            </div>
+	            </if>
+	            <if condition="$user_enroll_item['id_card']">
+		            <div class="form-group">
+		                <label for="id_card" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['id_card'])"><span class="red_star">*</span>
+		                    </if>
+		               		身份证号
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="id_card" class="form-control" id="id_card" value=""
+		                    <if condition="in_array('required',$user_enroll_item['id_card'])">required</if>
+		                    <if condition="in_array('unique',$user_enroll_item['id_card'])">data-bv-remote="true" data-bv-remote-url="{:U('Check/checkUserExtend',array('user_no'=>$user['user_no']))}" data-bv-remote-message=""
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">请填写正确的身份证号，必须在4~20个数字之间<if condition="in_array('unique',$user_enroll_item['id_card'])">(身份证号不能重复)</if></p>
+		                </div>
+		            </div>
+	            </if>
+	            <if condition="$user_enroll_item['telephone']">
+	            	<div class="form-group">
+		                <label for="telephone" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['telephone'])"><span class="red_star">*</span>
+		                    </if>
+		               		电话
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="telephone" class="form-control" id="telephone" value=""
+		                    <if condition="in_array('required',$user_enroll_item['telephone'])">required
+		                    </if>
+		                    <if condition="in_array('unique',$user_enroll_item['telephone'])">data-bv-remote="true" data-bv-remote-url="{:U('Check/checkUserExtend',array('user_no'=>$user['user_no']))}" data-bv-remote-message=""
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">请填写正确的电话号码，必须在4~20个字符之间<if condition="in_array('unique',$user_enroll_item['telephone'])">(不能重复)</if></p>
+		                </div>
+		            </div>
+	            </if>
+	            <if condition="$user_enroll_item['email']">
+	            	<div class="form-group">
+		                <label for="email" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['email'])"><span class="red_star">*</span>
+		                    </if>
+		               		E-MAIL
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="email" class="form-control" id="email" value=""
+		                    <if condition="in_array('required',$user_enroll_item['email'])">required
+		                    </if>
+		                    <if condition="in_array('unique',$user_enroll_item['email'])">data-bv-remote="true" data-bv-remote-url="{:U('Check/checkUserExtend',array('user_no'=>$user['user_no']))}" data-bv-remote-message=""
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">请填写正确的email，必须在6~50个字符之间<if condition="in_array('unique',$user_enroll_item['email'])">(不能重复)</if></p>
+		                </div>
+		            </div>
+	            </if>
+	            <if condition="$user_enroll_item['alipay']">
+	            	<div class="form-group">
+		                <label for="alipay" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['alipay'])"><span class="red_star">*</span>
+		                    </if>
+		               		支付宝
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="alipay" class="form-control" id="alipay" value=""
+		                    <if condition="in_array('required',$user_enroll_item['alipay'])">required
+		                    </if>
+		                    <if condition="in_array('unique',$user_enroll_item['alipay'])">data-bv-remote="true" data-bv-remote-url="{:U('Check/checkUserExtend',array('user_no'=>$user['user_no']))}" data-bv-remote-message=""
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">请填写正确的支付宝账号，必须在6~50个字符之间<if condition="in_array('unique',$user_enroll_item['alipay'])">(不能重复)</if></p>
+		                </div>
+		            </div>
+	            </if>
+	            <if condition="$user_enroll_item['wechat']">
+	            	<div class="form-group">
+		                <label for="wechat" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['wechat'])"><span class="red_star">*</span>
+		                    </if>
+		               		 微信
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="wechat" class="form-control" id="wechat" value=""
+		                    <if condition="in_array('required',$user_enroll_item['wechat'])">required
+		                    </if>
+		                    <if condition="in_array('unique',$user_enroll_item['wechat'])">data-bv-remote="true" data-bv-remote-url="{:U('Check/checkUserExtend',array('user_no'=>$user['user_no']))}" data-bv-remote-message=""
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">请填写正确的 微信账号，必须在6~50个字符之间<if condition="in_array('unique',$user_enroll_item['wechat'])">(不能重复)</if></p>
+		                </div>
+		            </div>
+	            </if>
+	            <if condition="$user_enroll_item['qq']">
+	            	<div class="form-group">
+		                <label for="qq" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['qq'])"><span class="red_star">*</span>
+		                    </if>
+		               		QQ
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="qq" class="form-control" id="qq" value=""
+		                    <if condition="in_array('required',$user_enroll_item['qq'])">required
+		                    </if>
+		                    <if condition="in_array('unique',$user_enroll_item['qq'])">data-bv-remote="true" data-bv-remote-url="{:U('Check/checkUserExtend',array('user_no'=>$user['user_no']))}" data-bv-remote-message=""
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">请填写正确的QQ号，必须在5~12个数字之间<if condition="in_array('unique',$user_enroll_item['qq'])">(不能重复)</if></p>
+		                </div>
+		            </div>
+	      		</if>
+	          	<if condition="$user_enroll_item['zip_code']">
+	          		<div class="form-group">
+		                <label for="zip_code" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['zip_code'])"><span class="red_star">*</span>
+		                    </if>
+		               		 邮编
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="zip_code" class="form-control" id="zip_code" value=""
+		                    <if condition="in_array('required',$user_enroll_item['zip_code'])">required
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">请填写六位数字的邮政编码</p>
+		                </div>
+		            </div>
+	       		</if>
+
+            	<if condition="$user_enroll_item['birthday']">
+	            	<div class="form-group">
+		                <label for="birthday" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['birthday'])"><span class="red_star">*</span>
+		                    </if>
+		               		 生日
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="birthday" class="form-control" id="birthday" value=""
+		                    <if condition="in_array('required',$user_enroll_item['birthday'])">required
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">格式为YYYY-MM-DD</p>
+		                </div>
+		            </div>
+	            </if>
+	            <if condition="$user_enroll_item['address']">
+	            	<div class="form-group">
+		                <label for="address" class="col-sm-2 control-label">
+		                    <if condition="in_array('required',$user_enroll_item['address'])"><span class="red_star">*</span>
+		                    </if>
+		               		 地址
+		               	</label>
+		                <div class="col-sm-5">
+		                    <input type="text" name="address" class="form-control" id="address" value=""
+		                    <if condition="in_array('required',$user_enroll_item['address'])">required
+		                    </if>
+		                    >
+		                </div>
+		                <div class="col-sm-5">
+		                    <p class="help-block">必须在2~50个字符之间</p>
+		                </div>
+		            </div>
+	            </if>
+	            <div class="form-group">
+	                <div class="col-sm-offset-4 col-sm-4">
+	                    <button type="submit" class="btn btn-success">注册</button>
+	                </div>
+	            </div>
+	        </form>
+		</div>
+	</div>
+	<!-- End of page -->
+
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/laydate/laydate.js"></script>
+
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__HOME_JS__/common.js"></script>
+	<script>
+    $(function() {
+        //ICHECK
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-aero',
+            radioClass: 'iradio_square-aero',
+            increaseArea: '20%' // optional
+        });
+
+        //SELECT
+        $('.selectpicker').selectpicker();
+        if ($("#birthday").length>0) {
+        	var date = {
+           		  	elem: '#birthday', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+           		 	event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+           		 	max: laydate.now(), //最大日期
+           		 	choose: function(datas){
+           		 		$('#register-form').data('bootstrapValidator').updateElementStatus($('#register-form').find("input[name='birthday']"), "VALID", null );
+           		  	}
+           		};
+           		laydate(date);
+        }
+
+        //表单验证
+        $('#register-form').bootstrapValidator({
+            message: '',
+            trigger: 'blur',
+            excluded: [':disabled'],
+            submitHandler: function (validator, form, submitButton) {
+                //询问框
+                window.parent.layer.confirm('确认注册该会员吗？', {
+                    btn: ['确认', '取消'], //按钮
+                    cancel: function(index){
+                        window.parent.layer.close(index);
+                        $('#register-form').bootstrapValidator('disableSubmitButtons', false);
+                    }
+                }, function (index) {
+
+                    //开启数据处理提示
+                    var load = window.parent.layer.msg('数据提交中。。。', {
+                        icon: 16,
+                        shade: 0.5,
+                        time: 0,
+                    });
+
+                    var f_data = $('form').serializeArray();
+					var data = {};
+					$.each(f_data, function(i, field){
+						if(field.name=='password' || field.name=='confirmPassword' || field.name=='two_password' || field.name=='confirm_two_password') {
+							data[field.name] = hex_sha1(field.value);
+						} else {
+							data[field.name] = field.value;
+						}
+				  	});
+                    // 用ajax提交表单
+                    $.post(form.attr('action'), data, function (response) {
+                        //关闭数据处理提示
+                        window.parent.layer.close(load);
+                        //弹出提示
+                        window.parent.layer.msg(response.message);
+
+                        //根据状态显示通知
+                        if (response.status) {
+                            notify("success", response.message);
+                            $(form)[0].reset();
+							$(form).data('bootstrapValidator').resetForm();
+							$(form).bootstrapValidator('disableSubmitButtons', false);
+							window.location.reload();
+                        } else {
+                            notify("error", response.message);
+                        }
+                    }, 'json');
+                    window.parent.layer.close(index);
+                }, function (index) {
+                    window.parent.layer.close(index);
+                    $('#register-form').bootstrapValidator('disableSubmitButtons', false);
+                });
+            },
+            fields: {
+                user_no: {
+                    validators: {
+                        callback: {
+	    					callback:function(value, validator){
+	    						if (value.length<2 || value.length>20) {
+	    							return false;
+	    						}
+	    						var reg=/^[A-Za-z0-9_]+$/;
+	    						if (!reg.test(value)) {
+	    							return false;
+	    						}
+
+	    						//会员编号加上前缀不得大于20
+    							var user_prefix = $("#user_prefix").html();
+	    						var user_no = value
+    							if (user_prefix) {
+    								var length = value.length + user_prefix.length;
+    								if(length>20){
+    									return false;
+    								}
+    								user_no = user_prefix + user_no;
+    							}
+
+    							//验证唯一性
+    							var flag = true;
+	    						$.ajax({
+	    							type : 'post',
+	    					    	url : "{:U('Check/existUserInfo')}",
+	    					     	data : {user_no: user_no, type:'user_no'},
+	    					     	dataType: 'json',
+	    					    	async : false,
+	    					      	success : function(response){
+		    							flag = !response.valid;
+	    					    	}
+	    						});
+
+	    						return flag;
+	    					}
+	    				}
+                    }
+                },
+                realname: {
+                    validators: {
+                        notEmpty: {
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 20,
+                        }
+                    }
+                },
+                phone:{
+                	validators: {
+                        callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^\d{4,20}$/;
+	    						if (!reg.test(value)) {
+	    							return false;
+	    						}
+
+    							//验证唯一性
+    							var flag = true;
+	    						$.ajax({
+	    							type : 'post',
+	    					    	url : "{:U('Check/existUserInfo')}",
+	    					     	data : {phone: value, type:'phone'},
+	    					     	dataType: 'json',
+	    					    	async : false,
+	    					      	success : function(response){
+	    					      		flag = !response.valid;
+	    					    	}
+	    						});
+
+	    						return flag;
+	    					}
+	    				}
+                    }
+                },
+                password: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 20,
+	                    },
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var confirmPassword = $('#register-form').find("input[name=confirmPassword]").val();
+	    						if (confirmPassword == '' || value != confirmPassword) {
+	    							$('#register-form').data('bootstrapValidator').updateElementStatus($('#register-form').find("input[name='confirmPassword']"), "INVALID", null );
+	    						} else {
+	    							$('#register-form').data('bootstrapValidator').updateElementStatus($('#register-form').find("input[name='confirmPassword']"), "VALID", null );
+	    						}
+	    						return true;
+	    					}
+	    				}
+	                }
+	            },
+	            confirmPassword: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 20,
+	                    },
+	                    identical: {
+	                        field: 'password',
+	                    }
+	                }
+	            },
+	            two_password: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 20,
+	                    },
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var confirm_two_password = $('#register-form').find("input[name=confirm_two_password]").val();
+	    						if (confirm_two_password == '' || value != confirm_two_password) {
+	    							$('#register-form').data('bootstrapValidator').updateElementStatus($('#register-form').find("input[name='confirm_two_password']"), "INVALID", null );
+	    						} else {
+	    							$('#register-form').data('bootstrapValidator').updateElementStatus($('#register-form').find("input[name='confirm_two_password']"), "VALID", null );
+	    						}
+	    						return true;
+	    					}
+	    				}
+	                }
+	            },
+	            confirm_two_password: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 20,
+	                    },
+	                    identical: {
+	                        field: 'two_password',
+	                    }
+	                }
+	            },
+                service_center_no: {
+                    validators: {
+                    	callback: {
+	    					callback:function(value, validator){
+	    						if (value.length<2 || value.length>20) {
+	    							return false;
+	    						}
+	    						var reg=/^[A-Za-z0-9_]+$/;
+	    						if (!reg.test(value)) {
+	    							return false;
+	    						}
+    							//验证报单中心是否存在
+    							var flag = true;
+	    						$.ajax({
+	    							type : 'post',
+	    					    	url : "{:U('Check/checkServiceCenter')}",
+	    					     	data : {service_center_no: value},
+	    					     	dataType: 'json',
+	    					    	async : false,
+	    					      	success : function(response){
+		    							flag = response.valid;
+	    					    	}
+	    						});
+	    						return flag;
+	    					}
+	    				}
+                    }
+                },
+                recommend_no: {
+                    validators: {
+                        callback: {
+	    					callback:function(value, validator){
+	    						if (value.length<2 || value.length>20) {
+	    							return false;
+	    						}
+	    						var reg=/^[A-Za-z0-9_]+$/;
+	    						if (!reg.test(value)) {
+	    							return false;
+	    						}
+    							//验证推荐人是否存在
+    							var flag = true;
+	    						$.ajax({
+	    							type : 'post',
+	    					    	url : "{:U('Check/existUserInfo')}",
+	    					     	data : {user_no: value, type:'user_no'},
+	    					     	dataType: 'json',
+	    					    	async : false,
+	    					      	success : function(response){
+		    							flag = response.valid;
+	    					    	}
+	    						});
+	    						return flag;
+	    					}
+	    				}
+                    }
+                },
+                parent_no: {
+                    validators: {
+                        callback: {
+	    					callback:function(value, validator){
+	    						if (value.length<2 || value.length>20) {
+	    							return false;
+	    						}
+	    						var reg=/^[A-Za-z0-9_]+$/;
+	    						if (!reg.test(value)) {
+	    							return false;
+	    						}
+    							//验证安置人真实存在
+    							var flag = true;
+    							var curr_user = $("input[name='curr_user']").val();
+	    						$.ajax({
+	    							type : 'post',
+	    					    	url : "{:U('Check/checkParentLocation')}",
+	    					     	data : {parent_no: value,curr_user: curr_user},
+	    					     	dataType: 'json',
+	    					    	async : false,
+	    					      	success : function(response){
+		    							flag = response.status;
+
+		    							var opt0 = "<option value='0'>请选择</option>";
+	    					            var opt1 = "<option value='1'>左区</option>";
+	    					            var opt2 = "<option value='2'>右区</option>";
+
+		    							if (flag) {
+		    								if (response.location == 'all') {
+		    									$('#parentarea').html(opt1+opt2);
+		    								} else if (response.location == 'left'){
+		    									$('#parentarea').html(opt1);
+		    								} else if (response.location == 'right'){
+		    									$('#parentarea').html(opt2);
+		    								}
+	    					                $("#location-tips").text("");
+	    					                $('#register-form').data('bootstrapValidator').updateElementStatus($('#register-form').find("select[name='location']"), "VALID", null );
+		    							} else {
+		    								$('#parentarea').html(opt0);
+	    					                $("#location-tips").text(response.message);
+	    					                $('#register-form').data('bootstrapValidator').updateElementStatus($('#register-form').find("select[name='location']"), "INVALID", null );
+		    							}
+		    							$('#parentarea').selectpicker('refresh');
+	    					    	}
+	    						});
+	    						return flag;
+	    					}
+	    				}
+                    }
+                },
+                location:{
+                    validators: {
+                        notEmpty: {
+                        },
+                        greaterThan: {
+                            value: 0
+                        },
+                        lessThan: {
+                            value: 3
+                        }
+                    }
+                },
+                user_level_id: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            sex: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+                id_card: {
+                    validators: {
+                        stringLength: {
+                            min: 4,
+                            max: 20,
+                        }
+                    }
+                },
+                telephone: {
+                    validators: {
+                        stringLength: {
+                            min: 4,
+                            max: 20,
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        stringLength: {
+                            min: 6,
+                            max: 50,
+                        },
+                        emailAddress: {
+	                    }
+                    }
+                },
+                alipay: {
+                    validators: {
+                        stringLength: {
+                            min: 6,
+                            max: 50,
+                        }
+                    }
+                },
+                wechat: {
+                    validators: {
+                        stringLength: {
+                            min: 6,
+                            max: 50,
+                        }
+                    }
+                },
+                qq: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                            max: 12,
+                        },
+                        numeric: {
+                        }
+                    }
+                },
+                zip_code: {
+                    validators: {
+                        stringLength: {
+                            min: 6,
+                            max: 6,
+                        },
+                        numeric: {
+                        }
+                    }
+                },
+                birthday: {
+                    validators: {
+                    	date: {
+	                        format: 'YYYY-MM-DD',
+	                    }
+                    }
+                },
+                address: {
+                    validators: {
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                        }
+                    }
+                }
+            }
+        });
+    });
+	</script>
+	</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    
+    <body>
+    <div>
+        <div class="sub-header-title">
+            <h2>商品列表</h2>
+        </div>
+        <form method="post" class="form-horizontal" action="{:U('Mall/goodsList')}">
+          <div class="form-group">
+              <div class="col-sm-2">
+                    <select class="form-control selectpicker" name="goods_category_id">
+                    <option value="0">全部分类</option>
+                        <volist name="categorys" id="vo">
+                            <option value="{$vo.id}" <if condition="$goods_category_id eq $vo['id']">selected</if> >{$vo.title}</option>
+                        </volist>
+                    </select>
+                </div>
+            <div class="col-sm-2">
+                <select class="form-control selectpicker" name="status">
+                      <option value="-1">上/下架</option>
+                      <option value="0" <if condition="$status eq '0'">selected</if>>下架</option>
+                      <option value="1" <if condition="$status eq '1'">selected</if>>上架</option>
+                  </select>
+              </div>
+              <div class="col-sm-2">
+                    <input class="form-control" id="filter" placeholder="根据商品名称搜索" name="keyword" value="{$keyword}" type="text"/>
+                </div>
+              
+              <div class="col-sm-2">
+                    <button class="btn btn-success" type="submit">查询</button>
+                </div>
+                <div class="col-sm-4">
+                  <a class="btn btn-success pull-right" href="{:U('Mall/addGoods')}">添加商品</a>
+              </div>
+          </div>
+        </form>
+    </div>
+    <div class="widget">
+        <div class="widget-content">                            
+            <table id="user" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>商品展图</th>
+                        <th>商品名称</th>
+                        <th>商品分类</th>
+                        <th>商品价格</th>
+                        <th>商品数量</th>
+                        <th>商品状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="datahtml"> 
+                     <volist name="list" id="vo">
+                        <tr data-id="{$vo.id}" data-status="{$vo.status}" <if condition="$vo['inventory_number'] ELT $vo['warn_number']">class="warn_goods"</if>>         
+                            <td>
+                              <a href="{:U('Mall/detail',array('id'=>$vo['id']))}"><img width="80" height="80" src="{$vo.file}"></a>
+                            </td>
+                            <td><a href="{:U('Mall/detail',array('id'=>$vo['id']))}">{$vo.title}</a></td>
+                            <td>{$vo.categoty.title}</td>
+                            <td>
+                              <p class="goods_info_p">
+                              商品原价：{$currency_symbol}{$vo.old_price}<br/>
+                              商品现价：{$currency_symbol}{$vo.new_price}
+                              </p>
+                            </td>
+                            <td>
+                              <p class="goods_info_p">
+                              商品总量：{$vo.total_number}<br/>
+                              库存量：{$vo.inventory_number}<br/>
+                              已售数量：{$vo.sell_number}<br/>
+                              限购数量：{$vo.limit_number}
+                              </p>
+                            </td>
+                            <td>
+                              <if condition="$vo.status eq  1"><font class="green">上架</font><else /><font class="red">下架</font></if>
+                            </td>
+                            <td data-id="{$vo.id}">
+                <a href="{:U('Mall/editGoods',array('id'=>$vo['id']))}">修改</a> |
+                <a href="{:U('Mall/changesInventory',array('id'=>$vo['id']))}">变更库存</a> |
+                <a class="set-status" href="javascript:void(0);"><if condition="$vo.status eq  1">下架<else />上架</if></a>
+              </td>
+                        </tr>
+                     </volist>  
+                </tbody>
+            </table>
+            {$page}
+        </div> 
+    </div> 
+    
+    <!-- Base Js Files -->
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+  
+  <!-- Extra Js Files -->
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+  
+  <!-- Custom Js Files -->
+  <script src="__ADMIN_JS__/common.js"></script>
+  
+    <script>
+        //SELECT
+        $('.selectpicker').selectpicker();
+        
+    // 设置商品状态
+      $('.set-status').click(function(event) {
+        var id = $(this).parents('tr').data("id");
+        var status = $(this).parents('tr').data("status");
+        var operation = "上架";
+        if (status==1) {
+          operation = "下架";
+        }
+        
+        window.parent.layer.confirm('确认要'+ operation +'该商品吗', {
+          btn: ['确认','取消'], //按钮
+      }, function(index){
+        //ajax保存状态
+        var data = {
+            'id'    : id,
+            'status'  : status ? 0 : 1
+        };
+        // 用ajax提交表单
+            $.post("{:U('Mall/setGoodsStatus')}", data, function(response) {
+          //弹出提示
+          window.parent.layer.msg(response.message);
+              
+              //根据请求相应状态提示通知
+              if(response.status){
+            notify("success",response.message);
+            window.location.reload();
+          }else{
+            notify("error",response.message);
+          }
+            }, 'json');
+        
+        //关闭确认对话框
+            window.parent.layer.close(index);
+      });
+      });
+  </script>
+  </body>
+</html>

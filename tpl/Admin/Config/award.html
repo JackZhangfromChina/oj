@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>奖项设置</h2>
+		</div>
+		<div class="row">
+    		<div class="col-sm-offset-2 col-sm-10">
+    			<p class="red"><if condition="$system_state eq  1">系统在开启状态下，不允许进行敏感操作！如必须操作，请先关闭系统，以免引起数据异常。</if>带有*为必填项</p>
+    		</div>
+    	</div>
+		<form role="form" id="config-form" class="form-horizontal" action="{:U('Config/award')}">
+			<input type="hidden" name="password">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['AWARD_OPEN_TOUCH']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="AWARD_OPEN_TOUCH" value="1" <if condition="$configs['AWARD_OPEN_TOUCH']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="AWARD_OPEN_TOUCH" value="0" <if condition="$configs['AWARD_OPEN_TOUCH']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			<if condition="$is_open_service_center eq  1">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['AWARD_OPEN_SERVICE']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="AWARD_OPEN_SERVICE" value="1" <if condition="$configs['AWARD_OPEN_SERVICE']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="AWARD_OPEN_SERVICE" value="0" <if condition="$configs['AWARD_OPEN_SERVICE']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			</if>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['AWARD_OPEN_RECOMMEND']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="AWARD_OPEN_RECOMMEND" value="1" <if condition="$configs['AWARD_OPEN_RECOMMEND']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="AWARD_OPEN_RECOMMEND" value="0" <if condition="$configs['AWARD_OPEN_RECOMMEND']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['AWARD_OPEN_LEADER']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="AWARD_OPEN_LEADER" value="1" <if condition="$configs['AWARD_OPEN_LEADER']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="AWARD_OPEN_LEADER" value="0" <if condition="$configs['AWARD_OPEN_LEADER']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['AWARD_OPEN_FLOOR']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="AWARD_OPEN_FLOOR" value="1" <if condition="$configs['AWARD_OPEN_FLOOR']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="AWARD_OPEN_FLOOR" value="0" <if condition="$configs['AWARD_OPEN_FLOOR']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['AWARD_OPEN_LAYER_TOUCH']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="AWARD_OPEN_LAYER_TOUCH" value="1" <if condition="$configs['AWARD_OPEN_LAYER_TOUCH']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="AWARD_OPEN_LAYER_TOUCH" value="0" <if condition="$configs['AWARD_OPEN_LAYER_TOUCH']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['AWARD_OPEN_POINT']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="AWARD_OPEN_POINT" value="1" <if condition="$configs['AWARD_OPEN_POINT']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="AWARD_OPEN_POINT" value="0" <if condition="$configs['AWARD_OPEN_POINT']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">{$configs['AWARD_FEE']['title']}</label>
+				<div class="col-sm-10">
+					<input type="hidden" name="AWARD_FEE">
+				  	<label class="checkbox-inline icheckbox"><input type="checkbox" class="fee" value="touch" <if condition="in_array('touch',$fees)">checked</if>> 对碰奖</label>
+					<label class="checkbox-inline icheckbox"><input type="checkbox" class="fee" value="recommend" <if condition="in_array('recommend',$fees)">checked</if>> 推荐奖</label>
+					<label class="checkbox-inline icheckbox"><input type="checkbox" class="fee" value="leader" <if condition="in_array('leader',$fees)">checked</if>> 领导奖</label>
+					<label class="checkbox-inline icheckbox"><input type="checkbox" class="fee" value="service" <if condition="in_array('service',$fees)">checked</if>> 报单奖</label>
+					<label class="checkbox-inline icheckbox"><input type="checkbox" class="fee" value="point" <if condition="in_array('point',$fees)">checked</if>> 见点奖</label>
+					<label class="checkbox-inline icheckbox"><input type="checkbox" class="fee" value="floor" <if condition="in_array('floor',$fees)">checked</if>> 层奖</label>
+					<label class="checkbox-inline icheckbox"><input type="checkbox" class="fee" value="layer_touch" <if condition="in_array('layer_touch',$fees)">checked</if>> 层碰奖</label>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2"></label>
+				<div class="col-sm-10">
+				  	<button type="submit" class="btn btn-success">保存</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		//ICHECK
+		$('input').iCheck({
+		  	checkboxClass: 'icheckbox_square-blue',
+		  	radioClass: 'iradio_square-blue',
+		  	increaseArea: '20%' // optional
+		});
+		$("input").on('ifChecked', function(event){ 
+			$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		}); 
+		
+		//表单验证
+		$('#config-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        excluded : [':disabled'],//[':disabled', ':hidden', ':not(:visible)']
+	        submitHandler: function(validator, form, submitButton) {
+		      	//询问框
+				window.parent.layer.confirm('确认保存修改后的配置信息吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+					
+					window.parent.layer.prompt({
+		        		title: '敏感操作:请输入口令', 
+		        		formType: 1,
+		        		btn: ['确认','取消'], //按钮
+		        		btn2: function(pro_index){
+		        			window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		        		},
+					    cancel: function(index){ 
+					    	window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+						}
+					}, function(password, pro_index){
+						//封装会员注册配置的json对象
+						var fees = new Array();
+						$(".fee:checked").each(function(){
+							fees.push($(this).val());
+						});
+						$("input[name='AWARD_FEE']").val(JSON.stringify(fees));
+						
+						//开启数据处理提示
+						var load = window.parent.layer.msg('数据保存中。。。', {
+									  icon: 16,
+									  shade: 0.5,
+									  time: 0,
+									});
+						
+						form.find("input[name='password']").val(hex_sha1(password));
+						
+						// 用ajax提交表单
+				      	$.post(form.attr('action'), form.serialize(), function(response) {
+				      		//关闭数据处理提示
+							window.parent.layer.close(load);
+				      		//弹出提示
+							window.parent.layer.msg(response.message);
+				      	
+				      		//根据状态显示通知
+				       		if(response.status){
+								notify("success",response.message);
+								$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+							}else{
+								notify("error",response.message);
+							}
+				        }, 'json');
+						
+				      	window.parent.layer.close(pro_index);
+				      	window.parent.layer.close(index);
+					});
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	        	AWARD_OPEN_TOUCH: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            AWARD_OPEN_SERVICE: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            AWARD_OPEN_RECOMMEND: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            AWARD_OPEN_LEADER: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            AWARD_OPEN_FLOOR: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            AWARD_OPEN_POINT: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            AWARD_OPEN_LAYER_TOUCH: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            AWARD_FEE: {
+	            	validators: {
+	            		stringLength: {
+	                        min: 0,
+	                        max: 1000,
+	                    }
+	                }
+	            }
+	        }
+	    });
+	});
+	</script>
+	</body>
+</html>

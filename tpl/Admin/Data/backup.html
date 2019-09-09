@@ -1,0 +1,206 @@
+ <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>数据库备份</h2>
+		</div>
+		
+        <div class="form-horizontal">
+        	<div class="form-group">
+        		<if condition="$system_state eq  1">
+		    		<div class="col-sm-10">
+		    			<p class="red">系统在开启状态下，不允许进行数据还原操作！如必须操作，请先关闭系统，以免引起数据异常。</p>
+		    		</div>
+	    		</if>
+	    		<div class="col-sm-2 pull-right">
+	            	<button type="button" id="submit-operate" class="btn btn-success pull-right">备份</button>
+	            </div>
+	    	</div>
+	    </div>
+	    
+        <div class="widget">
+	        <div class="widget-content">                            
+	            <table class="table table-bordered table-striped">
+	                <thead>
+	                    <tr>
+	                        <th>文件名</th>
+	                        <th>大小</th>
+	                        <th>备份时间</th>
+	                        <th>操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody> 
+	                     <volist name="files" id="vo">
+	                        <tr>     
+	                            <td>{$vo.name}</td>
+	                            <td>{$vo.size}</td>
+	                            <td>{$vo.time}</td>
+	                            <td path="{$vo.path}" file="{$vo.name}">
+	                                <a href="__URL__/backupDownload?path={$vo.path}">下载</a> |
+	                                <a class="backup-restore" href="javascript:void(0);">还原</a> |
+	                                <a class="backup-del" href="javascript:void(0);">删除</a>
+	                            </td>
+	                        </tr>
+	                     </volist>  
+	                </tbody>
+	            </table>
+	        </div> 
+	    </div> 
+    </div>
+    
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		
+		// 数据库备份点击事件
+	    $('#submit-operate').click(function(event) {
+	    	window.parent.layer.confirm('请事先明了操作注意事项！确认要备份数据库吗？', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				//开启数据处理提示
+				var load = window.parent.layer.msg('数据库备份中。。。', {
+							  icon: 16,
+							  shade: 0.5,
+							  time: 0,
+							});
+				
+				// 用ajax提交表单
+		      	$.post("{:U('Data/backup')}", function(response) {
+		      		//关闭数据处理提示
+					window.parent.layer.close(load);
+					//弹出提示
+					window.parent.layer.msg(response.message);
+		      		
+		      		//根据请求相应状态提示通知
+		       		if(response.status){
+						notify("success",response.message);
+						window.location.reload();
+					}else{
+						notify("error",response.message);
+					}
+		        }, 'json');
+				
+				//关闭确认对话框
+		      	window.parent.layer.close(index);
+			});
+	    });
+		
+	 	// 备份删除点击事件
+	    $('.backup-del').click(function(event) {
+	    	var path = $(this).parent("td").attr("path");
+	    	var file = $(this).parent("td").attr("file");
+	    	window.parent.layer.confirm('数据文件删除后将无法恢复，确认要删除该备份记录吗？', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				// 用ajax提交表单
+		      	$.post("{:U('Data/backupDel')}", {'path': path,'file': file}, function(response) {
+		      		//弹出提示
+					window.parent.layer.msg(response.message);
+		      	
+		      		//根据请求相应状态提示通知
+		       		if(response.status){
+						notify("success",response.message);
+						window.location.reload();
+					}else{
+						notify("error",response.message);
+					}
+		        }, 'json');
+				
+				//关闭确认对话框
+		      	window.parent.layer.close(index);
+			});
+	    });
+	 	
+	 	// 数据库备份还原点击事件
+	    $('.backup-restore').click(function(event) {
+	    	var path = $(this).parent("td").attr("path");
+	    	window.parent.layer.confirm('数据库还原后，备份时间以后的数据都将丢失。确认要还原数据库记录吗？', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				window.parent.layer.prompt({
+	        		title: '敏感操作:请输入口令', 
+	        		formType: 1,
+	        		btn: ['确认','取消'], //按钮
+	        		btn2: function(pro_index){
+	        			window.parent.layer.close(pro_index);
+	        		},
+				    cancel: function(index){ 
+				    	window.parent.layer.close(pro_index);
+					}
+				}, function(password, pro_index){
+					//开启数据处理提示
+					var load = window.parent.layer.msg('数据库还原中。。。', {
+								  icon: 16,
+								  shade: 0.5,
+								  time: 0,
+								});
+					
+					// 用ajax提交表单
+			      	$.post("{:U('Data/backupRestore')}", {'path':path,'password':hex_sha1(password)}, function(response) {
+			      		//关闭数据处理提示
+						window.parent.layer.close(load);
+						//弹出提示
+						window.parent.layer.msg(response.message);
+			      		
+			      		//根据请求相应状态提示通知
+			       		if(response.status){
+							notify("success",response.message);
+							window.location.reload();
+						}else{
+							notify("error",response.message);
+						}
+			        }, 'json');
+					
+					//关闭确认对话框
+			      	window.parent.layer.close(pro_index);
+					window.parent.layer.close(index);
+	        	});
+			});
+	    });
+	});
+	</script>
+	</body>
+</html>

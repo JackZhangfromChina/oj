@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    
+    <body>
+	<!-- Begin page -->
+	<div>
+        <div class="sub-header-title">
+            <h2>团队会员列表</h2>
+        </div>
+        <form method="post" class="form-horizontal" action="{:U('Group/placeList')}">
+       		<div class="form-group">
+	         	<div class="col-sm-2">
+					<select class="form-control selectpicker" name="status">
+						<option value="-1">全部状态</option>
+						<option value="0" <if condition="$status eq '0'">selected</if>>未激活</option>
+						<option value="1" <if condition="$status eq '1'">selected</if>>已激活</option>
+					</select>
+	            </div>
+	  			<div class="col-sm-2">
+	        		<div class="input-group">
+                     	<span class="input-group-addon">日期</span>
+                     	<input type="text" class="form-control" id="date-start" name="start_date" value="{$start_date}" placeholder="开始日期"/>
+                 	</div>
+	           	</div>
+	          	<div class="col-sm-2">
+             		<div class="input-group">
+	                    <span class="input-group-addon">-</span>
+	                  	<input type="text" class="form-control" id="data-end" name="end_date" value="{$end_date}" placeholder="截止日期"/>
+	              	</div>
+	       		</div>
+				<div class="col-sm-2">
+					<input class="form-control" placeholder="根据会员编号搜索" value="{$keyword}" name="keyword" type="text">
+				</div>
+	            <div class="col-sm-2">
+	                <button class="btn btn-success" type="submit">查询</button>
+	            </div>
+
+	        </div>
+        </form>
+    </div>
+    <div class="widget">
+        <div class="widget-content">
+        	<h4 class="form-group">
+        		投资额总计:<span class="total">{$currency_symbol}<if condition="$statistics.sum_total eq 0">0.00<else />{$statistics.sum_total}</if></span>
+        	</h4>
+           	<table class="table table-bordered table-striped">
+                <thead>
+				<tr>
+					<th>会员编号</th>
+					<th>真实姓名</th>
+					<th>手机号</th>
+					<th>激活状态</th>
+					<th>投资额</th>
+					<th>安置人</th>
+					<th>注册时间</th>
+					<th>激活时间</th>
+				</tr>
+                </thead>
+                <tbody>
+                	<volist name="list" id="vo">
+						<tr>
+							<td>
+								{$vo.user_no}
+							</td>
+							<td>
+								{$vo.realname}
+							</td>
+							<td>
+								{$vo.phone}
+							</td>
+							<td>
+							<if condition="($vo['investment'] neq 0) and ($vo['is_activated'] eq 1)">
+								已激活
+								<elseif condition="($vo['investment'] eq 0) and ($vo['is_activated'] eq 1)"/>
+								已激活
+								<elseif condition="($vo['investment'] eq 0) and ($vo['is_activated'] neq 1)"/>
+								未激活
+								<else />
+								未激活
+							</if>
+							</td>
+							<td>
+								{$vo.investment}
+							</td>
+							<td>
+								{$vo.parent_no}
+							</td>
+							<td>
+								{$vo.add_time}
+							</td>
+							<td>
+								{$vo.activate_time}
+							</td>
+						</tr>
+                 	</volist>
+            	</tbody>
+            </table>
+            {$page}
+        </div> 
+    </div> 
+    <!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/laydate/laydate.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__HOME_JS__/common.js"></script>
+	
+    <script>
+    	var start = {
+   		  	elem: '#date-start', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+   		 	event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+   		 	max: laydate.now(), //最大日期
+   		  	choose: function(datas){
+   		     	end.min = datas; //开始日选好后，重置结束日的最小日期
+   		     	end.start = datas //将结束日的初始值设定为开始日
+   		  	}
+   		};
+   		var end = {
+   		  	elem: '#data-end', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+   		 	event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+   		 	max: laydate.now(), //最大日期
+   		  	choose: function(datas){
+   		    	start.max = datas; //结束日选好后，重置开始日的最大日期
+   		  	}
+   		};
+   		laydate(start);
+   		laydate(end);
+
+   		//SELECT
+		$('.selectpicker').selectpicker();
+	
+	</script>
+	</body>
+</html>

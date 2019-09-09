@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+
+    </head>
+    <body>
+    <div>
+        <div class="sub-header-title">
+            <h2>收货地址</h2>
+        </div>
+        <form id="form1" method="post" class="form-horizontal">
+            <div class="form-group" style="margin-bottom:10px;">
+               <div class="col-sm-12">
+                 <button class="btn btn-success pull-right add_addr" onclick="return false">添加地址</button>
+               </div>
+            </div>
+        </form>
+    </div>
+    <div class="widget">
+        <div class="widget-content">                            
+
+            <table id="user" class="table table-bordered table-striped" style="clear: both">
+                <thead>
+                    <tr>
+                        <th>收货人</th>
+                        <th>手机号</th>
+                        <th>详细地址</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                     <foreach name="list" item="value">
+                          <tr dataId="{$value['id']}" class="atr">
+                            <td ><label>{$value['receiver']}</label>
+                                 <if condition="$value['is_default']=='1'">
+                                   <span style="color: red;">【默认】</span>
+                                 </if>
+                            </td>
+                            <td>{$value['phone']}</td>
+                            <td>{$value['address']}</td>
+                            <td class="mr">
+                              <a href="{:U('Mall/editAddress',array('id'=>$value['id']))}" class="editadr">修改</a> |
+                              <a onclick="deleteAssress(this,{$value['id']});" href="javascript:;">删除</a>
+
+                                <if condition="$value['is_default']=='0'">
+                                  <span>
+                                    <a onclick="setD(this);" href="javascript:;">| 设为默认</a>
+                                  </span>
+                                </if>
+
+                            </td>
+                          </tr>
+                     </foreach> 
+                </tbody>
+            </table>
+            {$page}
+        </div> 
+    </div> 
+    
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+
+  <!-- Custom Js Files -->
+  <script src="__HOME_JS__/common.js"></script>
+<script>
+       $(function(){
+          //绑定添加地址
+          $('.add_addr').click(function(){
+            $.post("{:U('Mall/isCanAddAddress')}", '', function(response) {
+              if(response.status){
+                location.href = "{:U('Mall/addAddress')}?type=";
+              }else{
+                window.parent.layer.msg(response.message);
+              }
+            }, 'json');
+          });
+       });
+       
+       //删除地址信息
+        function deleteAssress(del,id){
+            window.parent.layer.confirm('确定删除该地址？',{
+              btn: ['确认','取消'], //按钮
+            },function(index){
+                 $.ajax({
+                    type: "post",
+                    url: '{:U('Mall/delAddress')}',
+                    data: {'id':id},
+                    success: function(data) {
+                      if(data.status){
+                        $(del).parents("tr").remove();
+                        window.parent.layer.close(index);
+                      }
+                    },
+                    error: function(error){
+                      window.parent.layer.msg('网络错误！');
+                    }
+                  });
+            });
+        }
+       
+        //设置默认
+        function setD(set){
+           var id = $(set).parents("tr").attr('dataId');
+            $.ajax({
+              type: "post",
+              url: '{:U('Mall/setAddress')}',
+              data: {
+                'id':id
+              },
+              success: function(data) {
+                if(data.status){
+                   $('td:first-child>span').parents('tr').children('.mr').append('<span><a onclick="setD(this);" href="javascript:;">| 设为默认</a></span>');
+                  $('td:first-child>span').remove();
+                  $(set).parents("tr").children('td').eq(0).append('<span style="color:red">【默认】</span>');
+                  $(set).parents("span").remove();
+                }
+              },
+              error: function(error){
+                window.parent.layer.msg('网络错误！');
+              }
+            });
+        }
+        
+</script>
+  </body>
+</html>

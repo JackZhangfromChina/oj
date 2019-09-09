@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-spinner/bootstrap-spinner.min.css" rel="stylesheet" />
+        
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+
+    <div>
+    	<div class="sub-header-title">
+            <h2>商品订购</h2>
+        </div>
+       	<div class="row">
+           	<div class="dt_info col-sm-12">
+           		<img src="{$goods.big_pic_url}" class="goods_detail_pic"/>
+           		<div class="dh col-sm-6 row" style="float: left;">
+           			<h3>{$goods.title}</h3>
+            		<ul class="key">
+                    	<li><span>商品分类</span>：{$goods.categoty}</li>
+                      	<li><span>商品原价：</span><i>{$currency_symbol}<s>{$goods.old_price}</s></i></li>
+                      	<li><span>商品现价：</span>{$currency_symbol}{$goods.new_price}</li>
+                      	
+                      	<li>
+                      		<span>限购数量：</span>
+                          	<span><if condition="$goods.limit_number == 0">不限购<else/>{$goods.limit_number}</if></span>
+                      	</li>
+             		</ul>
+             		
+             		<form role="form" id="cart-form" class="form-horizontal" action="{:U('Mall/addCart')}">
+             			<input type="hidden" name="goods_id" value="{$goods.id}">
+	             		<div class="input-group col-sm-12 spinner" data-trigger="spinner" style="margin-bottom:15px;max-width:100px;">
+						    <input type="text" class="form-control text-center" data-min="1" data-max="{$goods['limit_number']&&$goods['limit_number']<$goods['inventory_number']?$goods['limit_number']:$goods['inventory_number']}" data-step="1" value="1" name="quantity" data-rule="quantity">
+						    <span class="input-group-addon">
+						        <a href="javascript:;" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
+						        <a href="javascript:;" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
+						    </span>
+						</div>
+					</form>
+				    <if condition="$goods[status] eq 0">
+				    	<a href="javascript:;" class="btn btn-success col-sm-12" style="max-width:200px;" disabled>商品已下架</a>
+   					<elseif condition="$goods['inventory_number'] lt 1"/>
+   						<a href="javascript:;" class="btn btn-success col-sm-12" style="max-width:200px;" disabled>商品库存不足</a>
+				    <else />
+				    	<a id="add-cart" href="javascript:;" class="btn btn-success col-sm-12" style="max-width:100px;">加入购物车</a>
+				    </if>
+         		</div>
+           	</div>
+		</div>
+      	<div class="row">
+      		<div class="col-sm-12">
+	           	<ul class="tabClick">
+	               	<li class="active">商品详情</li>
+	           	</ul>
+	     		<div class="lineBorder"></div>
+	          	<div class="tabCon">
+	           		{$goods.detail}
+	        	</div>
+        	</div>
+		</div>
+    </div>
+    
+   	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-spinner/jquery.spinner.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__HOME_JS__/common.js"></script>
+
+	<script>
+        $('#add-cart').click(function(){
+        	// 用ajax提交表单
+	      	$.post($('#cart-form').attr('action'), $('#cart-form').serialize(), function(response) {
+	      		//根据请求相应状态提示通知
+	       		if(response.status){
+	       			//询问框
+                    window.parent.layer.confirm('加入购物车成功', {
+                        btn: ['去购物车结算','去商城'], //按钮
+                    }, function(index){
+                        location = "{:U('Mall/cart')}";
+                        window.parent.layer.close(index);
+                    }, function(index){
+                        location = "{:U('Mall/goods')}";
+                        window.parent.layer.close(index);
+                    });
+				}else{
+					notify("error",response.message);
+					//弹出提示
+					window.parent.layer.msg(response.message);
+					window.location.reload();
+				}
+	        }, 'json');
+        });
+	</script>
+	</body>
+</html>

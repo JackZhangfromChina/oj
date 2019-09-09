@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="description" content="">
+        <meta name="keywords" content="coco bootstrap template, coco admin, bootstrap,admin template, bootstrap admin,">
+        <meta name="author" content="Huban Creative">
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/ios7-switch/ios7-switch.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/sortable/sortable-theme-bootstrap.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        <!-- Code Highlighter for Demo -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/prettify/github.css" rel="stylesheet" />
+
+        <!-- Extra CSS Libraries Start -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/summernote/summernote.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Libraries End -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+
+         <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+    <div>
+        <div class="sub-header-title">
+            <h2>地址管理</h2>
+        </div>
+    </div>
+      <div>
+        <form method="post" class="form-horizontal" action="{:U('Mall/addrList')}">
+          <div class="form-group">
+          <div class="col-sm-2">
+              <div class="input-group">
+                      <span class="input-group-addon">日期</span>
+                      <input type="text" class="form-control" id="date-start" name="date_start" value="{$date_start}" placeholder="开始日期"/>
+                  </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="input-group">
+                      <span class="input-group-addon">-</span>
+                      <input type="text" class="form-control" id="data-end" name="date_end" value="{$date_end}" placeholder="截止日期"/>
+                  </div>
+            </div>
+            <div class="col-sm-2">
+                  <input class="form-control" placeholder="根据会员编号搜索" value="{$user_no}" name="user_no" type="text">
+              </div>
+              <div class="col-sm-2">
+                  <button class="btn btn-success" type="submit">查询</button>
+              </div>
+          </div>
+        </form>
+    </div>
+    <div class="widget">
+        <div class="widget-content">                            
+
+            <table id="user" class="table table-bordered table-striped" style="clear: both">
+                <thead>
+                    <tr>
+                        <th>会员编号</th>
+                        <th>收货人</th>
+                        <th>手机号</th>
+                        <th>详细地址</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                     <foreach name="list" item="value">
+                          <tr dataId="{$value['id']}" class="atr">
+                            <td>{$value['user_no']}</td>
+                            <td>{$value['receiver']}</td>
+                            <td>{$value['phone']}</td>
+                            <td>{$value['address']}</td>
+                            <td class="mr">
+                              <a href="{:U('Mall/addAddr',array('id'=>$value['id']))}" class="editadr">修改</a> |
+                              <a onclick="deleteAssress(this,{$value['id']});" href="javascript:;">删除</a>
+                            </td>
+                          </tr>
+                     </foreach> 
+                </tbody>
+            </table>
+            {$page}
+        </div> 
+    </div> 
+    
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+    <!-- Extra Js Files -->
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/laydate/laydate.js"></script>
+
+   <!-- Custom Js Files -->
+   <script src="__ADMIN_JS__/common.js"></script>
+<script>
+      var start = {
+        elem: '#date-start', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+        max: laydate.now(), //最大日期
+          choose: function(datas){
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+          }
+      };
+      var end = {
+        elem: '#data-end', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+        max: laydate.now(), //最大日期
+          choose: function(datas){
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+          }
+      };
+      laydate(start);
+      laydate(end);
+
+       $(function(){
+          //绑定添加地址
+          $('.add_addr').click(function(){
+            $.ajax({
+                type: "get",
+                url: '{:U('Mall/selectaddrcount')}', 
+                data: {
+                  'flag':'flag',
+                },
+                success: function(data) {
+                  if(data.status){
+                    window.parent.layer.msg(data.message);return;
+                  }else{
+                      location.href='{:U('Mall/addAddr')}';
+                  }
+                },
+                error: function(error){
+                  window.parent.layer.msg('网络错误！');
+                }
+            });
+          });
+       });
+        
+        //删除地址信息
+        function deleteAssress(del,id){
+            window.parent.layer.confirm('确定删除该地址？',{
+              btn: ['确认','取消'], //按钮
+            },function(index){
+               $.ajax({
+                  type: "get",
+                  url: '{:U('Mall/addressDelete')}',
+                  data: {'id':id},
+                  success: function(data) {
+                    if(data.status){
+                      $(del).parents("tr").remove();
+                      window.parent.layer.close(index);
+                    }
+                  },
+                  error: function(error){
+                    window.parent.layer.msg('网络错误！');
+                  }
+                });
+            });
+        }
+       
+        //设置默认
+        function setD(set){
+           var id = $(set).parents("tr").attr('dataId');
+            $.ajax({
+              type: "get",
+              url: '{:U('Mall/setDefault')}',
+              data: {
+                'id':id
+              },
+              success: function(data) {
+                if(data.status){
+                   $('td:first-child>span').parents('tr').children('.mr').append('<span><a onclick="setD(this);" href="javascript:;">| 设为默认</a></span>');
+                  $('td:first-child>span').remove();
+                  $(set).parents("tr").children('td').eq(0).append('<span style="color:red">【默认】</span>');
+                  $(set).parents("span").remove();
+                }
+              },
+              error: function(error){
+                window.parent.layer.msg('网络错误！');
+              }
+            });
+        }
+</script>
+  </body>
+</html>

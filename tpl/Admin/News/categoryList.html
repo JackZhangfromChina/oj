@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="description" content="">
+        <meta name="keywords" content="coco bootstrap template, coco admin, bootstrap,admin template, bootstrap admin,">
+        <meta name="author" content="Huban Creative">
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/ios7-switch/ios7-switch.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/sortable/sortable-theme-bootstrap.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        
+        <!-- Code Highlighter for Demo -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/prettify/github.css" rel="stylesheet" />
+
+        <!-- Extra CSS Libraries Start -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/summernote/summernote.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Libraries End -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+    <div>
+        <div class="sub-header-title">
+            <h2>公告分类列表</h2>
+        </div>
+        <div class="form-horizontal">
+       		<div class="form-group">
+	  			<div class="col-sm-12">
+                    <a class="btn btn-success pull-right" href="javascript:;"  id="add-cate">添加公告分类</a>
+                </div>
+	        </div>
+        </div>
+    </div>
+    
+    <div class="widget">
+        <div class="widget-content">
+           	<table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                    	<th>分类名称</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<volist name="list" id="vo">
+	                 	<tr>         
+                            <td>{$vo.title}</td>
+                            <td>{$vo.add_time}</td>
+                            <td data-id="{$vo.id}" data-title="{$vo.title}">
+	                        	<a class="edit-cate" href="javascript:;">修改</a> |
+                              	<a class="del-cate" href="javascript:;">删除</a>
+							</td>
+                        </tr>
+                 	</volist>
+            	</tbody>
+            </table>
+            {$page}
+        </div> 
+    </div> 
+    
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/sortable/sortable.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-fileinput/bootstrap.file-input.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/jquery.magnific-popup.min.js"></script> 
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+      <!-- Custom Js Files -->
+    <script src="__ADMIN_JS__/common.js"></script>
+
+    <script>
+		//添加公告分类
+		$('#add-cate').click(function(){
+      		window.parent.layer.open({
+           	type: 1, //page层
+           	title: '添加公告分类',
+           	area: ['450px', '200px'],
+           	btn: ['添加','取消'],
+           	content:'<div class="category-box">'
+                    	+'<div class="form-group">'
+                         	+'<label class="col-sm-3 control-label"><span class="red_star">*</span>名称：</label>'
+                      		+'<div class="col-sm-8">'
+                    			+'<input id="cate_title" class="form-control" />'
+                       		+'</div>'
+                  		+'</div>'
+                  		+'<div class="form-group">'
+	                     	+'<label class="col-sm-3 control-label"></label>'
+	                  		+'<div class="col-sm-8">'
+	                  			+'<p class="help-block">必须在2~20个字符之间</p>'
+	                   		+'</div>'
+	              		+'</div>'
+              		+'</div>',
+          	yes: function(index,layero){
+          		var title = $.trim($(layero).find('#cate_title').val());
+          		if (!title) {
+          			//弹出提示
+   					window.parent.layer.msg("名称不能为空");
+          			return false;
+          		}
+          		if (title.length<2 || title.length>20) {
+          			//弹出提示
+   					window.parent.layer.msg("名称必须在2~20个字符之间");
+          			return false;
+          		}
+           		// 用ajax提交表单
+   		      	$.post("{:U('News/addCategory')}", 'title='+title, function(response) {
+   		      		//弹出提示
+   					window.parent.layer.msg(response.message);
+   		      		
+   		      		//根据请求相应状态提示通知
+   		       		if(response.status){
+   		       			notify("success",response.message);
+   		       			window.parent.layer.close(index);
+   						window.location.reload();
+   					}else{
+   						notify("error",response.message);
+   					}
+   		        }, 'json');
+        	}
+        	}); 
+  		});
+		
+		//修改公告分类
+		$('.edit-cate').click(function(){
+			var id = $(this).parent('td').data("id");
+			var title = $(this).parent('td').data("title");
+      		window.parent.layer.open({
+           	type: 1, //page层
+           	title: '修改公告分类',
+           	area: ['450px', '210px'],
+           	btn: ['保存','取消'],
+  			content:'<div class="category-box">'
+                   	+'<div class="form-group">'
+                        	+'<label class="col-sm-3 control-label"><span class="red_star">*</span>名称：</label>'
+                     		+'<div class="col-sm-8">'
+                   				+'<input id="cate_title" class="form-control" value="'+title+'"/>'
+                      		+'</div>'
+                 		+'</div>'
+                 		+'<div class="form-group">'
+	                     	+'<label class="col-sm-3 control-label"></label>'
+	                  		+'<div class="col-sm-8">'
+	                  			+'<p class="help-block">必须在2~20个字符之间</p>'
+	                   		+'</div>'
+	              		+'</div>'
+             		+'</div>',
+                   
+          	yes: function(index,layero){
+          		var title = $.trim($(layero).find('#cate_title').val());
+          		if (!title) {
+          			//弹出提示
+   					window.parent.layer.msg("名称不能为空");
+          			return false;
+          		}
+          		if (title.length<2 || title.length>20) {
+          			//弹出提示
+   					window.parent.layer.msg("名称必须在2~20个字符之间");
+          			return false;
+          		}
+          		var data = {
+          				'id'	: id,
+                  		'title'	: title
+                  	};
+                	// 用ajax提交表单
+   		      	$.post("{:U('News/editCategory')}", data, function(response) {
+   		      		//弹出提示
+   					window.parent.layer.msg(response.message);
+   		      		
+   		      		//根据请求相应状态提示通知
+   		       		if(response.status){
+   		       			notify("success",response.message);
+   		       			window.parent.layer.close(index);
+   						window.location.reload();
+   					}else{
+   						notify("error",response.message);
+   					}
+   		        }, 'json');
+        	}
+        	}); 
+  		});
+      
+		//删除公告分类
+		$('.del-cate').click(function(){
+			var id = $(this).parent('td').data("id");
+			window.parent.layer.confirm('确定删除该分类吗？', {
+	     		btn: ['确认','取消'] //按钮
+	       	},function(index){
+            	// 用ajax提交表单
+   		      	$.post("{:U('News/deleteCategory')}", 'id='+id, function(response) {
+   		      		//弹出提示
+   					window.parent.layer.msg(response.message);
+   		      		
+   		      		//根据请求相应状态提示通知
+   		       		if(response.status){
+   		       			notify("success",response.message);
+   		       			window.location.reload();
+   					}else{
+   						notify("error",response.message);
+   					}
+   		       		//关闭确认对话框
+   		       		window.parent.layer.close(index);
+   		        }, 'json');
+        	}); 
+  		});
+    </script>
+    </body>
+</html>

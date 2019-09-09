@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>站点设置</h2>
+		</div>
+		<form role="form" id="config-form" class="form-horizontal" action="{:U('Config/website')}">
+			<input type="hidden" name="password">
+			<div class="form-group">
+				<label for="WEB_WEBSITE_NAME" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['WEB_WEBSITE_NAME']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="WEB_WEBSITE_NAME" name="WEB_WEBSITE_NAME" value="{$configs['WEB_WEBSITE_NAME']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~20个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="WEB_DOMAIN" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['WEB_DOMAIN']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="WEB_DOMAIN" name="WEB_DOMAIN" value="{$configs['WEB_DOMAIN']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须是当前项目部署的真实可访问的域名（域名格式必须合法）</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="WEB_COMPANY_NAME" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['WEB_COMPANY_NAME']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="WEB_COMPANY_NAME" name="WEB_COMPANY_NAME" value="{$configs['WEB_COMPANY_NAME']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~50个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="WEB_COMPANY_EMAIL" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['WEB_COMPANY_EMAIL']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="WEB_COMPANY_EMAIL" name="WEB_COMPANY_EMAIL" value="{$configs['WEB_COMPANY_EMAIL']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">6~50个字符之间(必须符合email的格式)</p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="WEB_COPYRIGHT" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['WEB_COPYRIGHT']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="WEB_COPYRIGHT" name="WEB_COPYRIGHT" value="{$configs['WEB_COPYRIGHT']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~50个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="WEB_KEYWORD" class="col-sm-2 control-label">{$configs['WEB_KEYWORD']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="WEB_KEYWORD" name="WEB_KEYWORD" value="{$configs['WEB_KEYWORD']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~100个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="WEB_DESCRIPTION" class="col-sm-2 control-label">{$configs['WEB_DESCRIPTION']['title']}</label>
+				<div class="col-sm-5">
+				  	<textarea class="form-control" id="WEB_DESCRIPTION" name="WEB_DESCRIPTION">{$configs['WEB_DESCRIPTION']['value']}</textarea>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~100个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['WEB_SYSTEM_STATE']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="WEB_SYSTEM_STATE" value="1" <if condition="$configs['WEB_SYSTEM_STATE']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="WEB_SYSTEM_STATE" value="0" <if condition="$configs['WEB_SYSTEM_STATE']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">系统关闭后前台系统不允许任何操作</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="WEB_CLOSE_PROMPT_TEXT" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['WEB_CLOSE_PROMPT_TEXT']['title']}</label>
+				<div class="col-sm-5">
+				  	<textarea class="form-control" id="WEB_CLOSE_PROMPT_TEXT" name="WEB_CLOSE_PROMPT_TEXT">{$configs['WEB_CLOSE_PROMPT_TEXT']['value']}</textarea>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~100个字符之间</p>
+				</div>
+			</div>
+			<!-- <div class="form-group">
+				<label for="WEB_LOGO" class="col-sm-2 control-label">{$configs['WEB_LOGO']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="WEB_LOGO" name="WEB_LOGO" value="{$configs['WEB_LOGO']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block"></p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="WEB_DEFAULT_AVATAR" class="col-sm-2 control-label">{$configs['WEB_DEFAULT_AVATAR']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="WEB_DEFAULT_AVATAR" name="WEB_DEFAULT_AVATAR" value="{$configs['WEB_DEFAULT_AVATAR']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block"></p>
+				</div>
+			</div> -->
+			
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">保存</button>
+                </div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		//ICHECK
+		$('input').iCheck({
+		  	checkboxClass: 'icheckbox_square-blue',
+		  	radioClass: 'iradio_square-blue',
+		  	increaseArea: '20%' // optional
+		});
+		$("input").on('ifChecked', function(event){ 
+			$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		}); 
+		
+		//表单验证
+		$('#config-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+		      	//询问框
+				window.parent.layer.confirm('确认保存修改后的配置信息吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+					window.parent.layer.prompt({
+		        		title: '敏感操作:请输入口令', 
+		        		formType: 1,
+		        		btn: ['确认','取消'], //按钮
+		        		btn2: function(pro_index){
+		        			window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		        		},
+					    cancel: function(index){ 
+					    	window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+						}
+					}, function(password, pro_index){
+						//开启数据处理提示
+						var load = window.parent.layer.msg('数据保存中。。。', {
+									  icon: 16,
+									  shade: 0.5,
+									  time: 0,
+									});
+						
+						form.find("input[name='password']").val(hex_sha1(password));
+						
+						// 用ajax提交表单
+				      	$.post(form.attr('action'), form.serialize(), function(response) {
+				      		//关闭数据处理提示
+							window.parent.layer.close(load);
+				      		//弹出提示
+							window.parent.layer.msg(response.message);
+				      	
+				      		//根据状态显示通知
+				       		if(response.status){
+								notify("success",response.message);
+								$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+							}else{
+								notify("error",response.message);
+							}
+				        }, 'json');
+						
+				      	window.parent.layer.close(pro_index);
+				      	window.parent.layer.close(index);
+					});    	
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	        	WEB_WEBSITE_NAME: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 20,
+	                    }
+	                }
+	            },
+	            WEB_DOMAIN: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    uri: {
+	                    }
+	                }
+	            },
+	            WEB_COMPANY_NAME: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 50,
+	                    }
+	                }
+	            },
+	            WEB_COMPANY_EMAIL: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 50,
+	                    },
+	                    emailAddress: {
+	                    }
+	                }
+	            },
+	            WEB_COPYRIGHT: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 50,
+	                    }
+	                }
+	            },
+	            WEB_KEYWORD: {
+	            	validators: {
+	                    stringLength: {
+	                        min: 2,
+	                        max: 100,
+	                    }
+	                }
+	            },
+	            WEB_DESCRIPTION: {
+	            	validators: {
+	                    stringLength: {
+	                        min: 2,
+	                        max: 100,
+	                    }
+	                }
+	            },
+	            WEB_CLOSE_PROMPT_TEXT: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 100,
+	                    }
+	                }
+	            },
+	            WEB_SYSTEM_STATE: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            }
+	        }
+	    });
+	});
+	</script>
+	</body>
+</html>

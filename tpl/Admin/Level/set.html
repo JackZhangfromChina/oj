@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>会员级别设置-{$level.title}</h2>
+		</div>
+		
+		<div class="row">
+    		<div class="col-sm-offset-2 col-sm-10">
+    			<p class="red"><if condition="$system_state eq  1">系统在开启状态下，不允许进行级别设置操作！如必须操作，请先关闭系统，以免引起数据异常。</if>带有*为必填项</p>
+    		</div>
+    	</div>
+    	
+		<form role="form" id="level-form" class="form-horizontal" action="{:U('Level/set')}">
+			<input type="hidden" class="form-control" name="id" value="{$level.id}">
+			<input type="hidden" name="password">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">级别名称</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="title" value="{$level.title}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">级别名称不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">状态</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="status" value="1" <if condition="$level.status eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="status" value="0" <if condition="$level.status eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="investment" class="col-sm-2 control-label"><span class="red_star">*</span>投资额</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="investment" name="investment" value="{$level.investment}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为(0,100000000)的两位小数或整数</p>
+				</div>
+			</div>
+			<if condition="$config['is_open_touch_award'] eq  1">
+				<div class="form-group">
+					<label for="touch_max" class="col-sm-2 control-label"><span class="red_star">*</span>对碰日封顶</label>
+					<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="touch_max" name="touch_max" value="{$level.touch_max}">
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[0,100000000)的两位小数或整数，设置为0表示不封顶</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="touch_award" class="col-sm-2 control-label"><span class="red_star">*</span>对碰奖</label>
+					<div class="col-sm-5">
+						<div class="input-group">
+							<input type="text" class="form-control" id="touch_award" name="touch_award" value="{$level.touch_award}">
+							<span class="input-group-addon">%</span>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[0,100]的一位小数或整数(单位是%)</p>
+					</div>
+				</div>
+			</if>
+			<if condition="($config['is_open_service_center'] eq  1) && ($config['is_open_service_award'] eq  1)">
+				<div class="form-group">
+					<label for="service_award" class="col-sm-2 control-label"><span class="red_star">*</span>报单奖</label>
+					<div class="col-sm-5">
+						<div class="input-group">
+							<input type="text" class="form-control" id="service_award" name="service_award" value="{$level.service_award}">
+							<span class="input-group-addon">%</span>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[0,100]的一位小数或整数(单位是%)</p>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_recommend_award'] eq  1">
+				<div class="form-group-diy">
+					<label class="col-sm-2 control-label">推荐奖</label>
+					<div class="col-sm-5">
+						<volist name="recommend_award" id="vo">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="recommend_award_from[]" value="{$vo.from}">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="recommend_award_to[]" value="{$vo.to}">
+										<span class="input-group-addon unit">代</span>
+										<input type="text" class="form-control" name="recommend_award_value[]" value="{$vo.value}">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</volist>
+						
+						<for start="0" end="$config['award_set_number'] - count($recommend_award)">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="recommend_award_from[]" value="">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="recommend_award_to[]" value="">
+										<span class="input-group-addon unit">代</span>
+										<input type="text" class="form-control" name="recommend_award_value[]" value="">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</for>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">
+							子设置项必须是连续性设置，不允许出现断代或交叠的现象,即：<br/>
+							1：第一个子项的起始值必须为1；<br/>
+							2：其他子项的起始值必须为上一项的终点值加1；<br/>
+							3：所有设置项的终点值为[1,1000)的正整数,大于等于当前项的起始值；<br/>
+							4：设置项百分点为[0,100]的一位小数；
+						</p>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_leader_award'] eq  1">
+				<div class="form-group-diy">
+					<label class="col-sm-2 control-label">领导奖</label>
+					<div class="col-sm-5">
+						<volist name="leader_award" id="vo">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="leader_award_from[]" value="{$vo.from}">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="leader_award_to[]" value="{$vo.to}">
+										<span class="input-group-addon unit">代</span>
+										<input type="text" class="form-control" name="leader_award_value[]" value="{$vo.value}">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</volist>
+						
+						<for start="0" end="$config['award_set_number'] - count($leader_award)">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="leader_award_from[]" value="">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="leader_award_to[]" value="">
+										<span class="input-group-addon unit">代</span>
+										<input type="text" class="form-control" name="leader_award_value[]" value="">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</for>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">
+							子设置项必须是连续性设置，不允许出现断代或交叠的现象,即：<br/>
+							1：第一个子项的起始值必须为1；<br/>
+							2：其他子项的起始值必须为上一项的终点值加1；<br/>
+							3：所有设置项的终点值为[1,1000)的正整数,大于等于当前项的起始值；<br/>
+							4：设置项百分点为[0,100]的一位小数；
+						</p>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_point_award'] eq  1">
+				<div class="form-group-diy">
+					<label class="col-sm-2 control-label">见点奖</label>
+					<div class="col-sm-5">
+						<volist name="point_award" id="vo">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="point_award_from[]" value="{$vo.from}">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="point_award_to[]" value="{$vo.to}">
+										<span class="input-group-addon unit">层</span>
+										<input type="text" class="form-control" name="point_award_value[]" value="{$vo.value}">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</volist>
+						
+						<for start="0" end="$config['award_set_number'] - count($point_award)">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="point_award_from[]" value="">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="point_award_to[]" value="">
+										<span class="input-group-addon unit">层</span>
+										<input type="text" class="form-control" name="point_award_value[]" value="">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</for>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">
+							子设置项必须是连续性设置，不允许出现断层或交叠的现象,即：<br/>
+							1：第一个子项的起始值必须为1；<br/>
+							2：其他子项的起始值必须为上一项的终点值加1；<br/>
+							3：所有设置项的终点值为[1,1000)的正整数,大于等于当前项的起始值；<br/>
+							4：设置项百分点为[0,100]的一位小数；
+						</p>
+					</div>
+				</div>
+			</if>
+			
+			<if condition="$config['is_open_layer_touch_award'] eq  1">
+				<div class="form-group-diy">
+					<label class="col-sm-2 control-label">层碰奖</label>
+					<div class="col-sm-5">
+						<volist name="layer_touch_award" id="vo">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="layer_touch_award_from[]" value="{$vo.from}">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="layer_touch_award_to[]" value="{$vo.to}">
+										<span class="input-group-addon unit">层</span>
+										<input type="text" class="form-control" name="layer_touch_award_value[]" value="{$vo.value}">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</volist>
+						
+						<for start="0" end="$config['award_set_number'] - count($layer_touch_award)">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="layer_touch_award_from[]" value="">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="layer_touch_award_to[]" value="">
+										<span class="input-group-addon unit">层</span>
+										<input type="text" class="form-control" name="layer_touch_award_value[]" value="">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</for>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">
+							子设置项必须是连续性设置，不允许出现断层或交叠的现象,即：<br/>
+							1：第一个子项的起始值必须为1；<br/>
+							2：其他子项的起始值必须为上一项的终点值加1；<br/>
+							3：所有设置项的终点值为[1,1000)的正整数,大于等于当前项的起始值；<br/>
+							4：设置项百分点为[0,100]的一位小数；
+						</p>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_floor_award'] eq  1">
+				<div class="form-group-diy">
+					<label class="col-sm-2 control-label">层奖</label>
+					<div class="col-sm-5">
+						<volist name="floor_award" id="vo">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="floor_award_from[]" value="{$vo.from}">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="floor_award_to[]" value="{$vo.to}">
+										<span class="input-group-addon unit">层</span>
+										<input type="text" class="form-control" name="floor_award_value[]" value="{$vo.value}">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</volist>
+						
+						<for start="0" end="$config['award_set_number'] - count($floor_award)">
+							<div class="form-group">
+								<div class="col-sm-12 award-set">
+									<div class="input-group">
+										<input type="text" class="form-control" name="floor_award_from[]" value="">
+										<span class="input-group-addon to">-</span>
+										<input type="text" class="form-control" name="floor_award_to[]" value="">
+										<span class="input-group-addon unit">层</span>
+										<input type="text" class="form-control" name="floor_award_value[]" value="">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</div>
+						</for>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">
+							子设置项必须是连续性设置，不允许出现断层或交叠的现象,即：<br/>
+							1：第一个子项的起始值必须为1；<br/>
+							2：其他子项的起始值必须为上一项的终点值加1；<br/>
+							3：所有设置项的终点值为[1,1000)的正整数,大于等于当前项的起始值；<br/>
+							4：设置项百分点为[0,100]的一位小数；
+						</p>
+					</div>
+				</div>
+			</if>
+			
+			<div class="form-group">
+				<label for="tax" class="col-sm-2 control-label"><span class="red_star">*</span>手续费</label>
+				<div class="col-sm-5">
+				  	<div class="input-group">
+						<input type="text" class="form-control" id="tax" name="tax" value="{$level.tax}">
+						<span class="input-group-addon">%</span>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为[0,100]的一位小数或整数(单位是%)</p>
+				</div>
+			</div>
+			<if condition="$config['is_open_mall'] eq  1">
+				<div class="form-group">
+					<label for="tb_reward" class="col-sm-2 control-label"><span class="red_star">*</span>奖励购物币</label>
+					<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="tb_reward" name="tb_reward" value="{$level.tb_reward}">
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[0,100000000)的两位小数或整数</p>
+					</div>
+				</div>
+			</if>
+			<if condition="$config['is_open_return'] eq  1">
+				<div class="form-group">
+					<label for="multiple" class="col-sm-2 control-label"><span class="red_star">*</span>杠杆倍数</label>
+					<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="multiple" name="multiple" value="{$level.multiple}">
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[0,100]的一位小数或整数</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="return_ratio" class="col-sm-2 control-label"><span class="red_star">*</span>返还百分比</label>
+					<div class="col-sm-5">
+						<div class="input-group">
+							<input type="text" class="form-control" id="return_ratio" name="return_ratio" value="{$level.return_ratio}">
+							<span class="input-group-addon">%</span>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[0,100]的一位小数或整数(单位是%)</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="return_cycle" class="col-sm-2 control-label"><span class="red_star">*</span>返还周期</label>
+					<div class="col-sm-5">
+						<div class="input-group">
+					  		<input type="text" class="form-control" id="return_cycle" name="return_cycle" value="{$level.return_cycle}">
+							<span class="input-group-addon">天</span>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为(0,200)的正整数(单位是天)</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="return_number" class="col-sm-2 control-label"><span class="red_star">*</span>返还次数</label>
+					<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="return_number" name="return_number" value="{$level.return_number}">
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[0,36500]的正整数</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="return_max" class="col-sm-2 control-label"><span class="red_star">*</span>返还封顶</label>
+					<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="return_max" name="return_max" value="{$level.return_max}">
+					</div>
+					<div class="col-sm-5">
+						<p class="help-block">必须为[0,100000000)的两位小数或整数，设置为0表示不封顶</p>
+					</div>
+				</div>
+			</if>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">保存</button>
+                </div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		//ICHECK
+		$('input').iCheck({
+		  	checkboxClass: 'icheckbox_square-blue',
+		  	radioClass: 'iradio_square-blue',
+		  	increaseArea: '20%' // optional
+		});
+		
+		/* 
+		//绑定删除事件
+		//$(".del-item:visible").bind("click",delItem);
+		
+		//绑定添加事件
+		$(".add-item").click(function(event) {
+			//克隆元素
+	    	var new_item = $(this).parent().parent('.form-group').prev(".form-group:hidden").clone().show();
+			//设置重要参数传递
+	    	var n = $(this).parent().parent('.form-group').siblings(".form-group:visible").length;
+	    	var base_name = new_item.attr("ref");
+	    	new_item.find(".input-from").attr("name","investment");
+	    	new_item.find(".input-to").attr("name",base_name+"_to[]");
+	    	new_item.find(".input-value").attr("name",base_name+"_value[]");
+			//添加元素
+	    	new_item.insertBefore($(this).parent().parent('.form-group').prev(".form-group:hidden"));  
+	    	//绑定删除事件
+	    	new_item.find(".del-item").bind("click",delItem);
+	    	//绑定验证事件
+	    	new_item.find("input").bind("input",checkItem);
+	    }); */
+		
+		//表单验证
+		$('#level-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+	        	
+	        	//验证起始值正则规则
+				var reg=/^[1-9][0-9]{0,2}$/;
+				//验证百分比正则规则
+			    var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+			  	//推荐奖设置是否验证通过
+			    var recommend_flag = true;
+			  	//领导奖设置是否验证通过
+			    var leader_flag = true;
+			  	//见点奖设置是否验证通过
+			    var point_flag = true;
+			  	//层奖设置是否验证通过
+			    var floor_flag = true;
+			  	//层碰奖设置是否验证通过
+			    var layer_touch_flag = true;
+			    
+				//验证推荐奖设置整体合法性
+				$("input[name='recommend_award_from[]']").each(function(i){
+					//获取当前输入行
+					var parent_row = $(this).parent();
+					//获取当前输入行对应的输入值
+				    var from = $(this).val()
+				    var to = parent_row.find("input[name='recommend_award_to[]']").val();
+				    var percent = parent_row.find("input[name='recommend_award_value[]']").val();
+					//获取前一项的终点值对象
+					var prev_to = parent_row.parent().parent().prev().find("input[name='recommend_award_to[]']");
+				    
+				    //验证通过的两种情况：一：为空行；二：起始值，终点值，百分比都存在，并且都通过验证（输入合法，起始值合法，终点值合法）
+				    //起始值合法：首行起始值为1，其他起始值为上一行终点值+1
+				    //终点值合法：终点值大于等于本行的起始值
+				    if((from=="" && to=="" && percent=="") || (from!="" && to!="" && percent!="" && reg.test(from) && reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(from) && (i==0 && from==1 || i>0 && from == parseInt(prev_to.val())+1))){
+				    	//本行验证通过
+				    }else{
+				    	//当前行输入不完整，验证失败
+				    	$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_from[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_to[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_value[]']"), "INVALID", null );
+						recommend_flag = false;
+				    }
+				});
+				
+				//验证领导奖设置整体合法性
+				$("input[name='leader_award_from[]']").each(function(i){
+					//获取当前输入行
+					var parent_row = $(this).parent();
+					//获取当前输入行对应的输入值
+				    var from = $(this).val()
+				    var to = parent_row.find("input[name='leader_award_to[]']").val();
+				    var percent = parent_row.find("input[name='leader_award_value[]']").val();
+					//获取前一项的终点值对象
+					var prev_to = parent_row.parent().parent().prev().find("input[name='leader_award_to[]']");
+				    
+				    //验证通过的两种情况：一：为空行；二：起始值，终点值，百分比都存在，并且都通过验证（输入合法，起始值合法，终点值合法）
+				    //起始值合法：首行起始值为1，其他起始值为上一行终点值+1
+				    //终点值合法：终点值大于等于本行的起始值
+				    if((from=="" && to=="" && percent=="") || (from!="" && to!="" && percent!="" && reg.test(from) && reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(from) && (i==0 && from==1 || i>0 && from == parseInt(prev_to.val())+1))){
+				    	//本行验证通过
+				    }else{
+				    	//当前行输入不完整，验证失败
+				    	$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_from[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_to[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_value[]']"), "INVALID", null );
+						leader_flag = false;
+				    }
+				});
+				
+				//验证见点奖设置整体合法性
+				$("input[name='point_award_from[]']").each(function(i){
+					//获取当前输入行
+					var parent_row = $(this).parent();
+					//获取当前输入行对应的输入值
+				    var from = $(this).val()
+				    var to = parent_row.find("input[name='point_award_to[]']").val();
+				    var percent = parent_row.find("input[name='point_award_value[]']").val();
+					//获取前一项的终点值对象
+					var prev_to = parent_row.parent().parent().prev().find("input[name='point_award_to[]']");
+				    
+				    //验证通过的两种情况：一：为空行；二：起始值，终点值，百分比都存在，并且都通过验证（输入合法，起始值合法，终点值合法）
+				    //起始值合法：首行起始值为1，其他起始值为上一行终点值+1
+				    //终点值合法：终点值大于等于本行的起始值
+				    if((from=="" && to=="" && percent=="") || (from!="" && to!="" && percent!="" && reg.test(from) && reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(from) && (i==0 && from==1 || i>0 && from == parseInt(prev_to.val())+1))){
+				    	//本行验证通过
+				    }else{
+				    	//当前行输入不完整，验证失败
+				    	$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_from[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_to[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_value[]']"), "INVALID", null );
+						point_flag = false;
+				    }
+				});
+				
+				//验证层奖设置整体合法性
+				$("input[name='floor_award_from[]']").each(function(i){
+					//获取当前输入行
+					var parent_row = $(this).parent();
+					//获取当前输入行对应的输入值
+				    var from = $(this).val()
+				    var to = parent_row.find("input[name='floor_award_to[]']").val();
+				    var percent = parent_row.find("input[name='floor_award_value[]']").val();
+					//获取前一项的终点值对象
+					var prev_to = parent_row.parent().parent().prev().find("input[name='floor_award_to[]']");
+				    
+				    //验证通过的两种情况：一：为空行；二：起始值，终点值，百分比都存在，并且都通过验证（输入合法，起始值合法，终点值合法）
+				    //起始值合法：首行起始值为1，其他起始值为上一行终点值+1
+				    //终点值合法：终点值大于等于本行的起始值
+				    if((from=="" && to=="" && percent=="") || (from!="" && to!="" && percent!="" && reg.test(from) && reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(from) && (i==0 && from==1 || i>0 && from == parseInt(prev_to.val())+1))){
+				    	//本行验证通过
+				    }else{
+				    	//当前行输入不完整，验证失败
+				    	$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_from[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_to[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_value[]']"), "INVALID", null );
+						floor_flag = false;
+				    }
+				});
+				
+				//验证层碰奖设置整体合法性
+				$("input[name='layer_touch_award_from[]']").each(function(i){
+					//获取当前输入行
+					var parent_row = $(this).parent();
+					//获取当前输入行对应的输入值
+				    var from = $(this).val()
+				    var to = parent_row.find("input[name='layer_touch_award_to[]']").val();
+				    var percent = parent_row.find("input[name='layer_touch_award_value[]']").val();
+					//获取前一项的终点值对象
+					var prev_to = parent_row.parent().parent().prev().find("input[name='layer_touch_award_to[]']");
+				    
+				    //验证通过的两种情况：一：为空行；二：起始值，终点值，百分比都存在，并且都通过验证（输入合法，起始值合法，终点值合法）
+				    //起始值合法：首行起始值为1，其他起始值为上一行终点值+1
+				    //终点值合法：终点值大于等于本行的起始值
+				    if((from=="" && to=="" && percent=="") || (from!="" && to!="" && percent!="" && reg.test(from) && reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(from) && (i==0 && from==1 || i>0 && from == parseInt(prev_to.val())+1))){
+				    	//本行验证通过
+				    }else{
+				    	//当前行输入不完整，验证失败
+				    	$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_from[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_to[]']"), "INVALID", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_value[]']"), "INVALID", null );
+						layer_touch_flag = false;
+				    }
+				});
+				
+				if(!recommend_flag || !leader_flag || !recommend_flag || !floor_flag || !layer_touch_flag){
+					return false;
+				}else{
+					//询问框
+					window.parent.layer.confirm('确认保存修改后的会员级别设置信息吗？', {
+						btn: ['确认','取消'], //按钮
+						cancel: function(index){ 
+					    	window.parent.layer.close(index);
+							$('#level-form').bootstrapValidator('disableSubmitButtons', false);
+						}
+					}, function(index){
+
+						window.parent.layer.prompt({
+			        		title: '敏感操作:请输入口令', 
+			        		formType: 1,
+			        		btn: ['确认','取消'], //按钮
+			        		btn2: function(pro_index){
+			        			window.parent.layer.close(pro_index);
+								$('#level-form').bootstrapValidator('disableSubmitButtons', false);
+			        		},
+						    cancel: function(index){ 
+						    	window.parent.layer.close(pro_index);
+								$('#level-form').bootstrapValidator('disableSubmitButtons', false);
+							}
+						}, function(password, pro_index){
+							//开启数据处理提示
+							var load = window.parent.layer.msg('数据保存中。。。', {
+										  icon: 16,
+										  shade: 0.5,
+										  time: 0,
+										});
+							
+							form.find("input[name='password']").val(hex_sha1(password));
+							
+							// 用ajax提交表单
+					      	$.post(form.attr('action'), form.serialize(), function(response) {
+					      		//关闭数据处理提示
+								window.parent.layer.close(load);
+					      		//弹出提示
+								window.parent.layer.msg(response.message);
+					      	
+					      		//根据状态显示通知
+					       		if(response.status){
+									notify("success",response.message);
+									window.location.reload();
+									$('#level-form').bootstrapValidator('disableSubmitButtons', false);
+								}else{
+									notify("error",response.message);
+								}
+					        }, 'json');
+					      	window.parent.layer.close(pro_index);
+							window.parent.layer.close(index);
+			        	});
+					}, function(index){
+						window.parent.layer.close(index);
+						$('#level-form').bootstrapValidator('disableSubmitButtons', false);
+					});
+				}
+	        },
+	        fields: {
+	            investment: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,7}|0)(\.[0-9]{1,2})?$/;
+	    						return reg.test(value) && value>0  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            touch_max: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,7}|0)(\.[0-9]{1,2})?$/;
+	    						return reg.test(value)  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            touch_award: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,2}|0)(\.[0-9]{1})?$/;
+	    						return reg.test(value) &&value<=100  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            layer_touch_award: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,2}|0)(\.[0-9]{1})?$/;
+	    						return reg.test(value) &&value<=100  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            service_award: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	            		callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,2}|0)(\.[0-9]{1})?$/;
+	    						return reg.test(value) &&value<=100  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            tax: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	            		callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,2}|0)(\.[0-9]{1})?$/;
+	    						return reg.test(value) &&value<=100  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            tb_reward: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	            		callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,7}|0)(\.[0-9]{1,2})?$/;
+	    						return reg.test(value)  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            multiple: {
+		            validators: {
+		            	notEmpty: {
+	                    },
+		            	callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,2}|0)(\.[0-9]{1})?$/;
+	    						return reg.test(value) &&value<=100  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            return_ratio: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	            		callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,2}|0)(\.[0-9]{1})?$/;
+	    						return reg.test(value) &&value<=100  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            return_cycle: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^[1-9][0-9]{0,2}$/; 
+	    						return reg.test(value) && value>0&&value<200 ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            return_number: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                    callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^[1-9][0-9]{0,4}|0$/; 
+	    						return reg.test(value) && value>=0&&value<=36500 ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            return_max: {
+	                validators: {
+	                	notEmpty: {
+	                    },
+	                	callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^([1-9][0-9]{0,7}|0)(\.[0-9]{0,2})?$/;
+	    						return reg.test(value)  ? true : false;
+	    					}
+	    				}
+	                }
+	            },
+	            "recommend_award_from[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkRecommendFrom
+	    				}
+	                }
+	            },
+	            "recommend_award_to[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkRecommendTo
+	    				}
+	                }
+	            },
+	            "recommend_award_value[]": {
+	            	validators: {
+			            callback: {
+							callback: checkRecommendValue
+						}
+	                }
+	            },
+	            "leader_award_from[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkLeaderFrom
+	    				}
+	                }
+	            },
+	            "leader_award_to[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkLeaderTo
+	    				}
+	                }
+	            },
+	            "leader_award_value[]": {
+	            	validators: {
+			            callback: {
+							callback: checkLeaderValue
+						}
+	                }
+	            },
+	            "point_award_from[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkPointFrom
+	    				}
+	                }
+	            },
+	            "point_award_to[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkPointTo
+	    				}
+	                }
+	            },
+	            "point_award_value[]": {
+	            	validators: {
+			            callback: {
+							callback: checkPointValue
+						}
+	                }
+	            },
+	            "layer_touch_award_from[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkLayerTouchFrom
+	    				}
+	                }
+	            },
+	            "layer_touch_award_to[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkLayerTouchTo
+	    				}
+	                }
+	            },
+	            "layer_touch_award_value[]": {
+	            	validators: {
+			            callback: {
+							callback: checkLayerTouchValue
+						}
+	                }
+	            },
+	            "floor_award_from[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkFloorFrom
+	    				}
+	                }
+	            },
+	            "floor_award_to[]": {
+	                validators: {
+	                    callback: {
+	    					callback: checkFloorTo
+	    				}
+	                }
+	            },
+	            "floor_award_value[]": {
+	            	validators: {
+			            callback: {
+							callback: checkFloorValue
+						}
+	                }
+	            }
+	        }
+	    });
+	});
+	
+	//验证推荐奖起始值
+	function checkRecommendFrom(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取终点值
+		var to = parent_row.find("input[name='recommend_award_to[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='recommend_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='recommend_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if(to =='' && percent =='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			var reg=/^[1-9][0-9]{0,2}$/; 
+			//验证当前验证对象的输入合法性
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	      	//验证当前验证对象的输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && value != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(value !=1 ) return false;
+			}
+			//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			if(to!='' && percent!=''){
+				var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+				if(reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(value) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='recommend_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='recommend_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='recommend_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证推荐奖终点值
+	function checkRecommendTo(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='recommend_award_from[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='recommend_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='recommend_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && percent=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[1-9][0-9]{0,2}$/;    
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+			if(from!='' && percent!=''){
+				if(reg.test(from) && reg_percent.test(percent) && parseInt(value)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='recommend_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='recommend_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='recommend_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证推荐奖百分比
+	function checkRecommendValue(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='recommend_award_from[]']").val();
+		//获取终点值
+		var to = parent_row.find("input[name='recommend_award_to[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='recommend_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && to=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        if(value>100 || value<0){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_to=/^[1-9][0-9]{0,2}$/;
+			if(from!='' && to!=''){
+				if(reg_to.test(from) && reg_to.test(to) && parseInt(to)>=parseInt(from)) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='recommend_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='recommend_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='recommend_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='recommend_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg_to.test(next_from) && reg_to.test(next_to) && reg.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='recommend_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	
+	//验证领导奖起始值
+	function checkLeaderFrom(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取终点值
+		var to = parent_row.find("input[name='leader_award_to[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='leader_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='leader_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if(to =='' && percent =='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			var reg=/^[1-9][0-9]{0,2}$/; 
+			//验证当前验证对象的输入合法性
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	      	//验证当前验证对象的输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && value != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(value !=1 ) return false;
+			}
+			//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			if(to!='' && percent!=''){
+				var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+				if(reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(value) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='leader_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='leader_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='leader_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证领导奖终点值
+	function checkLeaderTo(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='leader_award_from[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='leader_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='leader_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && percent=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[1-9][0-9]{0,2}$/;    
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+			if(from!='' && percent!=''){
+				if(reg.test(from) && reg_percent.test(percent) && parseInt(value)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='leader_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='leader_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='leader_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证领导奖百分比
+	function checkLeaderValue(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='leader_award_from[]']").val();
+		//获取终点值
+		var to = parent_row.find("input[name='leader_award_to[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='leader_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && to=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        if(value>100 || value<0){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_to=/^[1-9][0-9]{0,2}$/;
+			if(from!='' && to!=''){
+				if(reg_to.test(from) && reg_to.test(to) && parseInt(to)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='leader_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='leader_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='leader_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='leader_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg_to.test(next_from) && reg_to.test(next_to) && reg.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='leader_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证见点奖起始值
+	function checkPointFrom(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取终点值
+		var to = parent_row.find("input[name='point_award_to[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='point_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='point_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if(to =='' && percent =='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			var reg=/^[1-9][0-9]{0,2}$/; 
+			//验证当前验证对象的输入合法性
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	      	//验证当前验证对象的输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && value != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(value !=1 ) return false;
+			}
+			//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			if(to!='' && percent!=''){
+				var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+				if(reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(value) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='point_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='point_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='point_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证见点奖终点值
+	function checkPointTo(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='point_award_from[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='point_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='point_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && percent=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[1-9][0-9]{0,2}$/;    
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+			if(from!='' && percent!=''){
+				if(reg.test(from) && reg_percent.test(percent) && parseInt(value)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='point_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='point_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='point_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证见点奖百分比
+	function checkPointValue(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='point_award_from[]']").val();
+		//获取终点值
+		var to = parent_row.find("input[name='point_award_to[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='point_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && to=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        if(value>100 || value<0){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_to=/^[1-9][0-9]{0,2}$/;
+			if(from!='' && to!=''){
+				if(reg_to.test(from) && reg_to.test(to) && parseInt(to)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='point_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='point_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='point_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='point_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg_to.test(next_from) && reg_to.test(next_to) && reg.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='point_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	
+	//验证层奖起始值
+	function checkFloorFrom(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取终点值
+		var to = parent_row.find("input[name='floor_award_to[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='floor_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='floor_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if(to =='' && percent =='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			var reg=/^[1-9][0-9]{0,2}$/; 
+			//验证当前验证对象的输入合法性
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	      	//验证当前验证对象的输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && value != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(value !=1 ) return false;
+			}
+			//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			if(to!='' && percent!=''){
+				var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+				if(reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(value) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='floor_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='floor_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='floor_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证层奖终点值
+	function checkFloorTo(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='floor_award_from[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='floor_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='floor_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && percent=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[1-9][0-9]{0,2}$/;    
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+			if(from!='' && percent!=''){
+				if(reg.test(from) && reg_percent.test(percent) && parseInt(value)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='floor_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='floor_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='floor_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证层奖百分比
+	function checkFloorValue(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='floor_award_from[]']").val();
+		//获取终点值
+		var to = parent_row.find("input[name='floor_award_to[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='floor_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && to=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        if(value>100 || value<0){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_to=/^[1-9][0-9]{0,2}$/;
+			if(from!='' && to!=''){
+				if(reg_to.test(from) && reg_to.test(to) && parseInt(to)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='floor_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='floor_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='floor_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='floor_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg_to.test(next_from) && reg_to.test(next_to) && reg.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='floor_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	
+	//验证层碰奖起始值
+	function checkLayerTouchFrom(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取终点值
+		var to = parent_row.find("input[name='layer_touch_award_to[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='layer_touch_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='layer_touch_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if(to =='' && percent =='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			var reg=/^[1-9][0-9]{0,2}$/; 
+			//验证当前验证对象的输入合法性
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	      	//验证当前验证对象的输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && value != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(value !=1 ) return false;
+			}
+			//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			if(to!='' && percent!=''){
+				var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+				if(reg.test(to) && reg_percent.test(percent) && parseInt(to)>=parseInt(value) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='layer_touch_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='layer_touch_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='layer_touch_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证层碰奖终点值
+	function checkLayerTouchTo(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='layer_touch_award_from[]']").val();
+		//获取比例设置
+		var percent = parent_row.find("input[name='layer_touch_award_value[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='layer_touch_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && percent=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[1-9][0-9]{0,2}$/;    
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_percent=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+			if(from!='' && percent!=''){
+				if(reg.test(from) && reg_percent.test(percent) && parseInt(value)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='layer_touch_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='layer_touch_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='layer_touch_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg.test(next_from) && reg.test(next_to) && reg_percent.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	//验证层碰奖百分比
+	function checkLayerTouchValue(value, validator, field){
+		//获取设置项输入行
+		var parent_row = $(field).parent().parent().parent();
+		//获取起始值
+		var from = parent_row.find("input[name='layer_touch_award_from[]']").val();
+		//获取终点值
+		var to = parent_row.find("input[name='layer_touch_award_to[]']").val();
+		//获取前一项的终点值对象
+		var prev_to = parent_row.prev().find("input[name='layer_touch_award_to[]']");
+		//获取后一项的对象
+		var next = parent_row.next();
+		
+		if(value == ''){
+			//起始值、终点值、百分百都为null，验证通过
+			if (from=='' && to=='') {
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_from[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_to[]']"), "VALID", null );
+				$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_value[]']"), "VALID", null );
+				return true;
+			}
+		}else{
+			//验证当前验证对象的输入合法性
+			var reg=/^[0-9]{1,3}(\.[0-9]{0,1})?$/;
+	        if(!reg.test(value)){
+	        	return false;
+	        }
+	        if(value>100 || value<0){
+	        	return false;
+	        }
+	        
+	      	//验证起始值输入合法性（必须为前一项的终点值+1）
+			if(prev_to.length>0){
+				if (prev_to.val()=='' || !reg.test(prev_to.val()) || reg.test(prev_to.val()) && from != (parseInt(prev_to.val())+1)) return false;
+			}else {
+				if(from !=1 ) return false;
+			}
+	      
+	      	//起始值、终点值、百分百都存在，格式验证、约束验证都通过的条件
+			var reg_to=/^[1-9][0-9]{0,2}$/;
+			if(from!='' && to!=''){
+				if(reg_to.test(from) && reg_to.test(to) && parseInt(to)>=parseInt(from) ) {
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_from[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_to[]']"), "VALID", null );
+					$('#level-form').data('bootstrapValidator').updateElementStatus(parent_row.find("input[name='layer_touch_award_value[]']"), "VALID", null );
+					
+					//获取下一个设置项起始值
+					var next_from = next.find("input[name='layer_touch_award_from[]']").val();
+					//获取下一个设置项终点值
+					var next_to = next.find("input[name='layer_touch_award_to[]']").val();
+					//获取下一个设置项百分比
+					var next_percent = next.find("input[name='layer_touch_award_value[]']").val();
+					if(next_from !='' && next_to !='' && next_percent !='' && reg_to.test(next_from) && reg_to.test(next_to) && reg.test(next_percent) && parseInt(next_to)>=parseInt(next_from)){
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_from[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_to[]']"), "NOT_VALIDATED", null );
+						$('#level-form').data('bootstrapValidator').updateElementStatus(next.find("input[name='layer_touch_award_value[]']"), "NOT_VALIDATED", null );
+					}
+					return true;
+				}
+			}
+		}
+	}
+	/* function delItem(){
+		$(this).parent().parent('.form-group').remove();
+	}*/
+	</script>
+	</body>
+</html>

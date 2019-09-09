@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    
+    <body>
+	<div>
+		<div class="sub-header-title">
+			<h2>变更库存</h2>
+		</div>
+		
+		<form role="form" id="inventory-form" class="form-horizontal" action="{:U('Mall/changesInventory')}">
+			<input type="hidden" id="goods_id" name="goods_id" value="{$goods.id}">
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">商品名称</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="title" value="{$goods.title}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">为需要变更库存的商品名称，不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">当前库存</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="inventory" value="{$goods.inventory_number}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">为商品的当前库存，不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>变更类型</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="type" value="0" checked>库存追加</label>
+					  	<label><input type="radio" name="type" value="1">库存损耗</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="quantity" class="col-sm-2 control-label"><span class="red_star">*</span>变更数量</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="quantity" name="quantity" value="">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须为[1,100000000)的正整数，并且库存损耗小于当前库存</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="remark" class="col-sm-2 control-label"><span class="red_star">*</span>变更备注</label>
+				<div class="col-sm-5">
+				  	<textarea class="form-control" id="remark" name="remark"></textarea>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在2~100个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">确认</button>
+                </div>
+			</div>
+		</form>
+	</div>
+
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__ADMIN_JS__/common.js"></script>
+
+	<script>
+  	    //ICHECK
+		$('input').iCheck({
+		  	checkboxClass: 'icheckbox_square-blue',
+		  	radioClass: 'iradio_square-blue',
+		  	increaseArea: '20%' // optional
+		});
+  	    
+		$("input").on('ifChecked', function(event){ 
+			//切换库存变更类型
+			var quantity = $('#inventory-form').find("input[name='quantity']").val();
+			if($(this).attr("name") == 'type' && quantity !=''){
+				if ($(this).val() == '1') {
+					var reg=/^[1-9][0-9]{0,7}$/;
+					var inventory = $('#inventory-form').find("input[name='inventory']").val();
+					
+					if (!reg.test(quantity) || parseInt(quantity)>parseInt(inventory)) {
+						$('#inventory-form').data('bootstrapValidator').updateElementStatus($('#inventory-form').find("input[name='quantity']"), "INVALID", null );
+					} else {
+						$('#inventory-form').data('bootstrapValidator').updateElementStatus($('#inventory-form').find("input[name='quantity']"), "VALID", null );
+					}
+				} else {
+					var reg=/^[1-9][0-9]{0,7}$/;
+					
+					if (!reg.test(quantity)) {
+						$('#inventory-form').data('bootstrapValidator').updateElementStatus($('#inventory-form').find("input[name='quantity']"), "INVALID", null );
+					} else {
+						$('#inventory-form').data('bootstrapValidator').updateElementStatus($('#inventory-form').find("input[name='quantity']"), "VALID", null );
+					}
+				}
+			}
+		});
+			
+		$('#inventory-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+	        	
+		      	//询问框
+				window.parent.layer.confirm('确定变更库存吗？', {
+				    btn: ['确认','取消'], //按钮
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+				    	form.bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+					// 用ajax提交表单
+			      	$.post(form.attr('action'), form.serialize(), function(response) {
+			      		//弹出提示
+						window.parent.layer.msg(response.message);
+			      		
+			      		//根据请求相应状态提示通知
+			       		if(response.status){
+							notify("success",response.message);
+							location.href = "{:U('Mall/goodsList')}";
+						}else{
+							notify("error",response.message);
+						}
+			        }, 'json');
+			      	window.parent.layer.close(index);
+				}, function(index){
+					window.parent.layer.close(index);
+					form.bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	        	type: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            quantity: {
+		            validators: {
+		            	notEmpty: {
+	                    },
+	                	callback: {
+	    					callback:function(value, validator){
+	    						var reg=/^[1-9][0-9]{0,7}$/;
+	    						var type = $('#inventory-form').find("input[name='type']:checked").val();
+	    						
+	    						if (type == 1) {
+		    						var inventory = $('#inventory-form').find("input[name='inventory']").val();
+	    							return value!='' && value>0 && reg.test(value) && parseInt(value)<=parseInt(inventory) ? true : false;
+	    						} else {
+	    							return value!='' && value>0 && reg.test(value) ? true : false;
+	    						}
+	    					}
+	    				}
+	                }
+	            },
+	            remark: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 100,
+	                    }
+	                }
+	            }
+	        }
+	    });
+	</script>
+	</body>
+</html>

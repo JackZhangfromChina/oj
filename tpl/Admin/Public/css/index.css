@@ -1,0 +1,88 @@
+@CHARSET "UTF-8";
+.md-modal{
+	background-color: #fff;
+}
+.md-show.md-just-me ~ .md-overlay{
+	background-color: #000;
+	opacity: 0.5;
+}
+.profile-info{
+	margin-top:15px;
+}
+.logo-img {
+	max-width: 400px;
+	width:100%;
+}
+.not-logged-avatar{
+	background-color: #fff;
+}
+.rounded-image img{
+	background-color: #fff;
+}
+/* .content-page > .content {
+  	padding: 0px;
+} */
+.page-content{
+	min-height:300px;
+	-webkit-overflow-scrolling:touch;
+	overflow: auto;
+}
+.btn{
+	line-height:20px;
+}
+.input-group .form-control{
+	z-index:1;
+}
+
+/* 后台整体蓝色样式 */
+body.login-page{
+	background:url("../images/blue-bg.jpg") no-repeat fixed center bottom / cover;
+}
+.login-wrap{
+  	background: rgba(0, 0, 0, 0.3);
+}
+#sidebar-menu > ul > li > a.active, #sidebar-menu > ul > li > a.active.subdrop {
+  	background: #3189c4 !important;
+}
+.btn-success {
+  	background-color: #3498db;
+  	border-color: #3498db;
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success{
+	background-color: #3189c4;
+  	border-color: #3189c4;
+}
+.btn-success.disabled, .btn-success[disabled], fieldset[disabled] .btn-success, .btn-success.disabled:hover, .btn-success[disabled]:hover, fieldset[disabled] .btn-success:hover, .btn-success.disabled:focus, .btn-success[disabled]:focus, fieldset[disabled] .btn-success:focus, .btn-success.disabled.focus, .btn-success.focus[disabled], fieldset[disabled] .btn-success.focus, .btn-success.disabled:active, .btn-success[disabled]:active, fieldset[disabled] .btn-success:active, .btn-success.disabled.active, .btn-success.active[disabled], fieldset[disabled] .btn-success.active {
+  background-color: #3189c4;
+  border-color: #3189c4;
+}
+.pace .pace-progress {
+  	background: #3189c4;
+}
+.pace .pace-progress-inner {
+  	box-shadow: 0 0 10px #3189c4, 0 0 5px #3189c4;
+}
+.pace .pace-activity {
+  	border-top-color: #3189c4;
+  	border-left-color: #3189c4;
+}
+
+span.red_star {
+	margin-right: 5px;
+  	color: red;
+  	font-weight: bold;
+}
+
+.category-box{
+	padding: 30px 0px;
+}
+.category-box .control-label {
+  	margin-bottom: 0;
+  	padding-top: 7px;
+  	text-align: right;
+	padding-right: 0px;
+}
+.logo h1 img {
+  height: 60%;
+}
+

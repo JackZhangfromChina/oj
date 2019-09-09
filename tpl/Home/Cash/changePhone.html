@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>
+				修改手机号
+			</h2>
+		</div>
+		<form role="form" id="edit-form" class="form-horizontal" action="{:U('Cash/changePhone')}">
+			<input type="hidden" name="id" value="{$bank['id']}">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">会员编号</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="user_no" value="{$user['user_no']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">会员编号为当前登录账号，不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">卡号</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" readonly name="bank" value="{$bank['bank_no']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">卡号，不能更改</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">原手机号</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" readonly name="phone" value="{$bank['phone']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">原手机号</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">新手机号</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control"  name="newPhone" value="">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">修改的手机号</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-success">保存</button>
+                </div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__HOME_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		
+		$('#edit-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        submitHandler: function(validator, form, submitButton) {
+	        	//询问框
+				window.parent.layer.confirm('确认保存修改手机信息吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#edit-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+	        		// 用ajax提交表单
+			      	$.post(form.attr('action'), form.serialize(), function(response) {
+			      		//弹出提示
+						window.parent.layer.msg(response.message);
+			      		
+			      		//根据请求相应状态提示通知
+			       		if(response.status){
+							notify("success",response.message);
+							window.location.href = "{:U('Cash/bankList')}";
+						}else{
+							notify("error",response.message);
+						}
+			        }, 'json');
+        		
+			      	window.parent.layer.close(index);
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#edit-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+				newPhone: {
+	            	validators: {
+	            		notEmpty: {
+	                    },
+	                    stringLength: {
+	                        min: 11,
+	                        max: 11,
+	                    }
+	                }
+	            }
+	        }
+	    });
+	});
+	</script>
+	</body>
+</html>

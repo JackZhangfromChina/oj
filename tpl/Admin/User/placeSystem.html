@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes" />
+	
+	    <!-- Base Css Files -->
+	    <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+	    <link href="__PUBLIC__/statics/coco-chat/assets/libs/chart/jquery.orgchart.css" rel="stylesheet" type="text/css" />
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+        <link href="__ADMIN_CSS__/chart.css"  rel="stylesheet" />
+	</head>
+	<body>
+	<!-- Begin page -->
+	
+	<div>
+		<div>
+			<div class="sub-header-title">
+				<h2>团队网络</h2>
+			</div>
+			<div class="form-horizontal" id="placeForm">
+				<div class="form-group">
+					<div class="col-sm-2">
+						<input class="form-control" placeholder="根据会员编号搜索" value="" name="userNo" type="text">
+					</div>
+					<div class="col-sm-2">
+						<button class="btn btn-success" type="button" id="sub">查询</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	    <div class="widget-content">
+			<div id="chart-container"></div>
+		</div>
+	</div>
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/chart/admin.jquery.orgchart.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__ADMIN_JS__/common.js"></script>
+
+	<script>
+		var url ="{:U('')}";
+        $('#chart-container').orgchart({
+            'data' : {$as},
+            'nodeContent': 'left_market',
+            'right_market': 'right_market',
+            'touch_market':'touch_market',
+            'nodeTitle': 'user_no',
+			'parent_no': 'parent_no',
+			'investment': 'investment',
+			'local': 'local',
+			'url':url
+        });
+		
+      	//查询会员
+        $('#sub').bind('click',queryUser);
+		$("#placeForm").keydown(function(event) {
+			if(event.keyCode==13) queryUser();
+		});
+        function queryUser(){
+        	var userNo = $('[name=userNo]').val();
+			if (userNo!='') {
+				var data = {
+					'userNo'		: userNo
+				};
+				// 用ajax提交表单
+				$.post("{:U('User/placeSystem')}", data, function(response) {
+					//根据请求相应状态提示通知
+					if(response.status){
+						window.location.href="{:U('User/placeSystem')}"+'?no='+userNo;
+					}else{
+						notify("error",response.message);
+					}
+				}, 'json');
+			}
+        }
+	</script>
+	</body>
+</html>

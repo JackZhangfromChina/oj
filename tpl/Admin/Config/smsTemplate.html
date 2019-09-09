@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+    <div>
+        <div class="sub-header-title">
+            <h2>短信模板列表</h2>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <p class="red">计费标准：国内短信：70字符/条，长短信（＞70字符时）67字符/条，不分中英文，含签名字数；国际短信：中文=国内计费，英文：140字符/条，长短信（＞140字符时）134字符/条。 短信中出现非ASCII编码字符，作中文标准计费。</p>
+          </div>
+        </div>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <div class="col-sm-12">
+              <a class="btn btn-success pull-right" href="javascript:;"  id="add-tpl">添加模板</a>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="widget-content">
+            <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>模板编号</th>
+                    <th>添加时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <volist name="list" id="vo">
+                    <tr data-id="{$vo.id}" data-no="{$vo.no}" data-msg="{$vo.msg}">
+                        <td>{$vo.no}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                          <a class="edit-tpl" href="javascript:;">修改</a> |
+                          <a class="del-tpl" href="javascript:;">删除</a>
+                        </td>
+                      </tr>
+                  </volist>
+              </tbody>
+            </table>
+            {$page}
+        </div>
+    </div>
+
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+
+  <!-- Extra Js Files -->
+  <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-dragsort/jquery.dragsort-0.5.2.min.js"></script>
+
+      <!-- Custom Js Files -->
+    <script src="__ADMIN_JS__/common.js"></script>
+
+    <script>
+
+    //添加短信模板
+    $('#add-tpl').click(function(){
+      window.parent.layer.open({
+        type: 1, //page层
+        title: '添加短信模板',
+        area: ['450px', '300px'],
+        btn: ['保存','取消'],
+        content:'<div class="category-box">\
+                  <div class="form-group">\
+                    <label class="col-sm-3 control-label"><span class="red_star">*</span>编号：</label>\
+                    <div class="col-sm-8">\
+                      <input id="msg_no" class="form-control"/>\
+                    </div>\
+                  </div>\
+                  <div class="form-group">\
+                    <label class="col-sm-3 control-label"></label>\
+                    <div class="col-sm-8">\
+                      <p class="help-block">必须在2~20个字符之间</p>\
+                    </div>\
+                  </div>\
+                  <div class="form-group">\
+                    <label class="col-sm-3 control-label"><span class="red_star">*</span>内容：</label>\
+                    <div class="col-sm-8">\
+                      <textarea id="msg_content" class="form-control" rows="5" cols=""></textarea>\
+                    </div>\
+                  </div>\
+                </div>',
+        yes: function(index,layero){
+          var msg_no = $.trim($(layero).find('#msg_no').val());
+          if (!msg_no) {
+            //弹出提示
+            window.parent.layer.msg("短信模板编号不能为空");
+            return false;
+          }
+          if (msg_no.length<2 || msg_no.length>20) {
+            //弹出提示
+            window.parent.layer.msg("编号必须在2~20个字符之间");
+            return false;
+          }
+          var msg_content = $.trim($(layero).find('#msg_content').val());
+          if (!msg_content) {
+            //弹出提示
+            window.parent.layer.msg("短信模板内容不能为空");
+            return false;
+          }
+          var data = {
+              'no'  : msg_no,
+              'msg' : msg_content
+            };
+          // 用ajax提交表单
+          $.post("{:U('Config/addSmsTemplate')}", data, function(response) {
+            //弹出提示
+            window.parent.layer.msg(response.message);
+            //根据请求相应状态提示通知
+            if(response.status){
+              notify("success",response.message);
+              window.parent.layer.close(index);
+              window.location.reload();
+            }else{
+              notify("error",response.message);
+            }
+          }, 'json');
+        }
+      });
+    });
+
+    //修改短信模板
+    $('.edit-tpl').click(function(){
+      var id = $(this).parents('tr').data("id");
+      var no = $(this).parents('tr').data("no");
+      var msg = $(this).parents('tr').data("msg");
+      window.parent.layer.open({
+        type: 1, //page层
+        title: '修改短信模板',
+        area: ['450px', '300px'],
+        btn: ['保存','取消'],
+        content:'<div class="category-box">\
+                  <div class="form-group">\
+                    <label class="col-sm-3 control-label"><span class="red_star">*</span>编号：</label>\
+                    <div class="col-sm-8">\
+                      <input id="msg_no" class="form-control" value="'+no+'" disabled/>\
+                    </div>\
+                  </div>\
+                  <div class="form-group">\
+                    <label class="col-sm-3 control-label"></label>\
+                    <div class="col-sm-8">\
+                      <p class="help-block">必须在2~20个字符之间</p>\
+                    </div>\
+                  </div>\
+                  <div class="form-group">\
+                    <label class="col-sm-3 control-label"><span class="red_star">*</span>内容：</label>\
+                    <div class="col-sm-8">\
+                      <textarea id="msg_content" class="form-control" rows="5" cols="">'+msg+'</textarea>\
+                    </div>\
+                  </div>\
+                </div>',
+        yes: function(index,layero){
+          var msg_content = $.trim($(layero).find('#msg_content').val());
+          if (!msg_content) {
+            //弹出提示
+            window.parent.layer.msg("短信模板内容不能为空");
+            return false;
+          }
+          var data = {
+              'id'  : id,
+              'msg' : msg_content
+            };
+          // 用ajax提交表单
+          $.post("{:U('Config/editSmsTemplate')}", data, function(response) {
+            //弹出提示
+            window.parent.layer.msg(response.message);
+            //根据请求相应状态提示通知
+            if(response.status){
+              notify("success",response.message);
+              window.parent.layer.close(index);
+              window.location.reload();
+            }else{
+              notify("error",response.message);
+            }
+          }, 'json');
+        }
+      });
+    });
+
+    //删除短信模板
+    $('.del-tpl').click(function(){
+      var id = $(this).parents('tr').data("id");
+      window.parent.layer.confirm('确定删除该分类吗？', {
+          btn: ['确认','取消'] //按钮
+      },function(index){
+        // 用ajax提交表单
+        $.post("{:U('Config/deleteSmsTemplate')}", 'id='+id, function(response) {
+          //弹出提示
+          window.parent.layer.msg(response.message);
+
+          //根据请求相应状态提示通知
+          if(response.status){
+            notify("success",response.message);
+            window.location.reload();
+          }else{
+            notify("error",response.message);
+          }
+          //关闭确认对话框
+          window.parent.layer.close(index);
+        }, 'json');
+      });
+    });
+    </script>
+    </body>
+</html>

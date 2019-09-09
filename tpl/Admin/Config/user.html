@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Extra CSS Files -->
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet"/>
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+      	<link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+      	
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>会员设置</h2>
+		</div>
+		<div class="row">
+    		<div class="col-sm-offset-2 col-sm-10">
+    			<p class="red"><if condition="$system_state eq  1">系统在开启状态下，不允许进行敏感操作！如必须操作，请先关闭系统，以免引起数据异常。</if>带有*为必填项</p>
+    		</div>
+    	</div>
+		<form role="form" id="config-form" class="form-horizontal" action="{:U('Config/user')}">
+			<input type="hidden" name="password">
+			<div class="form-group">
+				<label for="USER_PREFIX" class="col-sm-2 control-label">{$configs['USER_PREFIX']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="USER_PREFIX" name="USER_PREFIX" value="{$configs['USER_PREFIX']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">在1~10个字符之间</p>
+				</div>
+			</div>
+			<!-- <div class="form-group">
+				<label for="USER_VERTEX_NO" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['USER_VERTEX_NO']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="text" class="form-control" id="USER_VERTEX_NO" name="USER_VERTEX_NO" value="{$configs['USER_VERTEX_NO']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在1~10个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="USER_VERTEX_PASSWORD" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['USER_VERTEX_PASSWORD']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="password" class="form-control" id="USER_VERTEX_PASSWORD" name="USER_VERTEX_PASSWORD" value="{$configs['USER_VERTEX_PASSWORD']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在6~20个字符之间</p>
+				</div>
+			</div> -->
+			<div class="form-group">
+				<label for="USER_INITIAL_PASSWORD" class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['USER_INITIAL_PASSWORD']['title']}</label>
+				<div class="col-sm-5">
+				  	<input type="password" class="form-control" id="USER_INITIAL_PASSWORD" name="USER_INITIAL_PASSWORD" value="{$configs['USER_INITIAL_PASSWORD']['value']}">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">必须在6~20个字符之间</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['USER_OPEN_AUTO_NO']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="USER_OPEN_AUTO_NO" value="1" <if condition="$configs['USER_OPEN_AUTO_NO']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="USER_OPEN_AUTO_NO" value="0" <if condition="$configs['USER_OPEN_AUTO_NO']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">开启后注册会员时默认生成一个会员编号</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="red_star">*</span>{$configs['USER_IS_REAL_REGISTER']['title']}</label>
+				<div class="col-sm-5">
+				  	<div class="radio iradio">
+						<label><input type="radio" name="USER_IS_REAL_REGISTER" value="1" <if condition="$configs['USER_IS_REAL_REGISTER']['value'] eq  1">checked</if>>开启</label>
+					  	<label><input type="radio" name="USER_IS_REAL_REGISTER" value="0" <if condition="$configs['USER_IS_REAL_REGISTER']['value'] eq  0">checked</if>>关闭</label>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">开启后注册会员时扣减注册币，产生业绩，注册的会员是已激活状态</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">{$configs['USER_ENROLL_ITEM']['title']}</label>
+				<div class="col-sm-5">
+					<input type="hidden" class="form-control" name="USER_ENROLL_ITEM" value="">
+				</div>
+				<div class="col-sm-5">
+					<p class="help-block">只有设置项可见，才能设置必填和唯一</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+				  	<div class="form-group enroll_item" name="email">
+				  		<label class="col-sm-2 control-label">email</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['email'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['email'])">disabled</if> <if condition="in_array('required',$enroll_items['email'])">checked</if>> 必须</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="unique" value="unique" <if condition="! in_array('visible',$enroll_items['email'])">disabled</if> <if condition="in_array('unique',$enroll_items['email'])">checked</if>> 唯一</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="qq">
+				  		<label class="col-sm-2 control-label">qq</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['qq'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['qq'])">disabled</if>  <if condition="in_array('required',$enroll_items['qq'])">checked</if>> 必须</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="unique" value="unique" <if condition="! in_array('visible',$enroll_items['qq'])">disabled</if>  <if condition="in_array('unique',$enroll_items['qq'])">checked</if>> 唯一</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="telephone">
+				  		<label class="col-sm-2 control-label">电话</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['telephone'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['telephone'])">disabled</if>  <if condition="in_array('required',$enroll_items['telephone'])">checked</if>> 必须</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="unique" value="unique" <if condition="! in_array('visible',$enroll_items['telephone'])">disabled</if>  <if condition="in_array('unique',$enroll_items['telephone'])">checked</if>> 唯一</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="zip_code">
+				  		<label class="col-sm-2 control-label">邮政编码</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['zip_code'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['zip_code'])">disabled</if>  <if condition="in_array('required',$enroll_items['zip_code'])">checked</if>> 必须</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="alipay">
+				  		<label class="col-sm-2 control-label">支付宝</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['alipay'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['alipay'])">disabled</if>  <if condition="in_array('required',$enroll_items['alipay'])">checked</if>> 必须</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="unique" value="unique" <if condition="! in_array('visible',$enroll_items['alipay'])">disabled</if>  <if condition="in_array('unique',$enroll_items['alipay'])">checked</if>> 唯一</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="wechat">
+				  		<label class="col-sm-2 control-label">微信号</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['wechat'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['wechat'])">disabled</if>  <if condition="in_array('required',$enroll_items['wechat'])">checked</if>> 必须</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="unique" value="unique" <if condition="! in_array('visible',$enroll_items['wechat'])">disabled</if>  <if condition="in_array('unique',$enroll_items['wechat'])">checked</if>> 唯一</label>
+						</div>
+					</div>
+					<!-- <div class="form-group enroll_item" name="bank">
+				  		<label class="col-sm-2 control-label">开户行</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['bank'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['bank'])">disabled</if>  <if condition="in_array('required',$enroll_items['bank'])">checked</if>> 必须</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="sub_bank">
+				  		<label class="col-sm-2 control-label">开户支行</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['sub_bank'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['sub_bank'])">disabled</if>  <if condition="in_array('required',$enroll_items['sub_bank'])">checked</if>> 必须</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="bank_no">
+				  		<label class="col-sm-2 control-label">卡号</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['bank_no'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['bank_no'])">disabled</if>  <if condition="in_array('required',$enroll_items['bank_no'])">checked</if>> 必须</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="unique" value="unique" <if condition="! in_array('visible',$enroll_items['bank_no'])">disabled</if>  <if condition="in_array('unique',$enroll_items['bank_no'])">checked</if>> 唯一</label>
+						</div>
+					</div> -->
+					<div class="form-group enroll_item" name="sex">
+				  		<label class="col-sm-2 control-label">性别</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['sex'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['sex'])">disabled</if> <if condition="in_array('required',$enroll_items['sex'])">checked</if>> 必须</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="birthday">
+				  		<label class="col-sm-2 control-label">生日</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['birthday'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['birthday'])">disabled</if>  <if condition="in_array('required',$enroll_items['birthday'])">checked</if>> 必须</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="id_card">
+				  		<label class="col-sm-2 control-label">身份证</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['id_card'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['id_card'])">disabled</if>  <if condition="in_array('required',$enroll_items['id_card'])">checked</if>> 必须</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="unique" value="unique" <if condition="! in_array('visible',$enroll_items['id_card'])">disabled</if>  <if condition="in_array('unique',$enroll_items['id_card'])">checked</if>> 唯一</label>
+						</div>
+					</div>
+					<div class="form-group enroll_item" name="address">
+				  		<label class="col-sm-2 control-label">地址</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="visible" value="visible" <if condition="in_array('visible',$enroll_items['address'])">checked</if>> 可见</label>
+							<label class="checkbox-inline icheckbox"><input type="checkbox" class="required" value="required" <if condition="! in_array('visible',$enroll_items['address'])">disabled</if>  <if condition="in_array('required',$enroll_items['address'])">checked</if>> 必须</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2"></label>
+				<div class="col-sm-10">
+				  	<button type="submit" class="btn btn-success">保存</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	<!-- Extra Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-icheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select/bootstrap-select.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap-select2/select2.min.js"></script>
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		//ICHECK
+		$('input').iCheck({
+		  	checkboxClass: 'icheckbox_square-blue',
+		  	radioClass: 'iradio_square-blue',
+		  	increaseArea: '20%' // optional
+		});
+		
+		$("input").on('ifChecked', function(event){ 
+			//选择可见项
+			if($(this).val() == 'visible'){
+				$(this).parents(".enroll_item").find(".required").iCheck('enable');
+				$(this).parents(".enroll_item").find(".unique").iCheck('enable');
+			}
+			
+			$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		}); 
+		
+		$("input").on('ifUnchecked', function(event){ 
+			//选择可见项
+			if($(this).val() == 'visible'){
+				$(this).parents(".enroll_item").find(".required").iCheck('uncheck');
+				$(this).parents(".enroll_item").find(".unique").iCheck('uncheck');
+				
+				$(this).parents(".enroll_item").find(".required").iCheck('disable');
+				$(this).parents(".enroll_item").find(".unique").iCheck('disable');
+			}
+			
+			$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		}); 
+
+		//表单验证
+		$('#config-form').bootstrapValidator({
+	        message: '',
+	        trigger: 'blur',
+	        excluded: [':disabled'],//[':disabled', ':hidden', ':not(:visible)']
+	        submitHandler: function(validator, form, submitButton) {
+		      	//询问框
+				window.parent.layer.confirm('确认保存修改后的配置信息吗？', {
+					btn: ['确认','取消'], //按钮
+				    cancel: function(index){ 
+				    	window.parent.layer.close(index);
+						$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+					}
+				}, function(index){
+					window.parent.layer.prompt({
+		        		title: '敏感操作:请输入口令', 
+		        		formType: 1,
+		        		btn: ['确认','取消'], //按钮
+		        		btn2: function(pro_index){
+		        			window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+		        		},
+					    cancel: function(index){ 
+					    	window.parent.layer.close(pro_index);
+							$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+						}
+					}, function(password, pro_index){
+						//封装会员注册配置的json对象
+						var enroll_items = {};
+						$(".enroll_item").each(function(index){
+						    var name = $(this).attr("name");
+						    var item = new Array();
+						    
+						    if($(this).find("input.visible:checked").val() == 'visible'){
+						    	item.push("visible");
+						    }
+						    if($(this).find("input.required:checked").val() == 'required'){
+						    	item.push("required");
+						    }
+						    if($(this).find("input.unique:checked").val() == 'unique'){
+						    	item.push("unique");
+						    }
+						    enroll_items[name] = item;
+						});
+						$("input[name='USER_ENROLL_ITEM']").val(JSON.stringify(enroll_items));
+						
+						//开启数据处理提示
+						var load = window.parent.layer.msg('数据保存中。。。', {
+									  icon: 16,
+									  shade: 0.5,
+									  time: 0,
+									});
+						form.find("input[name='password']").val(hex_sha1(password));
+						
+						// 用ajax提交表单
+				      	$.post(form.attr('action'), form.serialize(), function(response) {
+				      		//关闭数据处理提示
+							window.parent.layer.close(load);
+				      		//弹出提示
+							window.parent.layer.msg(response.message);
+				      	
+				      		//根据状态显示通知
+				       		if(response.status){
+								notify("success",response.message);
+								$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+							}else{
+								notify("error",response.message);
+							}
+				        }, 'json');
+						
+				      	window.parent.layer.close(pro_index);
+				      	window.parent.layer.close(index);
+					});     	
+				}, function(index){
+					window.parent.layer.close(index);
+					$('#config-form').bootstrapValidator('disableSubmitButtons', false);
+				});
+	        },
+	        fields: {
+	        	USER_PREFIX: {
+	                validators: {
+	                    stringLength: {
+	                        min: 1,
+	                        max: 10,
+	                    },
+	                }
+	            },
+	            USER_VERTEX_NO: {
+	                validators: {
+			            notEmpty: {
+		                },
+		                stringLength: {
+		                    min: 1,
+		                    max: 10,
+		                }
+	                }
+	            },
+	            USER_VERTEX_PASSWORD: {
+	                validators: {
+	                	notEmpty: {
+		                },
+		                stringLength: {
+		                    min: 6,
+		                    max: 20,
+		                }
+	                }
+	            },
+	            USER_INITIAL_PASSWORD: {
+	                validators: {
+	                	notEmpty: {
+		                },
+		                stringLength: {
+		                    min: 6,
+		                    max: 20,
+		                }
+	                }
+	            },
+	            USER_OPEN_AUTO_NO: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            USER_IS_REAL_REGISTER: {
+	            	validators: {
+	            		notEmpty: {
+	                    }
+	                }
+	            },
+	            USER_ENROLL_ITEM: {
+	            	validators: {
+	            		stringLength: {
+		                    min: 0,
+		                    max: 1000,
+		                }
+	                }
+	            }
+	        }
+	    });
+	});
+	</script>
+	</body>
+</html>

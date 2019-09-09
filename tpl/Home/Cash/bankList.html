@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+
+        <!-- Extra CSS Files -->
+
+        <!-- Custom Css Files -->
+        <link href="__HOME_CSS__/style.css"  rel="stylesheet" />
+    </head>
+
+    <body>
+	<!-- Begin page -->
+	<div>
+        <div class="sub-header-title">
+            <h2>银行卡列表</h2>
+        </div>
+        <div class="form-horizontal">
+       		<div class="form-group">
+	            <div class="col-sm-12">
+	                <a class="btn btn-success pull-right add_bank">添加</a>
+	            </div>
+	        </div>
+        </div>
+    </div>
+    <div class="widget">
+        <div class="widget-content">
+           	<table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                    	<th>银行</th>
+                        <th>开户支行</th>
+                        <th>银行卡号</th>
+						<th>手机号</th>
+                        <th>修改时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<volist name="list" id="vo">
+	                 	<tr>
+                      		<td>{$vo.bank}</td>
+                      		<td>{$vo.subbank_province}{$vo.subbank_city}{$vo.sub_bank}</td>
+                      		<td>{$vo.bank_no}<if condition="$vo['is_default'] eq '1'"><span class="red">【默认】</span></if></td>
+							<td>{$vo.phone}</td>
+							<td>{$vo.update_time}</td>
+							<if condition="$vo['type'] eq 0">
+							<td ref="{$vo.id}">
+                   				<a href="{:U('Cash/editBank',array('id'=>$vo['id']))}">修改</a> |
+                              	<a class="del" href="javascript:;">删除</a>
+                                <if condition="$vo['is_default'] eq 0">
+                                    <a class="set_default" href="javascript:;">| 设为默认</a>
+                                </if>
+                            </td>
+								<else/>
+								<td ref="{$vo.id}">
+								<a href="{:U('Cash/changePhone',array('id'=>$vo['id']))}">修改快捷手机</a> |
+								<a class="cannel" href="javascript:;">解绑</a>
+								</td>
+								</if>
+	                 	</tr>
+                 	</volist>
+            	</tbody>
+            </table>
+        </div>
+    </div>
+    <!-- End of page -->
+
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+
+	<!-- Extra Js Files -->
+
+	<!-- Custom Js Files -->
+	<script src="__HOME_JS__/common.js"></script>
+
+    <script>
+	$(function(){
+		$(".add_bank").click(function(event){
+	   		// if ("{$user.identification}" == "1"){
+	   			window.location.href = "{:U('Cash/addBank')}";
+	   		// } else {
+	   		// 	window.parent.layer.msg('请到个人信息中完善信息！');
+	   		// }
+		});
+		//绑定删除事件
+		$(".del").click(function(event) {
+	    	var id = $(this).parent('td').attr("ref");
+
+	    	//询问框
+			window.parent.layer.confirm('数据删除后将无法恢复，确认删除此银行卡吗？', {
+				btn: ['确认','取消'], //按钮
+			}, function(index){
+				// 用ajax提交表单
+		      	$.post("{:U('Cash/delBank')}", "id="+id, function(response) {
+		      		//弹出提示
+					window.parent.layer.msg(response.message);
+
+		      		//根据请求相应状态提示通知
+		       		if(response.status){
+		       			notify("success",response.message);
+						window.location.reload();
+					}else{
+						notify("error",response.message);
+					}
+		        }, 'json');
+		      	window.parent.layer.close(index);
+			});
+	    });
+		//解约
+		$(".cannel").click(function(event) {
+			var id = $(this).parent('td').attr("ref");
+
+			//询问框
+			window.parent.layer.confirm('解约后将无法恢复，确认解约此银行卡吗？', {
+				btn: ['确认','取消'], //按钮
+			}, function(index){
+				// 用ajax提交表单
+				$.post("{:U('Cash/cannelBank')}", "id="+id, function(response) {
+					//弹出提示
+					window.parent.layer.msg(response.message);
+
+					//根据请求相应状态提示通知
+					if(response.status){
+						notify("success",response.message);
+						window.location.reload();
+					}else{
+						notify("error",response.message);
+					}
+				}, 'json');
+				window.parent.layer.close(index);
+			});
+		});
+		//绑定设置默认事件
+		$(".set_default").click(function(event) {
+	    	var id = $(this).parent('td').attr("ref");
+
+	    	//询问框
+			window.parent.layer.confirm('确认设置此银行卡为默认银行卡吗？', {
+				btn: ['确认','取消'], //按钮
+			}, function(index){
+				// 用ajax提交表单
+		      	$.post("{:U('Cash/setBank')}", "id="+id, function(response) {
+		      		//弹出提示
+					window.parent.layer.msg(response.message);
+
+		      		//根据请求相应状态提示通知
+		       		if(response.status){
+		       			notify("success",response.message);
+						window.location.reload();
+					}else{
+						notify("error",response.message);
+					}
+		        }, 'json');
+		      	window.parent.layer.close(index);
+			}, function(index){
+				window.parent.layer.close(index);
+			});
+	    });
+	});
+	</script>
+	</body>
+</html>

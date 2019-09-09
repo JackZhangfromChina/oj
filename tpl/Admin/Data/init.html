@@ -1,0 +1,122 @@
+ <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <!-- Base Css Files -->
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/fontello/css/fontello.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/animate-css/animate.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/css/component.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" /> 
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.css" rel="stylesheet" />
+        <link href="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom Css Files -->
+        <link href="__ADMIN_CSS__/style.css"  rel="stylesheet" />
+    </head>
+    <body>
+	<!-- Begin page -->
+	<div>
+		<div class="sub-header-title">
+			<h2>初始化数据</h2>
+		</div>
+		<div class="important-tips-info">
+			<h2 class="red"><i class="icon-info-circled-alt"></i>谨慎操作，请认真阅读以下说明：</h2>
+			<p <if condition="$system_state eq  1">class="red"</if>><b>1.此操作必须在系统在关闭状态下，以免引起数据异常。请事先关闭系统，否则不允许进行操作！</b></p>
+			<p><b>2.初始化数据是指把数据存储恢复到系统最初始状态</b></p>
+			<p><b>3.系统相关的配置信息将恢复到系统最初的默认配置</b></p>
+			<p><b>4.管理员信息会仅保留超级管理员，其他自定义的管理员权限将丢失</b></p>
+			<p><b>5.系统的公告和站内信内容将被全部重置</b></p>
+			<p><b>6.商城的商品、分类以及订单信息将会被重置</b></p>
+			<p><b>7.最重要的是会员信息会被重置，只保留初始的顶点信息。会员对应的安置推荐关系和相关的操作都将丢失</b></p>
+			<p><b>8.初始化数据过程中请确保无其他人操作系统，以免引起操作失败</b></p>
+			<br/>
+			<br/>
+			<div class="form-group">
+				<label class="col-sm-2"></label>
+				<div class="col-sm-10">
+				  	<button type="button" id="submit-operate" class="btn btn-success">初始化数据</button>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- End of page -->
+	
+	<!-- Base Js Files -->
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js"></script>
+ 	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-detectmobile/detect.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/classie.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/nifty-modal/js/modalEffects.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/notify.min.js"></script>
+    <script src="__PUBLIC__/statics/coco-chat/assets/libs/jquery-notifyjs/styles/metro/notify-metro-blue.js"></script>
+	<script src="__PUBLIC__/statics/coco-chat/assets/libs/pace/pace.min.js"></script>
+	
+	
+	<!-- Custom Js Files -->
+	<script src="__PUBLIC_JS__/sha1.js"></script>
+	<script src="__ADMIN_JS__/common.js"></script>
+	
+	<script>
+	$(function(){
+		
+		// 初始化数据点击事件
+	    $('#submit-operate').click(function(event) {
+	    	window.parent.layer.confirm('请事先明了操作注意事项！确认要初始化数据吗？', {
+	    		btn: ['确认','取消'], //按钮
+			}, function(index){
+				window.parent.layer.prompt({
+	        		title: '敏感操作:请输入口令', 
+	        		formType: 1,
+	        		btn: ['确认','取消'], //按钮
+	        		btn2: function(pro_index){
+	        			window.parent.layer.close(pro_index);
+	        		},
+				    cancel: function(index){ 
+				    	window.parent.layer.close(pro_index);
+					}
+				}, function(password, pro_index){
+					//开启数据处理提示
+					var load = window.parent.layer.msg('初始化进行中。。。', {
+								  icon: 16,
+								  shade: 0.5,
+								  time: 0,
+								});
+					
+					// 用ajax提交表单
+			      	$.post("{:U('Data/init')}", {'password':hex_sha1(password)}, function(response) {
+			      		//关闭数据处理提示
+						window.parent.layer.close(load);
+						//弹出提示
+						window.parent.layer.msg(response.message);
+			      		
+			      		//根据请求相应状态提示通知
+			       		if(response.status){
+							notify("success",response.message);
+						}else{
+							notify("error",response.message);
+						}
+			        }, 'json');
+					
+					//关闭确认对话框
+			      	window.parent.layer.close(pro_index);
+					window.parent.layer.close(index);
+	        	});
+			});
+	    });
+	});
+	</script>
+	</body>
+</html>
